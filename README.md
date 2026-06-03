@@ -1,6 +1,6 @@
 # aitimewalk MVP Kurulum Rehberi
 
-Bu proje, tarih sorularını Türkçe yanıtlayan ve ilgili Wikipedia görsellerini gösteren basit bir web uygulamasıdır. Aşağıdaki adımları teknik bilgisi sınırlı kullanıcılar için mümkün olduğunca net şekilde hazırladım.
+Bu proje, tarih sorularını Türkçe yanıtlayan ve ilgili Wikipedia görsellerini gösteren tam sayfa bir ana sayfa deneyimidir. Site artık doğrudan kök alan adında (`/`) açılır; embed kullanımı istenirse hâlâ mümkündür ama artık opsiyoneldir.
 
 ## 1) GitHub'da yeni repo açın
 
@@ -43,7 +43,14 @@ git push -u origin main
 1. **Deploy** düğmesine tıklayın.
 2. Vercel birkaç dakika içinde projeyi yayına alacaktır.
 
-## 6) Vercel adresinizi embed-snippet içine yazın
+## 6) Ana sayfayı kontrol edin
+
+Yayın tamamlandığında Vercel adresinizi açın. Site doğrudan ana sayfa olarak çalışır:
+
+- `https://projeniz.vercel.app/`
+- Özel alan adınız varsa `https://aitimewalk.com/`
+
+## 7) İsterseniz embed-snippet içine Vercel adresinizi yazın
 
 1. Yayın tamamlanınca size bir Vercel adresi verilir. Örnek: `https://aitimewalk-backend.vercel.app`
 2. `public/embed-snippet.html` dosyasını açın.
@@ -53,22 +60,24 @@ git push -u origin main
 
 ```html
 <iframe
-  src="https://aitimewalk-backend.vercel.app/embed.html"
+  src="https://aitimewalk-backend.vercel.app/"
   width="100%"
-  height="700"
+  height="900"
   style="border:0; border-radius:24px; overflow:hidden;"
   loading="lazy"
   title="aitimewalk tarih soru-cevap aracı"
 ></iframe>
 ```
 
-## 7) GoDaddy site düzenleyicide ekleyin
+## 8) GoDaddy site düzenleyicide ekleyin
 
 1. GoDaddy web sitesi düzenleyicisini açın.
 2. Sayfanıza **Embed** veya **HTML** bileşeni ekleyin.
 3. `public/embed-snippet.html` içindeki iframe kodunu kopyalayın.
 4. Bu kodu GoDaddy içindeki ilgili alana yapıştırın.
 5. Kaydedip yayınlayın.
+
+> Not: Eğer siteniz doğrudan `aitimewalk.com` alan adına bağlanacaksa bu embed adımı zorunlu değildir.
 
 ## Uygulama ne yapar?
 
@@ -83,4 +92,3 @@ git push -u origin main
 - Sadece Vercel ortam değişkeni olarak ekleyin.
 - Günlük basit istek limiti aynı IP için 10 sorudur.
 - CORS ayarı `https://aitimewalk.com` ve `http://localhost:*` için açıktır.
-- 
