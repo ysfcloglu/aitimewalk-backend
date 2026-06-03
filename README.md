@@ -83,3 +83,4 @@ git push -u origin main
 - Sadece Vercel ortam değişkeni olarak ekleyin.
 - Günlük basit istek limiti aynı IP için 10 sorudur.
 - CORS ayarı `https://aitimewalk.com` ve `http://localhost:*` için açıktır.
+- 
