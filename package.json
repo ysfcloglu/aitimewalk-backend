@@ -1,0 +1,12 @@
+{
+  "name": "aitimewalk-mvp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "aitimewalk MVP prototipi",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "openai": "^4.104.0"
+  }
+}
