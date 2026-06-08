@@ -281,11 +281,15 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
         </li>
         <li class="feature-item">
           <span class="feature-check check-normal">&#10003;</span>
+          Mitoloji, Bilim Kurgu, Paralel Evrenler &amp; daha fazlası <span class="limit-badge">günlük 3 hak</span>
+        </li>
+        <li class="feature-item">
+          <span class="feature-check check-normal">&#10003;</span>
           Standart AI yanıtları
         </li>
         <li class="feature-item feature-locked">
           <span class="feature-check">&#x1F512;</span>
-          Premium dönemler <span class="limit-badge">kilitli</span>
+          Premium dönemler &amp; kendi senaryom <span class="limit-badge">kilitli</span>
         </li>
         <li class="feature-item feature-locked">
           <span class="feature-check">&#x1F512;</span>
@@ -333,6 +337,10 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
         </li>
         <li class="feature-item">
           <span class="feature-check check-premium">&#x2736;</span>
+          Sınırsız Mitoloji, Bilim Kurgu, Paralel Evrenler, Fantastik Dünyalar &amp; Çoklu Evrenler
+        </li>
+        <li class="feature-item">
+          <span class="feature-check check-premium">&#x2736;</span>
           Kendi senaryonu oluştur
         </li>
         <li class="feature-item">
@@ -365,6 +373,8 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
       <tbody>
         <tr><td>Günlük yolculuk</td><td>3</td><td class="c-gold">Sınırsız</td></tr>
         <tr><td>Tarihsel senaryo</td><td>5</td><td class="c-gold">Tümü + Özel</td></tr>
+        <tr><td>Mitoloji &amp; Bilim Kurgu</td><td>3/gün</td><td class="c-gold">Sınırsız</td></tr>
+        <tr><td>Paralel &amp; Fantastik &amp; Çoklu Evren</td><td>3/gün</td><td class="c-gold">Sınırsız</td></tr>
         <tr><td>AI yanıt kalitesi</td><td>Standart</td><td class="c-gold">Gelişmiş</td></tr>
         <tr><td>Görsel kalite</td><td>Standart</td><td class="c-gold">Yüksek + Video</td></tr>
         <tr><td>Reklamlar</td><td>Var</td><td class="c-gold">Yok</td></tr>
@@ -432,6 +442,21 @@ const ERAS = [
   { id:'seljuk', emoji:'🏹', label:'Selçuklu', premium:true,
     system:'Sen Büyük Selçuklu İmparatorluğu döneminin bilge bir vezirisin. Türklerin Anadolu\'ya yerleşmesi, Malazgirt Savaşı ve Selçuklu medeniyeti hakkında akıcı Türkçe yanıtlar ver.',
     quick:['Malazgirt neden önemli?','Türkler Anadolu\'ya nasıl geldi?','Selçuklu bilim adamları kimler?'] },
+  { id:'mythology', emoji:'⚡', label:'Mitoloji', premium:false,
+    system:'Sen antik mitolojilerin derin bilgisine sahip bir bilge anlatıcısın. Yunan, Roma, Türk, Mezopotamya ve diğer mitolojilerdeki tanrılar, kahramanlar, yaratıklar ve destanlar hakkında büyülü ve akıcı Türkçe yanıtlar ver. Ücretsiz modda yanıtları orta uzunlukta tut; daha derin ve zengin mitolojik anlatılar için Premium öneri yapabilirsin.',
+    quick:['Zeus kimdir?','Prometheus ateşi nasıl çaldı?','Türk mitolojisinde Tengri nedir?','En güçlü mitolojik yaratıklar hangileri?'] },
+  { id:'scifi', emoji:'🚀', label:'Bilim Kurgu', premium:false,
+    system:'Sen bilim kurgunun sınırlarında gezinen, hem bilimsel hem de spekülatif konularda uzman bir anlatıcısın. Yapay zeka, uzay kolonileri, zaman yolculuğu, robotlar ve distopik gelecekler hakkında heyecan verici Türkçe yanıtlar ver. Ücretsiz modda orta uzunlukta tut; daha ayrıntılı senaryolar için Premium öner.',
+    quick:['2150\'de dünya nasıl görünür?','Yapay zeka insanlığı geçer mi?','Zaman yolculuğu mümkün mü?','Mars\'ta yaşam nasıl olur?'] },
+  { id:'parallel', emoji:'🌀', label:'Paralel Evrenler', premium:false,
+    system:'Sen kuantum fiziği ve çok dünya yorumundan ilham alan, paralel evrenler ve alternatif tarihler konusunda uzman mistik bir rehbersin. "Ya Osmanlı yıkılmasaydı?", "Ya dinozorlar hâlâ yaşıyor olsaydı?" gibi spekülatif senaryoları yaratıcı ve bilimsel temelli Türkçe yanıtlarla canlandır. Ücretsiz modda 1-2 senaryo anlat; çok katmanlı evren keşifleri için Premium öner.',
+    quick:['Osmanlı hiç yıkılmasaydı ne olurdu?','Dinozorlar yaşasaydı medeniyet kurabilir miydi?','İkizim olan evrende ben kimim?','Kuantum süperpozisyonu nedir?'] },
+  { id:'fantasy', emoji:'🐉', label:'Fantastik Dünyalar', premium:false,
+    system:'Sen fantastik edebiyatın ve oyun dünyalarının büyüleyici atmosferini bilen, büyü sistemleri, mitik yaratıklar, kahramanlık yolculukları ve kadim krallıklar konusunda uzman bir anlatıcısın. Kullanıcıya kendi fantastik evrenlerini keşfetmelerinde Türkçe rehberlik et. Ücretsiz modda kısa maceralar sun; epik dünya inşası ve sınırsız senaryo için Premium öner.',
+    quick:['Bir ejderha uygarlığı nasıl olurdu?','Büyünün fizik kuralları olsaydı neler değişirdi?','Orta Çağ\'da büyücü olmak nasıl bir şeydi?','Kendi fantastik ırkımı tasarlayabilir miyim?'] },
+  { id:'multiverse', emoji:'🌌', label:'Çoklu Evrenler', premium:false,
+    system:'Sen kozmoloji, kuantum mekaniği ve felsefenin kesişiminde var olan çoklu evrenler teorisinin uzman rehberisin. Büyük Patlama\'dan brane kozmolojisine, simülasyon teorisinden Tanrı parçacığına kadar evrenin en derin sırlarını akıcı ve anlaşılır Türkçe ile anlat. Ücretsiz modda genel bilgi ver; çok katmanlı ve interaktif evren keşifleri için Premium öner.',
+    quick:['Büyük Patlama\'dan önce ne vardı?','Evrenimiz bir simülasyon mu?','Karanlık madde nedir?','Sonsuz sayıda evren var mı?'] },
   { id:'custom', emoji:'✍️', label:'Kendi Senaryom', premium:true,
     system:'Kullanıcı sana kendi tarihi senaryosunu anlatacak. O senaryonun içinde yaşıyormuş gibi davran ve soruları en yaratıcı şekilde Türkçe yanıtla.',
     quick:['Kendi dönemimi tanımlarım...','Farklı bir senaryo kur...'] }
