@@ -1,4 +1,4 @@
-const OpenAI = require("openai");
+const Anthropic = require("@anthropic-ai/sdk");
 
 const DAILY_LIMIT = 10;
 const rateLimitStore = new Map();
@@ -129,7 +129,7 @@ module.exports = async function handler(request, response) {
     });
   }
 
-  if (!process.env.OPENAI_API_KEY) {
+  if (!process.env.ANTHROPIC_API_KEY) {
     return response.status(500).json({
       error: "Sunucu yapılandırması eksik. Lütfen daha sonra tekrar deneyin."
     });
@@ -152,19 +152,16 @@ module.exports = async function handler(request, response) {
   }
 
   try {
-    const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+    const client = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY
     });
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      response_format: { type: "json_object" },
+    const message = await client.messages.create({
+      model: "claude-haiku-4-5",
+      max_tokens: 1024,
+      system:
+        'Sen bir tarih uzmanısın. Tüm yanıtlarını Türkçe ver. Kısa ama öğretici bir tarih yanıtı üret. Yalnızca geçerli JSON döndür, başka hiçbir şey yazma. Biçim şu olsun: {"answer":"string","imageKeywords":["string","string"]}. imageKeywords alanında konuya uygun 2 veya 3 adet görsel arama terimi ver.',
       messages: [
-        {
-          role: "system",
-          content:
-            'Sen bir tarih uzmanısın. Tüm yanıtlarını Türkçe ver. Kısa ama öğretici bir tarih yanıtı üret. Yalnızca geçerli JSON döndür ve biçim şu olsun: {"answer":"string","imageKeywords":["string","string"]}. imageKeywords alanında konuya uygun 2 veya 3 adet görsel arama terimi ver.'
-        },
         {
           role: "user",
           content: question
@@ -172,7 +169,7 @@ module.exports = async function handler(request, response) {
       ]
     });
 
-    const rawContent = completion.choices?.[0]?.message?.content || "{}";
+    const rawContent = message.content?.[0]?.text || "{}";
     const parsed = JSON.parse(rawContent);
     const answer = String(parsed.answer || "").trim();
     const imageKeywords = Array.isArray(parsed.imageKeywords)
