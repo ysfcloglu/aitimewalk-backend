@@ -153,12 +153,20 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
 .modal-price-box{background:rgba(201,168,76,0.07);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;margin-bottom:1.5rem;}
 .modal-price-amount{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);font-weight:900;}
 .modal-price-label{font-size:0.82rem;color:var(--muted);margin-top:0.2rem;}
-.btn-pay{width:100%;padding:1rem;background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:10px;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.25s;margin-bottom:0.75rem;}
+.btn-pay{width:100%;padding:1rem;background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:10px;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.25s;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:center;gap:8px;}
 .btn-pay:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);box-shadow:0 8px 24px rgba(201,168,76,0.3);transform:translateY(-1px);}
+.btn-pay:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 .modal-legal{font-size:0.75rem;color:var(--muted);opacity:0.6;line-height:1.5;}
 .modal-legal a{color:var(--gold-dim);}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark3);border:1px solid var(--border-strong);border-radius:100px;padding:0.75rem 1.75rem;font-size:0.88rem;color:var(--gold-light);z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;pointer-events:none;}
 .toast.show{transform:translateX(-50%) translateY(0);}
+
+/* Premium success banner */
+.premium-banner{display:none;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:1px solid var(--border-strong);border-radius:14px;padding:1rem 1.5rem;margin-bottom:1.5rem;text-align:center;}
+.premium-banner.show{display:block;}
+.premium-banner-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:0.25rem;}
+.premium-banner-sub{font-size:0.85rem;color:var(--muted);font-style:italic;}
+
 @media(max-width:520px){.mode-bar{flex-direction:column;align-items:flex-start;}.msg-bubble{max-width:88%;}}
 </style>
 </head>
@@ -170,6 +178,13 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
     <h1 class="main-title">Tarihte Zaman Yolculuğuna Çık</h1>
     <p class="main-sub">Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al</p>
   </div>
+
+  <!-- Premium aktivasyon banner (ödeme sonrası gösterilir) -->
+  <div class="premium-banner" id="premium-banner">
+    <div class="premium-banner-title">🎉 Premium aktif! Tüm dönemler açıldı.</div>
+    <div class="premium-banner-sub">Ödemen alındı — sınırsız zaman yolculuğunun tadını çıkar.</div>
+  </div>
+
   <div class="mode-bar">
     <div class="mode-left">
       <div class="mode-dot" id="mode-dot"></div>
@@ -274,6 +289,7 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
   </p>
 </div>
 
+<!-- ÖDEME MODALİ -->
 <div class="modal-backdrop" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">&#x2715;</button>
@@ -290,14 +306,24 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
       <div class="modal-price-amount">&#x20BA;129</div>
       <div class="modal-price-label">aylık abonelik · istediğin zaman iptal</div>
     </div>
-    <button class="btn-pay" onclick="activatePremium()">Ödemeyi Tamamla &#x2736;</button>
-    <p class="modal-legal">Devam ederek <a href="#">Kullanım Şartları</a>'nı kabul etmiş olursun.</p>
+    <!-- Shopier'e yönlendiren buton -->
+    <button class="btn-pay" id="btn-pay" onclick="goToShopier()">
+      <span>Ödemeyi Tamamla</span> <span>&#x2736;</span>
+    </button>
+    <p class="modal-legal">Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek <a href="#">Kullanım Şartları</a>'nı kabul etmiş olursun.</p>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
+// =====================================================
+//  AYARLAR
+// =====================================================
+const SHOPIER_URL = 'https://www.shopier.com/aitimewalk/47778139';
+// Shopier panelinde "Başarılı Ödeme Sonrası URL" olarak şunu gir:
+// https://www.aitimewalk.com/?premium=success
+
 const ERAS = [
   { id:'ottoman', emoji:'⚔️', label:'Osmanlı', premium:false,
     system:'Sen 15. yüzyılda Osmanlı İmparatorluğu\'nda yaşayan bilge bir tarihçisin. Kullanıcıya Osmanlı tarihi, kültürü, savaşları ve gündelik yaşamı hakkında akıcı, etkileyici ve detaylı Türkçe yanıtlar ver.',
@@ -342,18 +368,140 @@ const ERAS = [
 
 const API_URL = '/api/ask';
 
-let isPremium = false;
+// =====================================================
+//  PREMIUM DURUM YÖNETİMİ
+// =====================================================
+
+// Premium durumunu localStorage'dan oku
+// NOT: Gerçek bir projede bu sunucu tarafında doğrulanmalıdır.
+// Shopier webhook ile backend doğrulaması yapılması önerilir.
+function loadPremiumState() {
+  const saved = localStorage.getItem('atw_premium');
+  if (!saved) return false;
+  try {
+    const data = JSON.parse(saved);
+    // 30 gün geçerlilik (ms)
+    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+    if (Date.now() - data.ts < THIRTY_DAYS) return true;
+    // Süresi dolmuş, temizle
+    localStorage.removeItem('atw_premium');
+    return false;
+  } catch { return false; }
+}
+
+function savePremiumState() {
+  localStorage.setItem('atw_premium', JSON.stringify({ ts: Date.now() }));
+}
+
+// Günlük kullanım sayacı (localStorage ile)
+function loadUsedToday() {
+  const saved = localStorage.getItem('atw_usage');
+  if (!saved) return 0;
+  try {
+    const data = JSON.parse(saved);
+    const today = new Date().toDateString();
+    if (data.date !== today) return 0; // Yeni gün, sıfırla
+    return data.count || 0;
+  } catch { return 0; }
+}
+
+function saveUsedToday(count) {
+  localStorage.setItem('atw_usage', JSON.stringify({
+    date: new Date().toDateString(),
+    count
+  }));
+}
+
+// =====================================================
+//  STATE
+// =====================================================
+let isPremium = loadPremiumState();
 let selectedEra = null;
-let usedToday = 0;
+let usedToday = loadUsedToday();
 const DAILY_LIMIT = 3;
 let isLoading = false;
 let conversationHistory = [];
 
+// =====================================================
+//  SHOPIER ÖDEME AKIŞI
+// =====================================================
+
+function goToShopier() {
+  const btn = document.getElementById('btn-pay');
+  btn.disabled = true;
+  btn.innerHTML = '<span>Shopier\'e yönlendiriliyorsunuz...</span>';
+
+  // Shopier ürün sayfasına yönlendir
+  // Shopier panelinde "Başarılı Ödeme Sonrası Yönlendirme URL'si" = https://www.aitimewalk.com/?premium=success
+  window.location.href = SHOPIER_URL;
+}
+
+// Shopier'den döndükten sonra URL parametresini kontrol et
+function checkPaymentReturn() {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get('premium') === 'success') {
+    // Ödeme başarılı — premium aktif et
+    savePremiumState();
+    isPremium = true;
+
+    // URL'yi temizle (sayfa yenilemede tekrar tetiklenmesin)
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+
+    // Banner göster
+    document.getElementById('premium-banner').classList.add('show');
+
+    // UI'yi güncelle
+    applyPremiumUI(true);
+    showToast('🎉 Ödemen alındı! Premium aktif.');
+  }
+
+  if (params.get('premium') === 'cancel') {
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+    showToast('Ödeme iptal edildi.');
+  }
+}
+
+function applyPremiumUI(showBanner) {
+  document.getElementById('mode-label').textContent = 'Premium Mod ✦';
+  document.getElementById('mode-dot').style.background = '#c9a84c';
+  document.getElementById('upgrade-btn').style.display = 'none';
+  document.getElementById('usage-pills').innerHTML = '<span style="font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">Sınırsız</span>';
+  document.getElementById('normal-plan-btn').textContent = 'Normal Mod';
+  document.getElementById('normal-plan-btn').style.opacity = '0.5';
+
+  // Kilitli dönemleri aç
+  document.querySelectorAll('.era-btn').forEach(btn => {
+    btn.classList.remove('locked-era');
+    const lock = btn.querySelector('.era-lock');
+    if (lock) lock.remove();
+  });
+  document.querySelectorAll('.era-chip').forEach(chip => {
+    chip.classList.remove('locked-chip');
+    chip.classList.add('unlocked');
+    const ov = chip.querySelector('.lock-overlay');
+    if (ov) ov.remove();
+  });
+}
+
+// =====================================================
+//  INIT
+// =====================================================
 function init() {
   buildStars();
   buildEraRow();
   buildChipsGrid();
   buildModeBar();
+
+  // Eğer sayfa başlangıçta premium ise UI'yi güncelle
+  if (isPremium) {
+    applyPremiumUI(false);
+  }
+
+  // Shopier'den dönüş kontrolü
+  checkPaymentReturn();
 }
 
 function buildStars() {
@@ -373,7 +521,7 @@ function buildEraRow() {
     const btn = document.createElement('div');
     btn.className = 'era-btn' + (era.premium && !isPremium ? ' locked-era' : '');
     btn.id = 'era-' + era.id;
-    btn.innerHTML = '<span class="era-emoji">'+era.emoji+'</span><span class="era-label">'+era.label+'</span>'+(era.premium ? '<span class="era-lock">🔒</span>' : '');
+    btn.innerHTML = '<span class="era-emoji">'+era.emoji+'</span><span class="era-label">'+era.label+'</span>'+(era.premium && !isPremium ? '<span class="era-lock">🔒</span>' : '');
     btn.onclick = () => selectEra(era);
     row.appendChild(btn);
   });
@@ -452,7 +600,12 @@ async function sendMessage() {
   input.value = '';
   autoResize(input);
   updateCharCount();
-  if (!isPremium) { usedToday++; buildModeBar(); }
+
+  if (!isPremium) {
+    usedToday++;
+    saveUsedToday(usedToday);
+    buildModeBar();
+  }
 
   const systemPrompt = selectedEra.system + (isPremium ? ' Premium üye — daha uzun, daha zengin ve ayrıntılı yanıtlar ver.' : ' Yanıtları orta uzunlukta tut.');
 
@@ -531,30 +684,6 @@ function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replac
 function openModal() { document.getElementById('modal').classList.add('open'); }
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
 document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
-
-function activatePremium() {
-  isPremium = true;
-  closeModal();
-  document.getElementById('mode-label').textContent = 'Premium Mod ✦';
-  document.getElementById('mode-dot').style.background = '#c9a84c';
-  document.getElementById('upgrade-btn').style.display = 'none';
-  document.getElementById('usage-pills').innerHTML = '<span style="font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">Sınırsız</span>';
-  document.getElementById('normal-plan-btn').textContent = 'Normal Mod';
-  document.getElementById('normal-plan-btn').style.opacity = '0.5';
-  document.querySelectorAll('.era-btn').forEach(btn => {
-    btn.classList.remove('locked-era');
-    const lock = btn.querySelector('.era-lock');
-    if(lock) lock.remove();
-  });
-  document.querySelectorAll('.era-chip').forEach(chip => {
-    chip.classList.remove('locked-chip');
-    chip.classList.add('unlocked');
-    const ov = chip.querySelector('.lock-overlay');
-    if(ov) ov.remove();
-  });
-  buildModeBar();
-  showToast('🎉 Premium aktif! Tüm dönemler açıldı.');
-}
 
 let toastTimer;
 function showToast(msg) {
