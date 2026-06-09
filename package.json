@@ -7,6 +7,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "openai": "^4.104.0"
+    "dependencies": {
+  "@anthropic-ai/sdk": "^0.30.0"
+}
   }
 }
