@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -19,6 +19,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .star{position:absolute;border-radius:50%;background:rgba(201,168,76,0.6);animation:twinkle var(--d,3s) ease-in-out infinite alternate;animation-delay:var(--delay,0s);}
 @keyframes twinkle{from{opacity:0.1;transform:scale(1);}to{opacity:0.7;transform:scale(1.3);}}
 .page{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 6rem;}
+
+/* ── LANGUAGE TOGGLE ── */
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.25rem;}
+.lang-toggle{display:flex;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:100px;padding:3px;gap:3px;}
+.lang-btn{padding:0.3rem 0.85rem;border-radius:100px;border:none;background:transparent;font-family:'Crimson Pro',serif;font-size:0.82rem;letter-spacing:0.08em;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.lang-btn.active{background:var(--gold);color:var(--dark);font-weight:700;}
+
 .site-header{text-align:center;margin-bottom:2rem;}
 .logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:0.75rem;opacity:0.6;font-size:0.78rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-light);}
 .logo-line{width:36px;height:1px;background:var(--border-strong);}
@@ -135,11 +142,20 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
 .compare-table tr:last-child td{border-bottom:none;}
 .c-gold{color:var(--gold);}
 .c-muted{color:var(--muted);opacity:0.4;}
-.footer-note{text-align:center;font-size:0.82rem;color:var(--muted);font-style:italic;opacity:0.7;line-height:1.7;}
+
+/* ── FOOTER ── */
+.site-footer{border-top:1px solid rgba(255,255,255,0.06);padding-top:2rem;margin-top:1rem;text-align:center;}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem;margin-bottom:1rem;}
+.footer-link{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color 0.2s;cursor:pointer;background:none;border:none;font-family:'Crimson Pro',serif;}
+.footer-link:hover{color:var(--gold-light);}
+.footer-note{font-size:0.78rem;color:var(--muted);font-style:italic;opacity:0.6;line-height:1.7;}
 .footer-note a{color:var(--gold-dim);text-decoration:underline;text-underline-offset:3px;}
+
+/* ── MODALS (shared) ── */
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:100;align-items:center;justify-content:center;padding:1.5rem;}
 .modal-backdrop.open{display:flex;}
 .modal{background:var(--dark2);border:1px solid var(--border-strong);border-radius:20px;padding:2.5rem;max-width:420px;width:100%;position:relative;text-align:center;animation:modalIn 0.3s ease;}
+.modal-wide{max-width:600px;text-align:left;}
 @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.97);}to{opacity:1;transform:none;}}
 .modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0;}
 .modal-close{position:absolute;top:1rem;right:1rem;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
@@ -157,29 +173,64 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
 .btn-pay:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);box-shadow:0 8px 24px rgba(201,168,76,0.3);transform:translateY(-1px);}
 .btn-pay:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 .modal-legal{font-size:0.75rem;color:var(--muted);opacity:0.6;line-height:1.5;}
-.modal-legal a{color:var(--gold-dim);}
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark3);border:1px solid var(--border-strong);border-radius:100px;padding:0.75rem 1.75rem;font-size:0.88rem;color:var(--gold-light);z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;pointer-events:none;}
-.toast.show{transform:translateX(-50%) translateY(0);}
+.modal-legal a{color:var(--gold-dim);cursor:pointer;}
 
-/* Premium success banner */
+/* ── LEGAL / CONTACT MODAL CONTENT ── */
+.legal-body{max-height:60vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,0.2) transparent;padding-right:0.5rem;}
+.legal-body::-webkit-scrollbar{width:4px;}
+.legal-body::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);border-radius:100px;}
+.legal-body h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-light);margin:1.25rem 0 0.4rem;}
+.legal-body h3:first-child{margin-top:0;}
+.legal-body p{font-size:0.9rem;color:var(--parchment2);line-height:1.8;margin-bottom:0.5rem;}
+.legal-body ul{padding-left:1.25rem;margin-bottom:0.5rem;}
+.legal-body ul li{font-size:0.9rem;color:var(--parchment2);line-height:1.7;}
+.legal-last-updated{font-size:0.75rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;}
+
+/* Contact form */
+.contact-form{display:flex;flex-direction:column;gap:0.85rem;margin-top:1.25rem;}
+.contact-form label{font-size:0.82rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:0.3rem;}
+.contact-form input,
+.contact-form textarea{width:100%;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.75rem 1rem;color:var(--parchment);font-family:'Crimson Pro',serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;resize:vertical;}
+.contact-form input:focus,
+.contact-form textarea:focus{border-color:var(--border-strong);}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder{color:var(--muted);font-style:italic;}
+.contact-form textarea{min-height:100px;}
+.btn-contact-send{padding:0.85rem 1.5rem;background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:10px;font-family:'Crimson Pro',serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.2s;width:100%;}
+.btn-contact-send:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);transform:translateY(-1px);}
+
+/* Premium banner */
 .premium-banner{display:none;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:1px solid var(--border-strong);border-radius:14px;padding:1rem 1.5rem;margin-bottom:1.5rem;text-align:center;}
 .premium-banner.show{display:block;}
 .premium-banner-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:0.25rem;}
 .premium-banner-sub{font-size:0.85rem;color:var(--muted);font-style:italic;}
+
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark3);border:1px solid var(--border-strong);border-radius:100px;padding:0.75rem 1.75rem;font-size:0.88rem;color:var(--gold-light);z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
 
 @media(max-width:520px){.mode-bar{flex-direction:column;align-items:flex-start;}.msg-bubble{max-width:88%;}}
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
+
 <div class="page">
-  <div class="site-header">
-    <div class="logo-row"><div class="logo-line"></div>aitimewalk.com<div class="logo-line"></div></div>
-    <h1 class="main-title">Tarihte Zaman Yolculuğuna Çık</h1>
-    <p class="main-sub">Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al</p>
+
+  <!-- LANGUAGE BAR -->
+  <div class="lang-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-tr" onclick="setLang('tr')">TR</button>
+      <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+    </div>
   </div>
 
-  <!-- Premium aktivasyon banner (ödeme sonrası gösterilir) -->
+  <div class="site-header">
+    <div class="logo-row"><div class="logo-line"></div>aitimewalk.com<div class="logo-line"></div></div>
+    <h1 class="main-title" id="main-title">Tarihte Zaman Yolculuğuna Çık</h1>
+    <p class="main-sub" id="main-sub">Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al</p>
+  </div>
+
+  <!-- Premium aktivasyon banner -->
   <div class="premium-banner" id="premium-banner">
     <div class="premium-banner-title">🎉 Premium aktif! Tüm dönemler açıldı.</div>
     <div class="premium-banner-sub">Ödemen alındı — sınırsız zaman yolculuğunun tadını çıkar.</div>
@@ -191,22 +242,27 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
       <span class="mode-label" id="mode-label">Normal Mod</span>
       <div class="usage-pills" id="usage-pills"></div>
     </div>
-    <button class="btn-upgrade-mini" id="upgrade-btn" onclick="openModal()">&#x1F451; Premium — &#x20BA;129/ay</button>
+    <button class="btn-upgrade-mini" id="upgrade-btn" onclick="openModal('payment')">&#x1F451; Premium — &#x20BA;129/ay</button>
   </div>
+
   <div class="era-row" id="era-row"></div>
+
   <div class="lock-notice" id="lock-notice">
     <span>&#x1F512;</span>
     <span id="lock-text">Bu dönem Premium'a özeldir.</span>
-    <button onclick="openModal()">Premium'a Geç</button>
+    <button onclick="openModal('payment')" id="lock-upgrade-btn">Premium'a Geç</button>
   </div>
+
   <div class="quick-btns" id="quick-btns"></div>
+
   <div class="chat-window" id="chat-window">
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">&#x23F3;</div>
-      <div class="empty-title">Geçmişe açılan kapı</div>
-      <div class="empty-desc">Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.</div>
+      <div class="empty-title" id="empty-title">Geçmişe açılan kapı</div>
+      <div class="empty-desc" id="empty-desc">Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.</div>
     </div>
   </div>
+
   <div class="input-area">
     <div class="input-row">
       <textarea id="user-input" placeholder="Tarihe dair ne merak ediyorsun?" rows="1"
@@ -222,95 +278,211 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
 
   <div class="section-divider">
     <div class="divider-line"></div>
-    <span>Planlar</span>
+    <span id="plans-label">Planlar</span>
     <div class="divider-line"></div>
   </div>
 
   <div class="plans-grid">
     <div class="plan-card plan-normal">
       <div class="plan-icon">&#x1F552;</div>
-      <div class="plan-name">Normal Mod</div>
-      <div class="plan-tagline">Tarihle tanışmanın başlangıcı</div>
-      <div class="price-row"><span class="price-free">Ücretsiz</span></div>
-      <ul class="features-list">
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span>Günde 3 zaman yolculuğu</li>
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span>5 temel tarihsel senaryo</li>
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span>Mitoloji, Bilim Kurgu &amp; daha fazlası <span class="limit-badge">günlük 3 hak</span></li>
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span>Standart AI yanıtları</li>
-        <li class="feature-item feature-locked"><span class="feature-check">&#x1F512;</span>Premium dönemler &amp; kendi senaryom <span class="limit-badge">kilitli</span></li>
-        <li class="feature-item feature-locked"><span class="feature-check">&#x1F512;</span>Reklamsız deneyim <span class="limit-badge">kilitli</span></li>
+      <div class="plan-name" id="plan-normal-name">Normal Mod</div>
+      <div class="plan-tagline" id="plan-normal-tag">Tarihle tanışmanın başlangıcı</div>
+      <div class="price-row"><span class="price-free" id="price-free-label">Ücretsiz</span></div>
+      <ul class="features-list" id="normal-features-list">
+        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf1">Günde 3 zaman yolculuğu</span></li>
+        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf2">5 temel tarihsel senaryo</span></li>
+        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf3">Mitoloji, Bilim Kurgu &amp; daha fazlası</span> <span class="limit-badge" id="nf3-badge">günlük 3 hak</span></li>
+        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf4">Standart AI yanıtları</span></li>
+        <li class="feature-item feature-locked"><span class="feature-check">&#x1F512;</span><span id="nf5">Premium dönemler &amp; kendi senaryom</span> <span class="limit-badge" id="nf5-badge">kilitli</span></li>
+        <li class="feature-item feature-locked"><span class="feature-check">&#x1F512;</span><span id="nf6">Reklamsız deneyim</span> <span class="limit-badge" id="nf6-badge">kilitli</span></li>
       </ul>
       <button class="btn-plan btn-normal-plan" id="normal-plan-btn">&#x2714; Şu An Aktif</button>
     </div>
+
     <div class="plan-card plan-premium">
-      <div class="badge-popular">En Popüler</div>
+      <div class="badge-popular" id="badge-popular">En Popüler</div>
       <div class="plan-icon">&#x1F451;</div>
-      <div class="plan-name">Premium Mod</div>
-      <div class="plan-tagline">Tam tarihin içinde yaşa</div>
+      <div class="plan-name" id="plan-premium-name">Premium Mod</div>
+      <div class="plan-tagline" id="plan-premium-tag">Tam tarihin içinde yaşa</div>
       <div class="price-row">
         <span class="price-currency">&#x20BA;</span>
         <span class="price-amount">129</span>
-        <span class="price-period">/ ay</span>
+        <span class="price-period" id="price-period">/ ay</span>
       </div>
       <ul class="features-list">
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span>Sınırsız zaman yolculuğu</li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span>Gelişmiş AI karakterlerle konuşma</li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span>Reklamsız deneyim</li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span>Özel dönemler: Antik Mısır, Dünya Savaşları…</li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span>Kendi senaryonu oluştur</li>
+        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf1">Sınırsız zaman yolculuğu</span></li>
+        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf2">Gelişmiş AI karakterlerle konuşma</span></li>
+        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf3">Reklamsız deneyim</span></li>
+        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf4">Özel dönemler: Antik Mısır, Dünya Savaşları…</span></li>
+        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf5">Kendi senaryonu oluştur</span></li>
       </ul>
-      <button class="btn-plan btn-premium-plan" onclick="openModal()">Premium'a Geç &#x2736;</button>
+      <button class="btn-plan btn-premium-plan" onclick="openModal('payment')" id="btn-go-premium">Premium'a Geç &#x2736;</button>
     </div>
   </div>
 
   <div class="locked-section">
-    <div class="section-inner-title">Dönemler</div>
+    <div class="section-inner-title" id="eras-section-title">Dönemler</div>
     <div class="eras-grid" id="chips-grid"></div>
   </div>
 
   <div class="compare-section">
-    <div class="section-inner-title">Detaylı Karşılaştırma</div>
+    <div class="section-inner-title" id="compare-title">Detaylı Karşılaştırma</div>
     <table class="compare-table">
-      <thead><tr><th>Özellik</th><th>Normal</th><th>Premium</th></tr></thead>
+      <thead><tr>
+        <th id="th-feature">Özellik</th>
+        <th id="th-normal">Normal</th>
+        <th id="th-premium">Premium</th>
+      </tr></thead>
       <tbody>
-        <tr><td>Günlük yolculuk</td><td>3</td><td class="c-gold">Sınırsız</td></tr>
-        <tr><td>Tarihsel senaryo</td><td>5</td><td class="c-gold">Tümü + Özel</td></tr>
-        <tr><td>AI yanıt kalitesi</td><td>Standart</td><td class="c-gold">Gelişmiş</td></tr>
-        <tr><td>Reklamlar</td><td>Var</td><td class="c-gold">Yok</td></tr>
-        <tr><td>Kilitli dönemler</td><td class="c-muted">—</td><td class="c-gold">Açık</td></tr>
-        <tr><td>Kendi senaryon</td><td class="c-muted">—</td><td class="c-gold">&#x2736;</td></tr>
+        <tr><td id="ct1">Günlük yolculuk</td><td>3</td><td class="c-gold" id="ct1v">Sınırsız</td></tr>
+        <tr><td id="ct2">Tarihsel senaryo</td><td>5</td><td class="c-gold" id="ct2v">Tümü + Özel</td></tr>
+        <tr><td id="ct3">AI yanıt kalitesi</td><td id="ct3n">Standart</td><td class="c-gold" id="ct3v">Gelişmiş</td></tr>
+        <tr><td id="ct4">Reklamlar</td><td id="ct4n">Var</td><td class="c-gold" id="ct4v">Yok</td></tr>
+        <tr><td id="ct5">Kilitli dönemler</td><td class="c-muted">—</td><td class="c-gold" id="ct5v">Açık</td></tr>
+        <tr><td id="ct6">Kendi senaryon</td><td class="c-muted">—</td><td class="c-gold">&#x2736;</td></tr>
       </tbody>
     </table>
   </div>
 
-  <p class="footer-note">
-    İstediğin zaman iptal edebilirsin · Ödeme güvenli şekilde işlenir<br>
-    Sorular için <a href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a>
-  </p>
-</div>
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <div class="footer-links">
+      <button class="footer-link" onclick="openModal('contact')" id="fl-contact">İletişim</button>
+      <button class="footer-link" onclick="openModal('privacy')" id="fl-privacy">Gizlilik Politikası</button>
+      <button class="footer-link" onclick="openModal('terms')" id="fl-terms">Kullanım Şartları</button>
+    </div>
+    <p class="footer-note" id="footer-note">
+      İstediğin zaman iptal edebilirsin · Ödeme güvenli şekilde işlenir<br>
+      Sorular için <a href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a>
+    </p>
+  </div>
 
-<!-- ÖDEME MODALİ -->
-<div class="modal-backdrop" id="modal">
+</div><!-- /page -->
+
+<!-- ═══════════════════════════════════════
+     ÖDEME MODALİ
+════════════════════════════════════════ -->
+<div class="modal-backdrop" id="modal-payment">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <button class="modal-close" onclick="closeModal('payment')">&#x2715;</button>
     <div class="modal-icon">&#x1F451;</div>
-    <h2 class="modal-title">Premium'a Hoş Geldin</h2>
-    <p class="modal-desc">Tarihin tüm kapılarını aç — sınırsız yolculuk, özel dönemler seni bekliyor.</p>
+    <h2 class="modal-title" id="pm-title">Premium'a Hoş Geldin</h2>
+    <p class="modal-desc" id="pm-desc">Tarihin tüm kapılarını aç — sınırsız yolculuk, özel dönemler seni bekliyor.</p>
     <div class="modal-features">
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> Sınırsız zaman yolculuğu</div>
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> Antik Mısır, Dünya Savaşları ve daha fazlası</div>
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> Kendi senaryonu oluştur</div>
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> Reklamsız deneyim</div>
+      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf1">Sınırsız zaman yolculuğu</span></div>
+      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf2">Antik Mısır, Dünya Savaşları ve daha fazlası</span></div>
+      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf3">Kendi senaryonu oluştur</span></div>
+      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf4">Reklamsız deneyim</span></div>
     </div>
     <div class="modal-price-box">
       <div class="modal-price-amount">&#x20BA;129</div>
-      <div class="modal-price-label">aylık abonelik · istediğin zaman iptal</div>
+      <div class="modal-price-label" id="pm-price-label">aylık abonelik · istediğin zaman iptal</div>
     </div>
-    <!-- Shopier'e yönlendiren buton -->
     <button class="btn-pay" id="btn-pay" onclick="goToShopier()">
-      <span>Ödemeyi Tamamla</span> <span>&#x2736;</span>
+      <span id="pm-pay-btn">Ödemeyi Tamamla</span> <span>&#x2736;</span>
     </button>
-    <p class="modal-legal">Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek <a href="#">Kullanım Şartları</a>'nı kabul etmiş olursun.</p>
+    <p class="modal-legal" id="pm-legal">
+      Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek
+      <a onclick="openModal('terms')">Kullanım Şartları</a>'nı ve
+      <a onclick="openModal('privacy')">Gizlilik Politikası</a>'nı kabul etmiş olursun.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     İLETİŞİM MODALİ
+════════════════════════════════════════ -->
+<div class="modal-backdrop" id="modal-contact">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('contact')">&#x2715;</button>
+    <div class="modal-icon">✉️</div>
+    <h2 class="modal-title" id="contact-title">İletişim</h2>
+    <p class="modal-desc" id="contact-desc">Sorularını ve görüşlerini bekliyoruz.</p>
+    <div class="contact-form">
+      <div>
+        <label id="contact-name-label">İsim</label>
+        <input type="text" id="contact-name" placeholder="Adın" />
+      </div>
+      <div>
+        <label id="contact-email-label">E-posta</label>
+        <input type="email" id="contact-email" placeholder="ornek@email.com" />
+      </div>
+      <div>
+        <label id="contact-msg-label">Mesaj</label>
+        <textarea id="contact-message" placeholder="Mesajını buraya yaz..."></textarea>
+      </div>
+      <button class="btn-contact-send" onclick="sendContactForm()" id="contact-send-btn">Gönder ✦</button>
+    </div>
+    <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);font-style:italic;" id="contact-alt">
+      Ya da doğrudan yaz: <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GİZLİLİK POLİTİKASI MODALİ
+════════════════════════════════════════ -->
+<div class="modal-backdrop" id="modal-privacy">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('privacy')">&#x2715;</button>
+    <div class="modal-icon">🔒</div>
+    <h2 class="modal-title" id="privacy-title">Gizlilik Politikası</h2>
+    <p class="legal-last-updated" id="privacy-updated">Son güncelleme: Haziran 2025</p>
+    <div class="legal-body" id="privacy-body">
+      <h3>1. Toplanan Veriler</h3>
+      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Shopier altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
+      <h3>2. Verilerin Kullanımı</h3>
+      <p>Topladığımız veriler yalnızca şu amaçlarla kullanılır:</p>
+      <ul>
+        <li>Hizmetin kesintisiz sunulması</li>
+        <li>Premium abonelik yönetimi</li>
+        <li>Teknik destek ve iletişim</li>
+        <li>Hizmet kalitesinin iyileştirilmesi</li>
+      </ul>
+      <h3>3. Üçüncü Taraflarla Paylaşım</h3>
+      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Shopier'in güvenli altyapısı üzerinden gerçekleştirilir.</p>
+      <h3>4. Çerezler (Cookies)</h3>
+      <p>Sitede oturum yönetimi ve tercih kaydı amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri devre dışı bırakabilirsiniz; ancak bu durum bazı özelliklerin çalışmasını etkileyebilir.</p>
+      <h3>5. Veri Güvenliği</h3>
+      <p>Verileriniz endüstri standardı SSL şifrelemesiyle korunmaktadır. Sunucularımız güvenli veri merkezlerinde barındırılmaktadır.</p>
+      <h3>6. Haklarınız</h3>
+      <p>KVKK kapsamında verilerinize erişim, düzeltme veya silme talebinde bulunabilirsiniz. Bunun için <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a> adresine yazabilirsiniz.</p>
+      <h3>7. İletişim</h3>
+      <p>Gizlilik politikamıza ilişkin sorularınız için: <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     KULLANIM ŞARTLARI MODALİ
+════════════════════════════════════════ -->
+<div class="modal-backdrop" id="modal-terms">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('terms')">&#x2715;</button>
+    <div class="modal-icon">📜</div>
+    <h2 class="modal-title" id="terms-title">Kullanım Şartları</h2>
+    <p class="legal-last-updated" id="terms-updated">Son güncelleme: Haziran 2025</p>
+    <div class="legal-body" id="terms-body">
+      <h3>1. Hizmet Tanımı</h3>
+      <p>AITimeWalk, yapay zekâ destekli tarihsel sohbet deneyimi sunan bir web uygulamasıdır. Hizmet, ücretsiz (Normal Mod) ve ücretli (Premium Mod) seçenekler ile sunulmaktadır.</p>
+      <h3>2. Kullanım Koşulları</h3>
+      <ul>
+        <li>Hizmet yalnızca kişisel ve eğitim amaçlı kullanılabilir.</li>
+        <li>İçeriklerin ticari amaçla kopyalanması veya dağıtılması yasaktır.</li>
+        <li>Sistemi kötüye kullanmaya yönelik her türlü girişim hesabın askıya alınmasıyla sonuçlanabilir.</li>
+        <li>18 yaş altı kullanıcıların ebeveyn gözetiminde kullanması önerilir.</li>
+      </ul>
+      <h3>3. Premium Abonelik</h3>
+      <p>Premium abonelik aylık olarak yenilenir. Aboneliğinizi istediğiniz zaman iptal edebilirsiniz. İptal işlemi mevcut dönem sonunda geçerlilik kazanır; kalan süre için iade yapılmaz.</p>
+      <h3>4. Yapay Zekâ Yanıtları</h3>
+      <p>Sistemimiz tarafından üretilen yanıtlar eğlence ve eğitim amacıyla tasarlanmıştır. AITimeWalk, yapay zekânın ürettiği içeriklerin tarihsel doğruluğunu garanti etmez; bu içerikler akademik kaynak olarak kullanılmamalıdır.</p>
+      <h3>5. Sorumluluk Sınırı</h3>
+      <p>AITimeWalk, hizmet kesintileri, veri kayıpları veya üçüncü taraf hizmetlerden kaynaklanan sorunlar nedeniyle doğabilecek zararlardan sorumlu tutulamaz.</p>
+      <h3>6. Değişiklikler</h3>
+      <p>Kullanım şartları önceden bildirim yapılmaksızın güncellenebilir. Değişiklikler sitede yayımlandığı andan itibaren geçerlidir.</p>
+      <h3>7. İletişim</h3>
+      <p>Kullanım şartlarına ilişkin sorularınız için: <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>
+    </div>
   </div>
 </div>
 
@@ -318,103 +490,255 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
 
 <script>
 // =====================================================
-//  AYARLAR
+// AYARLAR
 // =====================================================
 const SHOPIER_URL = 'https://www.shopier.com/aitimewalk/47778139';
-// Shopier panelinde "Başarılı Ödeme Sonrası URL" olarak şunu gir:
-// https://www.aitimewalk.com/?premium=success
 
+// =====================================================
+// ÇEVİRİLER (TR / EN)
+// =====================================================
+const TRANSLATIONS = {
+  tr: {
+    mainTitle: 'Tarihte Zaman Yolculuğuna Çık',
+    mainSub: 'Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al',
+    modeLabel: 'Normal Mod',
+    modeLabelPremium: 'Premium Mod ✦',
+    upgradeBtn: '👑 Premium — ₺129/ay',
+    emptyTitle: 'Geçmişe açılan kapı',
+    emptyDesc: 'Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.',
+    placeholder: 'Tarihe dair ne merak ediyorsun?',
+    hintText: 'Bir dönem seç · Enter ile gönder · Shift+Enter yeni satır',
+    plansLabel: 'Planlar',
+    planNormalName: 'Normal Mod',
+    planNormalTag: 'Tarihle tanışmanın başlangıcı',
+    priceFree: 'Ücretsiz',
+    pricePeriod: '/ ay',
+    planPremiumName: 'Premium Mod',
+    planPremiumTag: 'Tam tarihin içinde yaşa',
+    badgePopular: 'En Popüler',
+    normalPlanBtn: '✔ Şu An Aktif',
+    btnGoPremium: "Premium'a Geç ✶",
+    nf1: 'Günde 3 zaman yolculuğu',
+    nf2: '5 temel tarihsel senaryo',
+    nf3: 'Mitoloji, Bilim Kurgu & daha fazlası',
+    nf3Badge: 'günlük 3 hak',
+    nf4: 'Standart AI yanıtları',
+    nf5: 'Premium dönemler & kendi senaryom',
+    nf5Badge: 'kilitli',
+    nf6: 'Reklamsız deneyim',
+    nf6Badge: 'kilitli',
+    pf1: 'Sınırsız zaman yolculuğu',
+    pf2: 'Gelişmiş AI karakterlerle konuşma',
+    pf3: 'Reklamsız deneyim',
+    pf4: 'Özel dönemler: Antik Mısır, Dünya Savaşları…',
+    pf5: 'Kendi senaryonu oluştur',
+    erasSectionTitle: 'Dönemler',
+    compareTitle: 'Detaylı Karşılaştırma',
+    thFeature: 'Özellik', thNormal: 'Normal', thPremium: 'Premium',
+    ct1: 'Günlük yolculuk', ct1v: 'Sınırsız',
+    ct2: 'Tarihsel senaryo', ct2v: 'Tümü + Özel',
+    ct3: 'AI yanıt kalitesi', ct3n: 'Standart', ct3v: 'Gelişmiş',
+    ct4: 'Reklamlar', ct4n: 'Var', ct4v: 'Yok',
+    ct5: 'Kilitli dönemler', ct5v: 'Açık',
+    ct6: 'Kendi senaryon',
+    flContact: 'İletişim', flPrivacy: 'Gizlilik Politikası', flTerms: 'Kullanım Şartları',
+    footerNote: "İstediğin zaman iptal edebilirsin · Ödeme güvenli şekilde işlenir<br>Sorular için <a href='mailto:destek@aitimewalk.com'>destek@aitimewalk.com</a>",
+    pmTitle: "Premium'a Hoş Geldin",
+    pmDesc: 'Tarihin tüm kapılarını aç — sınırsız yolculuk, özel dönemler seni bekliyor.',
+    pmf1: 'Sınırsız zaman yolculuğu',
+    pmf2: 'Antik Mısır, Dünya Savaşları ve daha fazlası',
+    pmf3: 'Kendi senaryonu oluştur',
+    pmf4: 'Reklamsız deneyim',
+    pmPriceLabel: 'aylık abonelik · istediğin zaman iptal',
+    pmPayBtn: 'Ödemeyi Tamamla',
+    pmLegal: "Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek <a onclick=\"openModal('terms')\">Kullanım Şartları</a>'nı ve <a onclick=\"openModal('privacy')\">Gizlilik Politikası</a>'nı kabul etmiş olursun.",
+    contactTitle: 'İletişim',
+    contactDesc: 'Sorularını ve görüşlerini bekliyoruz.',
+    contactNameLabel: 'İsim', contactEmailLabel: 'E-posta', contactMsgLabel: 'Mesaj',
+    contactNamePlaceholder: 'Adın', contactEmailPlaceholder: 'ornek@email.com', contactMsgPlaceholder: 'Mesajını buraya yaz...',
+    contactSendBtn: 'Gönder ✦',
+    contactAlt: "Ya da doğrudan yaz: <a href='mailto:destek@aitimewalk.com' style='color:var(--gold-dim);'>destek@aitimewalk.com</a>",
+    privacyTitle: 'Gizlilik Politikası',
+    privacyUpdated: 'Son güncelleme: Haziran 2025',
+    termsTitle: 'Kullanım Şartları',
+    termsUpdated: 'Son güncelleme: Haziran 2025',
+    lockUpgradeBtn: "Premium'a Geç",
+    toastLimitReached: "Günlük hakkın doldu — Premium'a geç",
+    toastSelectEra: 'Önce bir dönem seç ⬆',
+    toastPremiumActive: '🎉 Ödemen alındı! Premium aktif.',
+    toastPaymentCancelled: 'Ödeme iptal edildi.',
+    toastContactSent: '✦ Mesajın iletildi!',
+    premiumBannerTitle: '🎉 Premium aktif! Tüm dönemler açıldı.',
+    premiumBannerSub: 'Ödemen alındı — sınırsız zaman yolculuğunun tadını çıkar.',
+    userAvatarLabel: 'Sen',
+    connectionError: 'Bağlantı hatası oluştu. Lütfen tekrar dene.',
+    apiError: 'Bir hata oluştu, lütfen tekrar dene.',
+    eraWelcome: (label) => `Bu çağa dair ne merak ediyorsun?`,
+    eraHint: (label) => `${label} dönemi · Enter ile gönder · Shift+Enter yeni satır`,
+    lockText: (label) => `"${label}" dönemi Premium'a özeldir.`,
+    unlimitedLabel: 'Sınırsız',
+    shopierRedirect: "Shopier'e yönlendiriliyorsunuz...",
+  },
+  en: {
+    mainTitle: 'Travel Through Time with AI',
+    mainSub: 'Explore history with artificial intelligence — get fluent answers to every question',
+    modeLabel: 'Free Mode',
+    modeLabelPremium: 'Premium Mode ✦',
+    upgradeBtn: '👑 Premium — ₺129/mo',
+    emptyTitle: 'A gateway to the past',
+    emptyDesc: 'Select an era above, then ask anything about history.',
+    placeholder: 'What do you want to know about history?',
+    hintText: 'Select an era · Press Enter to send · Shift+Enter for new line',
+    plansLabel: 'Plans',
+    planNormalName: 'Free Mode',
+    planNormalTag: 'Your first step into history',
+    priceFree: 'Free',
+    pricePeriod: '/ mo',
+    planPremiumName: 'Premium Mode',
+    planPremiumTag: 'Live fully inside history',
+    badgePopular: 'Most Popular',
+    normalPlanBtn: '✔ Currently Active',
+    btnGoPremium: 'Go Premium ✶',
+    nf1: '3 journeys per day',
+    nf2: '5 core historical scenarios',
+    nf3: 'Mythology, Sci-Fi & more',
+    nf3Badge: '3 daily uses',
+    nf4: 'Standard AI responses',
+    nf5: 'Premium eras & custom scenarios',
+    nf5Badge: 'locked',
+    nf6: 'Ad-free experience',
+    nf6Badge: 'locked',
+    pf1: 'Unlimited time travel',
+    pf2: 'Chat with advanced AI characters',
+    pf3: 'Ad-free experience',
+    pf4: 'Special eras: Ancient Egypt, World Wars…',
+    pf5: 'Create your own scenario',
+    erasSectionTitle: 'Eras',
+    compareTitle: 'Detailed Comparison',
+    thFeature: 'Feature', thNormal: 'Free', thPremium: 'Premium',
+    ct1: 'Daily journeys', ct1v: 'Unlimited',
+    ct2: 'Historical scenarios', ct2v: 'All + Custom',
+    ct3: 'AI response quality', ct3n: 'Standard', ct3v: 'Advanced',
+    ct4: 'Ads', ct4n: 'Yes', ct4v: 'No',
+    ct5: 'Locked eras', ct5v: 'Unlocked',
+    ct6: 'Your own scenario',
+    flContact: 'Contact', flPrivacy: 'Privacy Policy', flTerms: 'Terms of Use',
+    footerNote: "Cancel anytime · Payments are processed securely<br>Questions? <a href='mailto:destek@aitimewalk.com'>destek@aitimewalk.com</a>",
+    pmTitle: 'Welcome to Premium',
+    pmDesc: 'Unlock all of history — unlimited journeys, exclusive eras await.',
+    pmf1: 'Unlimited time travel',
+    pmf2: 'Ancient Egypt, World Wars and more',
+    pmf3: 'Create your own scenario',
+    pmf4: 'Ad-free experience',
+    pmPriceLabel: 'monthly subscription · cancel anytime',
+    pmPayBtn: 'Complete Payment',
+    pmLegal: "Powered by Shopier secure payments. By continuing you agree to our <a onclick=\"openModal('terms')\">Terms of Use</a> and <a onclick=\"openModal('privacy')\">Privacy Policy</a>.",
+    contactTitle: 'Contact',
+    contactDesc: "We'd love to hear from you.",
+    contactNameLabel: 'Name', contactEmailLabel: 'Email', contactMsgLabel: 'Message',
+    contactNamePlaceholder: 'Your name', contactEmailPlaceholder: 'example@email.com', contactMsgPlaceholder: 'Write your message here...',
+    contactSendBtn: 'Send ✦',
+    contactAlt: "Or write directly: <a href='mailto:destek@aitimewalk.com' style='color:var(--gold-dim);'>destek@aitimewalk.com</a>",
+    privacyTitle: 'Privacy Policy',
+    privacyUpdated: 'Last updated: June 2025',
+    termsTitle: 'Terms of Use',
+    termsUpdated: 'Last updated: June 2025',
+    lockUpgradeBtn: 'Go Premium',
+    toastLimitReached: 'Daily limit reached — go Premium',
+    toastSelectEra: 'Select an era first ⬆',
+    toastPremiumActive: '🎉 Payment received! Premium is active.',
+    toastPaymentCancelled: 'Payment cancelled.',
+    toastContactSent: '✦ Message sent!',
+    premiumBannerTitle: '🎉 Premium active! All eras unlocked.',
+    premiumBannerSub: 'Payment received — enjoy unlimited time travel.',
+    userAvatarLabel: 'You',
+    connectionError: 'Connection error. Please try again.',
+    apiError: 'An error occurred, please try again.',
+    eraWelcome: (label) => `What would you like to know about this era?`,
+    eraHint: (label) => `${label} era · Press Enter to send · Shift+Enter for new line`,
+    lockText: (label) => `"${label}" era is for Premium members only.`,
+    unlimitedLabel: 'Unlimited',
+    shopierRedirect: 'Redirecting to Shopier...',
+  }
+};
+
+// =====================================================
+// ERAS
+// =====================================================
 const ERAS = [
-  { id:'ottoman', emoji:'⚔️', label:'Osmanlı', premium:false,
-    system:'Sen 15. yüzyılda Osmanlı İmparatorluğu\'nda yaşayan bilge bir tarihçisin. Kullanıcıya Osmanlı tarihi, kültürü, savaşları ve gündelik yaşamı hakkında akıcı, etkileyici ve detaylı Türkçe yanıtlar ver.',
-    quick:['Osmanlı nasıl kuruldu?','Fatih İstanbul\'u nasıl fethetti?','Yeniçeriler kimdir?','Osmanlı\'da günlük hayat nasıldı?'] },
-  { id:'rome', emoji:'🏛️', label:'Roma', premium:false,
-    system:'Sen antik Roma döneminin bilge bir tarihçisisin. Roma İmparatorluğu\'nun yükselişi, çöküşü, yasaları, mimarisi ve kültürü hakkında akıcı Türkçe yanıtlar ver.',
-    quick:['Roma neden çöktü?','Gladyatörler nasıldı?','Sezar kim?','Roma mimarisi nasıl inşa edildi?'] },
-  { id:'republic', emoji:'🇹🇷', label:'Cumhuriyet', premium:false,
-    system:'Sen Türk Kurtuluş Savaşı ve Cumhuriyet\'in kuruluş döneminin bilge bir tarihçisisin. Atatürk, İnkılaplar ve o dönemin ruhunu doğru Türkçe yanıtlarla aktar.',
-    quick:['Cumhuriyet nasıl ilan edildi?','Kurtuluş Savaşı\'nın dönüm noktaları?','Atatürk\'ün reformları nelerdir?'] },
-  { id:'egypt', emoji:'🔱', label:'Antik Mısır', premium:true,
-    system:'Sen antik Mısır\'ın bilge bir rahibisin. Piramitlerin inşasına tanıklık etmiş birisin. Mısır tarihi, mitolojisi ve gündelik yaşamı hakkında mistik Türkçe yanıtlar ver.',
-    quick:['Piramitler nasıl inşa edildi?','Firavunlar neden tanrı sayılırdı?','Kleopatra kimdir?'] },
-  { id:'ww1', emoji:'💣', label:'I. Dünya Savaşı', premium:true,
-    system:'Sen Birinci Dünya Savaşı\'nı yakından yaşamış bir tarih tanığısın. Savaşın nedenleri, cephe koşulları, Osmanlı\'nın rolü ve sonuçları hakkında derin Türkçe yanıtlar ver.',
-    quick:['Savaş neden çıktı?','Çanakkale nasıl geçti?','Osmanlı neden savaşa girdi?'] },
-  { id:'ww2', emoji:'⚡', label:'II. Dünya Savaşı', premium:true,
-    system:'Sen İkinci Dünya Savaşı\'nın tüm boyutlarına hâkim bir tarihçisin. Savaşın nedenleri, önemli muharebeler, liderler ve insanlık tarihi üzerindeki etkileri hakkında akıcı Türkçe yanıtlar ver.',
-    quick:['Hitler nasıl iktidara geldi?','Normandiya çıkarması neydi?','Atom bombası neden atıldı?'] },
-  { id:'seljuk', emoji:'🏹', label:'Selçuklu', premium:true,
-    system:'Sen Büyük Selçuklu İmparatorluğu döneminin bilge bir vezirisin. Türklerin Anadolu\'ya yerleşmesi, Malazgirt Savaşı ve Selçuklu medeniyeti hakkında akıcı Türkçe yanıtlar ver.',
-    quick:['Malazgirt neden önemli?','Türkler Anadolu\'ya nasıl geldi?','Selçuklu bilim adamları kimler?'] },
-  { id:'mythology', emoji:'⚡', label:'Mitoloji', premium:false,
-    system:'Sen antik mitolojilerin derin bilgisine sahip bir bilge anlatıcısın. Yunan, Roma, Türk, Mezopotamya mitolojilerindeki tanrılar, kahramanlar ve destanlar hakkında büyülü Türkçe yanıtlar ver.',
-    quick:['Zeus kimdir?','Prometheus ateşi nasıl çaldı?','Türk mitolojisinde Tengri nedir?'] },
-  { id:'scifi', emoji:'🚀', label:'Bilim Kurgu', premium:false,
-    system:'Sen bilim kurgunun sınırlarında gezinen uzman bir anlatıcısın. Yapay zeka, uzay kolonileri, zaman yolculuğu ve distopik gelecekler hakkında heyecan verici Türkçe yanıtlar ver.',
-    quick:['2150\'de dünya nasıl görünür?','Yapay zeka insanlığı geçer mi?','Zaman yolculuğu mümkün mü?'] },
-  { id:'parallel', emoji:'🌀', label:'Paralel Evrenler', premium:false,
-    system:'Sen kuantum fiziği ve çok dünya yorumundan ilham alan, paralel evrenler konusunda uzman mistik bir rehbersin. Alternatif tarih senaryolarını yaratıcı Türkçe yanıtlarla canlandır.',
-    quick:['Osmanlı hiç yıkılmasaydı ne olurdu?','Dinozorlar yaşasaydı medeniyet kurabilir miydi?','Kuantum süperpozisyonu nedir?'] },
-  { id:'fantasy', emoji:'🐉', label:'Fantastik Dünyalar', premium:false,
-    system:'Sen fantastik edebiyatın büyüleyici atmosferini bilen, büyü sistemleri, mitik yaratıklar ve kahramanlık yolculukları konusunda uzman bir anlatıcısın. Türkçe rehberlik et.',
-    quick:['Bir ejderha uygarlığı nasıl olurdu?','Büyünün fizik kuralları olsaydı neler değişirdi?'] },
-  { id:'multiverse', emoji:'🌌', label:'Çoklu Evrenler', premium:false,
-    system:'Sen kozmoloji ve kuantum mekaniğinin kesişiminde var olan çoklu evrenler teorisinin uzman rehberisin. Evrenin en derin sırlarını akıcı Türkçe ile anlat.',
-    quick:['Büyük Patlama\'dan önce ne vardı?','Evrenimiz bir simülasyon mu?','Karanlık madde nedir?'] },
-  { id:'custom', emoji:'✍️', label:'Kendi Senaryom', premium:true,
-    system:'Kullanıcı sana kendi tarihi senaryosunu anlatacak. O senaryonun içinde yaşıyormuş gibi davran ve soruları en yaratıcı şekilde Türkçe yanıtla.',
-    quick:['Kendi dönemimi tanımlarım...','Farklı bir senaryo kur...'] }
+  { id:'ottoman', emoji:'⚔️', label:{tr:'Osmanlı',en:'Ottoman'}, premium:false,
+    system:{tr:'Sen 15. yüzyılda Osmanlı İmparatorluğu\'nda yaşayan bilge bir tarihçisin. Kullanıcıya Osmanlı tarihi, kültürü, savaşları ve gündelik yaşamı hakkında akıcı, etkileyici ve detaylı Türkçe yanıtlar ver.',
+            en:'You are a wise historian living in the 15th-century Ottoman Empire. Give the user fluent, vivid, and detailed answers in English about Ottoman history, culture, wars, and daily life.'},
+    quick:{tr:['Osmanlı nasıl kuruldu?','Fatih İstanbul\'u nasıl fethetti?','Yeniçeriler kimdir?','Osmanlı\'da günlük hayat nasıldı?'],
+           en:['How was the Ottoman Empire founded?','How did Mehmed II conquer Istanbul?','Who were the Janissaries?','What was daily life like in the Ottoman Empire?']}},
+  { id:'rome', emoji:'🏛️', label:{tr:'Roma',en:'Rome'}, premium:false,
+    system:{tr:'Sen antik Roma döneminin bilge bir tarihçisisin. Roma İmparatorluğu\'nun yükselişi, çöküşü, yasaları, mimarisi ve kültürü hakkında akıcı Türkçe yanıtlar ver.',
+            en:'You are a wise historian of ancient Rome. Give the user fluent answers in English about the rise and fall of the Roman Empire, its laws, architecture, and culture.'},
+    quick:{tr:['Roma neden çöktü?','Gladyatörler nasıldı?','Sezar kim?','Roma mimarisi nasıl inşa edildi?'],
+           en:['Why did Rome fall?','What were gladiators like?','Who was Caesar?','How was Roman architecture built?']}},
+  { id:'republic', emoji:'🇹🇷', label:{tr:'Cumhuriyet',en:'Turkish Republic'}, premium:false,
+    system:{tr:'Sen Türk Kurtuluş Savaşı ve Cumhuriyet\'in kuruluş döneminin bilge bir tarihçisisin. Atatürk, İnkılaplar ve o dönemin ruhunu doğru Türkçe yanıtlarla aktar.',
+            en:'You are a wise historian of the Turkish War of Independence and the founding of the Republic. Convey the spirit of Atatürk, the reforms, and that era in fluent English.'},
+    quick:{tr:['Cumhuriyet nasıl ilan edildi?','Kurtuluş Savaşı\'nın dönüm noktaları?','Atatürk\'ün reformları nelerdir?'],
+           en:['How was the Republic proclaimed?','Turning points of the War of Independence?','What were Atatürk\'s reforms?']}},
+  { id:'egypt', emoji:'🔱', label:{tr:'Antik Mısır',en:'Ancient Egypt'}, premium:true,
+    system:{tr:'Sen antik Mısır\'ın bilge bir rahibisin. Piramitlerin inşasına tanıklık etmiş birisin. Mısır tarihi, mitolojisi ve gündelik yaşamı hakkında mistik Türkçe yanıtlar ver.',
+            en:'You are a wise priest of ancient Egypt who witnessed the building of the pyramids. Give mystical answers in English about Egyptian history, mythology, and daily life.'},
+    quick:{tr:['Piramitler nasıl inşa edildi?','Firavunlar neden tanrı sayılırdı?','Kleopatra kimdir?'],
+           en:['How were the pyramids built?','Why were pharaohs considered gods?','Who was Cleopatra?']}},
+  { id:'ww1', emoji:'💣', label:{tr:'I. Dünya Savaşı',en:'World War I'}, premium:true,
+    system:{tr:'Sen Birinci Dünya Savaşı\'nı yakından yaşamış bir tarih tanığısın. Savaşın nedenleri, cephe koşulları, Osmanlı\'nın rolü ve sonuçları hakkında derin Türkçe yanıtlar ver.',
+            en:'You are a witness who lived through World War I. Give deep answers in English about the causes, trench conditions, the Ottoman role, and the consequences of the war.'},
+    quick:{tr:['Savaş neden çıktı?','Çanakkale nasıl geçti?','Osmanlı neden savaşa girdi?'],
+           en:['Why did the war start?','What happened at Gallipoli?','Why did the Ottoman Empire enter the war?']}},
+  { id:'ww2', emoji:'⚡', label:{tr:'II. Dünya Savaşı',en:'World War II'}, premium:true,
+    system:{tr:'Sen İkinci Dünya Savaşı\'nın tüm boyutlarına hâkim bir tarihçisin. Savaşın nedenleri, önemli muharebeler, liderler ve insanlık tarihi üzerindeki etkileri hakkında akıcı Türkçe yanıtlar ver.',
+            en:'You are a historian who knows every dimension of World War II. Give fluent answers in English about causes, major battles, leaders, and the war\'s impact on human history.'},
+    quick:{tr:['Hitler nasıl iktidara geldi?','Normandiya çıkarması neydi?','Atom bombası neden atıldı?'],
+           en:['How did Hitler rise to power?','What was the D-Day landing?','Why was the atomic bomb dropped?']}},
+  { id:'seljuk', emoji:'🏹', label:{tr:'Selçuklu',en:'Seljuk Empire'}, premium:true,
+    system:{tr:'Sen Büyük Selçuklu İmparatorluğu döneminin bilge bir vezirisin. Türklerin Anadolu\'ya yerleşmesi, Malazgirt Savaşı ve Selçuklu medeniyeti hakkında akıcı Türkçe yanıtlar ver.',
+            en:'You are a wise vizier of the Great Seljuk Empire. Give fluent answers in English about the Turks\' settlement in Anatolia, the Battle of Manzikert, and Seljuk civilization.'},
+    quick:{tr:['Malazgirt neden önemli?','Türkler Anadolu\'ya nasıl geldi?','Selçuklu bilim adamları kimler?'],
+           en:['Why is Manzikert important?','How did the Turks come to Anatolia?','Who were the Seljuk scientists?']}},
+  { id:'mythology', emoji:'⚡', label:{tr:'Mitoloji',en:'Mythology'}, premium:false,
+    system:{tr:'Sen antik mitolojilerin derin bilgisine sahip bir bilge anlatıcısın. Yunan, Roma, Türk, Mezopotamya mitolojilerindeki tanrılar, kahramanlar ve destanlar hakkında büyülü Türkçe yanıtlar ver.',
+            en:'You are a wise storyteller with deep knowledge of ancient mythologies. Give enchanting answers in English about gods, heroes, and epics from Greek, Roman, Turkish, and Mesopotamian myths.'},
+    quick:{tr:['Zeus kimdir?','Prometheus ateşi nasıl çaldı?','Türk mitolojisinde Tengri nedir?'],
+           en:['Who is Zeus?','How did Prometheus steal fire?','What is Tengri in Turkish mythology?']}},
+  { id:'scifi', emoji:'🚀', label:{tr:'Bilim Kurgu',en:'Sci-Fi'}, premium:false,
+    system:{tr:'Sen bilim kurgunun sınırlarında gezinen uzman bir anlatıcısın. Yapay zeka, uzay kolonileri, zaman yolculuğu ve distopik gelecekler hakkında heyecan verici Türkçe yanıtlar ver.',
+            en:'You are an expert narrator roaming the frontiers of science fiction. Give exciting answers in English about AI, space colonies, time travel, and dystopian futures.'},
+    quick:{tr:['2150\'de dünya nasıl görünür?','Yapay zeka insanlığı geçer mi?','Zaman yolculuğu mümkün mü?'],
+           en:['What will the world look like in 2150?','Will AI surpass humanity?','Is time travel possible?']}},
+  { id:'parallel', emoji:'🌀', label:{tr:'Paralel Evrenler',en:'Parallel Universes'}, premium:false,
+    system:{tr:'Sen kuantum fiziği ve çok dünya yorumundan ilham alan, paralel evrenler konusunda uzman mistik bir rehbersin. Alternatif tarih senaryolarını yaratıcı Türkçe yanıtlarla canlandır.',
+            en:'You are a mystical guide inspired by quantum physics and the many-worlds interpretation. Bring alternative history scenarios to life with creative answers in English.'},
+    quick:{tr:['Osmanlı hiç yıkılmasaydı ne olurdu?','Dinozorlar yaşasaydı medeniyet kurabilir miydi?','Kuantum süperpozisyonu nedir?'],
+           en:['What if the Ottoman Empire never fell?','Could dinosaurs have built a civilization?','What is quantum superposition?']}},
+  { id:'fantasy', emoji:'🐉', label:{tr:'Fantastik Dünyalar',en:'Fantasy Worlds'}, premium:false,
+    system:{tr:'Sen fantastik edebiyatın büyüleyici atmosferini bilen, büyü sistemleri, mitik yaratıklar ve kahramanlık yolculukları konusunda uzman bir anlatıcısın. Türkçe rehberlik et.',
+            en:'You are a storyteller who knows the enchanting atmosphere of fantasy literature, expert in magic systems, mythic creatures, and heroic journeys. Guide users in English.'},
+    quick:{tr:['Bir ejderha uygarlığı nasıl olurdu?','Büyünün fizik kuralları olsaydı neler değişirdi?'],
+           en:['What would a dragon civilization look like?','What if magic obeyed the laws of physics?']}},
+  { id:'multiverse', emoji:'🌌', label:{tr:'Çoklu Evrenler',en:'Multiverse'}, premium:false,
+    system:{tr:'Sen kozmoloji ve kuantum mekaniğinin kesişiminde var olan çoklu evrenler teorisinin uzman rehberisin. Evrenin en derin sırlarını akıcı Türkçe ile anlat.',
+            en:'You are an expert guide in multiverse theory, at the intersection of cosmology and quantum mechanics. Explain the universe\'s deepest secrets in fluent English.'},
+    quick:{tr:['Büyük Patlama\'dan önce ne vardı?','Evrenimiz bir simülasyon mu?','Karanlık madde nedir?'],
+           en:['What existed before the Big Bang?','Is our universe a simulation?','What is dark matter?']}},
+  { id:'custom', emoji:'✍️', label:{tr:'Kendi Senaryom',en:'My Own Scenario'}, premium:true,
+    system:{tr:'Kullanıcı sana kendi tarihi senaryosunu anlatacak. O senaryonun içinde yaşıyormuş gibi davran ve soruları en yaratıcı şekilde Türkçe yanıtla.',
+            en:'The user will tell you their own historical scenario. Act as if you are living inside that scenario and answer questions as creatively as possible in English.'},
+    quick:{tr:['Kendi dönemimi tanımlarım...','Farklı bir senaryo kur...'],
+           en:['Let me describe my era...','Build a different scenario...']}}
 ];
 
 const API_URL = '/api/ask';
 
 // =====================================================
-//  PREMIUM DURUM YÖNETİMİ
+// STATE
 // =====================================================
-
-// Premium durumunu localStorage'dan oku
-// NOT: Gerçek bir projede bu sunucu tarafında doğrulanmalıdır.
-// Shopier webhook ile backend doğrulaması yapılması önerilir.
-function loadPremiumState() {
-  const saved = localStorage.getItem('atw_premium');
-  if (!saved) return false;
-  try {
-    const data = JSON.parse(saved);
-    // 30 gün geçerlilik (ms)
-    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
-    if (Date.now() - data.ts < THIRTY_DAYS) return true;
-    // Süresi dolmuş, temizle
-    localStorage.removeItem('atw_premium');
-    return false;
-  } catch { return false; }
-}
-
-function savePremiumState() {
-  localStorage.setItem('atw_premium', JSON.stringify({ ts: Date.now() }));
-}
-
-// Günlük kullanım sayacı (localStorage ile)
-function loadUsedToday() {
-  const saved = localStorage.getItem('atw_usage');
-  if (!saved) return 0;
-  try {
-    const data = JSON.parse(saved);
-    const today = new Date().toDateString();
-    if (data.date !== today) return 0; // Yeni gün, sıfırla
-    return data.count || 0;
-  } catch { return 0; }
-}
-
-function saveUsedToday(count) {
-  localStorage.setItem('atw_usage', JSON.stringify({
-    date: new Date().toDateString(),
-    count
-  }));
-}
-
-// =====================================================
-//  STATE
-// =====================================================
+let currentLang = localStorage.getItem('atw_lang') || 'tr';
 let isPremium = loadPremiumState();
 let selectedEra = null;
 let usedToday = loadUsedToday();
@@ -423,56 +747,249 @@ let isLoading = false;
 let conversationHistory = [];
 
 // =====================================================
-//  SHOPIER ÖDEME AKIŞI
+// PREMIUM STATE
 // =====================================================
+function loadPremiumState() {
+  const saved = localStorage.getItem('atw_premium');
+  if (!saved) return false;
+  try {
+    const data = JSON.parse(saved);
+    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+    if (Date.now() - data.ts < THIRTY_DAYS) return true;
+    localStorage.removeItem('atw_premium');
+    return false;
+  } catch { return false; }
+}
+function savePremiumState() {
+  localStorage.setItem('atw_premium', JSON.stringify({ ts: Date.now() }));
+}
+function loadUsedToday() {
+  const saved = localStorage.getItem('atw_usage');
+  if (!saved) return 0;
+  try {
+    const data = JSON.parse(saved);
+    const today = new Date().toDateString();
+    if (data.date !== today) return 0;
+    return data.count || 0;
+  } catch { return 0; }
+}
+function saveUsedToday(count) {
+  localStorage.setItem('atw_usage', JSON.stringify({ date: new Date().toDateString(), count }));
+}
 
+// =====================================================
+// LANGUAGE
+// =====================================================
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('atw_lang', lang);
+  document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  applyTranslations();
+  // Rebuild era row and chips with new language
+  document.getElementById('era-row').innerHTML = '';
+  document.getElementById('chips-grid').innerHTML = '';
+  buildEraRow();
+  buildChipsGrid();
+  // Reset chat
+  if (selectedEra) {
+    selectedEra = ERAS.find(e => e.id === selectedEra.id);
+    buildQuickBtns(selectedEra);
+  }
+}
+
+function t(key, ...args) {
+  const val = TRANSLATIONS[currentLang][key];
+  return typeof val === 'function' ? val(...args) : val;
+}
+
+function applyTranslations() {
+  const keys = [
+    ['main-title','mainTitle'],['main-sub','mainSub'],
+    ['empty-title','emptyTitle'],['empty-desc','emptyDesc'],
+    ['plans-label','plansLabel'],['badge-popular','badgePopular'],
+    ['plan-normal-name','planNormalName'],['plan-normal-tag','planNormalTag'],
+    ['price-free-label','priceFree'],['price-period','pricePeriod'],
+    ['plan-premium-name','planPremiumName'],['plan-premium-tag','planPremiumTag'],
+    ['normal-plan-btn','normalPlanBtn'],['btn-go-premium','btnGoPremium'],
+    ['nf1','nf1'],['nf2','nf2'],['nf3','nf3'],['nf3-badge','nf3Badge'],
+    ['nf4','nf4'],['nf5','nf5'],['nf5-badge','nf5Badge'],['nf6','nf6'],['nf6-badge','nf6Badge'],
+    ['pf1','pf1'],['pf2','pf2'],['pf3','pf3'],['pf4','pf4'],['pf5','pf5'],
+    ['eras-section-title','erasSectionTitle'],['compare-title','compareTitle'],
+    ['th-feature','thFeature'],['th-normal','thNormal'],['th-premium','thPremium'],
+    ['ct1','ct1'],['ct1v','ct1v'],['ct2','ct2'],['ct2v','ct2v'],
+    ['ct3','ct3'],['ct3n','ct3n'],['ct3v','ct3v'],['ct4','ct4'],['ct4n','ct4n'],['ct4v','ct4v'],
+    ['ct5','ct5'],['ct5v','ct5v'],['ct6','ct6'],
+    ['fl-contact','flContact'],['fl-privacy','flPrivacy'],['fl-terms','flTerms'],
+    ['pm-title','pmTitle'],['pm-desc','pmDesc'],
+    ['pmf1','pmf1'],['pmf2','pmf2'],['pmf3','pmf3'],['pmf4','pmf4'],
+    ['pm-price-label','pmPriceLabel'],['pm-pay-btn','pmPayBtn'],
+    ['contact-title','contactTitle'],['contact-desc','contactDesc'],
+    ['contact-name-label','contactNameLabel'],['contact-email-label','contactEmailLabel'],
+    ['contact-msg-label','contactMsgLabel'],
+    ['contact-send-btn','contactSendBtn'],
+    ['privacy-title','privacyTitle'],['privacy-updated','privacyUpdated'],
+    ['terms-title','termsTitle'],['terms-updated','termsUpdated'],
+    ['lock-upgrade-btn','lockUpgradeBtn'],
+  ];
+  keys.forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = t(key);
+  });
+  // Placeholders
+  document.getElementById('user-input').placeholder = t('placeholder');
+  document.getElementById('contact-name').placeholder = t('contactNamePlaceholder');
+  document.getElementById('contact-email').placeholder = t('contactEmailPlaceholder');
+  document.getElementById('contact-message').placeholder = t('contactMsgPlaceholder');
+  // innerHTML items
+  document.getElementById('footer-note').innerHTML = t('footerNote');
+  document.getElementById('pm-legal').innerHTML = t('pmLegal');
+  document.getElementById('contact-alt').innerHTML = t('contactAlt');
+  // Mode labels
+  document.getElementById('mode-label').textContent = isPremium ? t('modeLabelPremium') : t('modeLabel');
+  document.getElementById('hint-text').textContent = t('hintText');
+  document.getElementById('upgrade-btn').innerHTML = t('upgradeBtn');
+  // Privacy/Terms bodies (only TR has full text; EN shows simplified)
+  applyLegalBodies();
+}
+
+function applyLegalBodies() {
+  if (currentLang === 'en') {
+    document.getElementById('privacy-body').innerHTML = `
+      <h3>1. Data We Collect</h3>
+      <p>AITimeWalk collects only the data necessary to provide our service: email address (optional), payment details (processed securely via Shopier), and site usage statistics.</p>
+      <h3>2. How We Use Your Data</h3>
+      <p>Collected data is used solely to: deliver the service, manage Premium subscriptions, provide technical support, and improve service quality.</p>
+      <h3>3. Third-Party Sharing</h3>
+      <p>Your personal data is never shared with third parties unless required by law or with your explicit consent. Payments are processed via Shopier's secure infrastructure.</p>
+      <h3>4. Cookies</h3>
+      <p>We use cookies for session management and preference storage. You may disable cookies in your browser settings, though this may affect some features.</p>
+      <h3>5. Data Security</h3>
+      <p>Your data is protected with industry-standard SSL encryption on secure servers.</p>
+      <h3>6. Your Rights</h3>
+      <p>You may request access, correction, or deletion of your data at any time by contacting <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a>.</p>`;
+    document.getElementById('terms-body').innerHTML = `
+      <h3>1. Service Description</h3>
+      <p>AITimeWalk is a web application providing AI-powered historical conversation experiences, available in Free and Premium tiers.</p>
+      <h3>2. Usage Rules</h3>
+      <ul>
+        <li>The service may only be used for personal and educational purposes.</li>
+        <li>Copying or distributing content for commercial purposes is prohibited.</li>
+        <li>Any attempt to abuse the system may result in account suspension.</li>
+        <li>Users under 18 are advised to use the service under parental supervision.</li>
+      </ul>
+      <h3>3. Premium Subscription</h3>
+      <p>Premium renews monthly. You may cancel at any time; cancellation takes effect at the end of the current billing period. No refunds are issued for unused time.</p>
+      <h3>4. AI Responses</h3>
+      <p>Responses generated by our system are designed for entertainment and education. AITimeWalk does not guarantee the historical accuracy of AI-generated content; it should not be used as an academic source.</p>
+      <h3>5. Limitation of Liability</h3>
+      <p>AITimeWalk is not liable for damages arising from service interruptions, data loss, or issues caused by third-party services.</p>
+      <h3>6. Changes</h3>
+      <p>These terms may be updated without prior notice. Changes take effect upon publication on the site.</p>
+      <h3>7. Contact</h3>
+      <p><a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>`;
+  } else {
+    document.getElementById('privacy-body').innerHTML = `
+      <h3>1. Toplanan Veriler</h3>
+      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Shopier altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
+      <h3>2. Verilerin Kullanımı</h3>
+      <p>Topladığımız veriler yalnızca şu amaçlarla kullanılır:</p>
+      <ul>
+        <li>Hizmetin kesintisiz sunulması</li>
+        <li>Premium abonelik yönetimi</li>
+        <li>Teknik destek ve iletişim</li>
+        <li>Hizmet kalitesinin iyileştirilmesi</li>
+      </ul>
+      <h3>3. Üçüncü Taraflarla Paylaşım</h3>
+      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Shopier'in güvenli altyapısı üzerinden gerçekleştirilir.</p>
+      <h3>4. Çerezler (Cookies)</h3>
+      <p>Sitede oturum yönetimi ve tercih kaydı amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri devre dışı bırakabilirsiniz; ancak bu durum bazı özelliklerin çalışmasını etkileyebilir.</p>
+      <h3>5. Veri Güvenliği</h3>
+      <p>Verileriniz endüstri standardı SSL şifrelemesiyle korunmaktadır.</p>
+      <h3>6. Haklarınız</h3>
+      <p>KVKK kapsamında verilerinize erişim, düzeltme veya silme talebinde bulunabilirsiniz. Bunun için <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a> adresine yazabilirsiniz.</p>
+      <h3>7. İletişim</h3>
+      <p><a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>`;
+    document.getElementById('terms-body').innerHTML = `
+      <h3>1. Hizmet Tanımı</h3>
+      <p>AITimeWalk, yapay zekâ destekli tarihsel sohbet deneyimi sunan bir web uygulamasıdır.</p>
+      <h3>2. Kullanım Koşulları</h3>
+      <ul>
+        <li>Hizmet yalnızca kişisel ve eğitim amaçlı kullanılabilir.</li>
+        <li>İçeriklerin ticari amaçla kopyalanması veya dağıtılması yasaktır.</li>
+        <li>Sistemi kötüye kullanmaya yönelik girişimler hesabın askıya alınmasıyla sonuçlanabilir.</li>
+        <li>18 yaş altı kullanıcıların ebeveyn gözetiminde kullanması önerilir.</li>
+      </ul>
+      <h3>3. Premium Abonelik</h3>
+      <p>Premium abonelik aylık olarak yenilenir. İstediğiniz zaman iptal edebilirsiniz. İptal mevcut dönem sonunda geçerlilik kazanır; kalan süre için iade yapılmaz.</p>
+      <h3>4. Yapay Zekâ Yanıtları</h3>
+      <p>Üretilen yanıtlar eğlence ve eğitim amacıylıdır; tarihsel doğruluk garanti edilmez ve akademik kaynak olarak kullanılmamalıdır.</p>
+      <h3>5. Sorumluluk Sınırı</h3>
+      <p>AITimeWalk, hizmet kesintileri veya üçüncü taraf sorunlarından kaynaklanan zararlardan sorumlu tutulamaz.</p>
+      <h3>6. Değişiklikler</h3>
+      <p>Kullanım şartları önceden bildirim yapılmaksızın güncellenebilir.</p>
+      <h3>7. İletişim</h3>
+      <p><a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>`;
+  }
+}
+
+// =====================================================
+// MODALS
+// =====================================================
+function openModal(type) {
+  closeAllModals();
+  document.getElementById('modal-' + type).classList.add('open');
+}
+function closeModal(type) {
+  document.getElementById('modal-' + type).classList.remove('open');
+}
+function closeAllModals() {
+  ['payment','contact','privacy','terms'].forEach(t => {
+    document.getElementById('modal-' + t).classList.remove('open');
+  });
+}
+['payment','contact','privacy','terms'].forEach(type => {
+  document.getElementById('modal-' + type).addEventListener('click', function(e) {
+    if (e.target === this) closeModal(type);
+  });
+});
+
+// =====================================================
+// SHOPIER
+// =====================================================
 function goToShopier() {
   const btn = document.getElementById('btn-pay');
   btn.disabled = true;
-  btn.innerHTML = '<span>Shopier\'e yönlendiriliyorsunuz...</span>';
-
-  // Shopier ürün sayfasına yönlendir
-  // Shopier panelinde "Başarılı Ödeme Sonrası Yönlendirme URL'si" = https://www.aitimewalk.com/?premium=success
+  btn.innerHTML = '<span>' + t('shopierRedirect') + '</span>';
   window.location.href = SHOPIER_URL;
 }
 
-// Shopier'den döndükten sonra URL parametresini kontrol et
 function checkPaymentReturn() {
   const params = new URLSearchParams(window.location.search);
-
   if (params.get('premium') === 'success') {
-    // Ödeme başarılı — premium aktif et
     savePremiumState();
     isPremium = true;
-
-    // URL'yi temizle (sayfa yenilemede tekrar tetiklenmesin)
-    const cleanUrl = window.location.pathname;
-    window.history.replaceState({}, document.title, cleanUrl);
-
-    // Banner göster
+    window.history.replaceState({}, document.title, window.location.pathname);
     document.getElementById('premium-banner').classList.add('show');
-
-    // UI'yi güncelle
-    applyPremiumUI(true);
-    showToast('🎉 Ödemen alındı! Premium aktif.');
+    document.getElementById('premium-banner').querySelector('.premium-banner-title').textContent = t('premiumBannerTitle');
+    document.getElementById('premium-banner').querySelector('.premium-banner-sub').textContent = t('premiumBannerSub');
+    applyPremiumUI();
+    showToast(t('toastPremiumActive'));
   }
-
   if (params.get('premium') === 'cancel') {
-    const cleanUrl = window.location.pathname;
-    window.history.replaceState({}, document.title, cleanUrl);
-    showToast('Ödeme iptal edildi.');
+    window.history.replaceState({}, document.title, window.location.pathname);
+    showToast(t('toastPaymentCancelled'));
   }
 }
 
-function applyPremiumUI(showBanner) {
-  document.getElementById('mode-label').textContent = 'Premium Mod ✦';
+function applyPremiumUI() {
+  document.getElementById('mode-label').textContent = t('modeLabelPremium');
   document.getElementById('mode-dot').style.background = '#c9a84c';
   document.getElementById('upgrade-btn').style.display = 'none';
-  document.getElementById('usage-pills').innerHTML = '<span style="font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">Sınırsız</span>';
-  document.getElementById('normal-plan-btn').textContent = 'Normal Mod';
+  document.getElementById('usage-pills').innerHTML = '<span style="font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">' + t('unlimitedLabel') + '</span>';
+  document.getElementById('normal-plan-btn').textContent = t('planNormalName');
   document.getElementById('normal-plan-btn').style.opacity = '0.5';
-
-  // Kilitli dönemleri aç
   document.querySelectorAll('.era-btn').forEach(btn => {
     btn.classList.remove('locked-era');
     const lock = btn.querySelector('.era-lock');
@@ -487,23 +1004,27 @@ function applyPremiumUI(showBanner) {
 }
 
 // =====================================================
-//  INIT
+// CONTACT FORM
 // =====================================================
-function init() {
-  buildStars();
-  buildEraRow();
-  buildChipsGrid();
-  buildModeBar();
-
-  // Eğer sayfa başlangıçta premium ise UI'yi güncelle
-  if (isPremium) {
-    applyPremiumUI(false);
-  }
-
-  // Shopier'den dönüş kontrolü
-  checkPaymentReturn();
+function sendContactForm() {
+  const name = document.getElementById('contact-name').value.trim();
+  const email = document.getElementById('contact-email').value.trim();
+  const msg = document.getElementById('contact-message').value.trim();
+  if (!name || !email || !msg) { showToast('⚠ ' + (currentLang === 'tr' ? 'Tüm alanları doldur.' : 'Please fill in all fields.')); return; }
+  // mailto fallback (backend entegrasyonu yoksa)
+  const subject = encodeURIComponent('AITimeWalk - ' + name);
+  const body = encodeURIComponent(msg + '\n\n' + name + ' <' + email + '>');
+  window.open('mailto:destek@aitimewalk.com?subject=' + subject + '&body=' + body);
+  closeModal('contact');
+  showToast(t('toastContactSent'));
+  document.getElementById('contact-name').value = '';
+  document.getElementById('contact-email').value = '';
+  document.getElementById('contact-message').value = '';
 }
 
+// =====================================================
+// BUILD UI
+// =====================================================
 function buildStars() {
   const el = document.getElementById('stars');
   for (let i = 0; i < 80; i++) {
@@ -519,9 +1040,10 @@ function buildEraRow() {
   const row = document.getElementById('era-row');
   ERAS.forEach(era => {
     const btn = document.createElement('div');
+    const label = era.label[currentLang];
     btn.className = 'era-btn' + (era.premium && !isPremium ? ' locked-era' : '');
     btn.id = 'era-' + era.id;
-    btn.innerHTML = '<span class="era-emoji">'+era.emoji+'</span><span class="era-label">'+era.label+'</span>'+(era.premium && !isPremium ? '<span class="era-lock">🔒</span>' : '');
+    btn.innerHTML = '<span class="era-emoji">'+era.emoji+'</span><span class="era-label">'+label+'</span>'+(era.premium && !isPremium ? '<span class="era-lock">🔒</span>' : '');
     btn.onclick = () => selectEra(era);
     row.appendChild(btn);
   });
@@ -530,12 +1052,13 @@ function buildEraRow() {
 function buildChipsGrid() {
   const grid = document.getElementById('chips-grid');
   ERAS.forEach(era => {
+    const label = era.label[currentLang];
     const chip = document.createElement('div');
     chip.className = 'era-chip ' + (era.premium && !isPremium ? 'locked-chip' : 'unlocked');
     chip.id = 'chip-' + era.id;
-    chip.innerHTML = '<span class="chip-emoji">'+era.emoji+'</span><span class="chip-name">'+era.label+'</span>'+(era.premium && !isPremium ? '<div class="lock-overlay">🔒</div>' : '');
+    chip.innerHTML = '<span class="chip-emoji">'+era.emoji+'</span><span class="chip-name">'+label+'</span>'+(era.premium && !isPremium ? '<div class="lock-overlay">🔒</div>' : '');
     chip.onclick = () => {
-      if (era.premium && !isPremium) { openModal(); return; }
+      if (era.premium && !isPremium) { openModal('payment'); return; }
       selectEra(era);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -552,25 +1075,16 @@ function buildModeBar() {
       p.className = 'usage-pip ' + (i < usedToday ? 'used' : 'empty');
       pills.appendChild(p);
     }
+  } else {
+    pills.innerHTML = '<span style="font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">' + t('unlimitedLabel') + '</span>';
   }
 }
 
-function selectEra(era) {
-  if (era.premium && !isPremium) {
-    document.getElementById('lock-notice').classList.add('show');
-    document.getElementById('lock-text').textContent = '"'+era.label+'" dönemi Premium\'a özeldir.';
-    return;
-  }
-  document.getElementById('lock-notice').classList.remove('show');
-  selectedEra = era;
-  conversationHistory = [];
-
-  document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('era-' + era.id).classList.add('active');
-
+function buildQuickBtns(era) {
   const qb = document.getElementById('quick-btns');
   qb.innerHTML = '';
-  era.quick.forEach(q => {
+  const questions = era.quick[currentLang] || era.quick['tr'];
+  questions.forEach(q => {
     const b = document.createElement('button');
     b.className = 'quick-btn';
     b.textContent = q;
@@ -582,19 +1096,35 @@ function selectEra(era) {
     };
     qb.appendChild(b);
   });
-
-  const cw = document.getElementById('chat-window');
-  cw.innerHTML = '';
-  addAIMessage(era.emoji + ' <strong>' + era.label + '</strong> dönemine hoş geldin. Bu çağa dair ne merak ediyorsun?');
-  document.getElementById('hint-text').textContent = era.label + ' dönemi · Enter ile gönder · Shift+Enter yeni satır';
 }
 
+function selectEra(era) {
+  if (era.premium && !isPremium) {
+    document.getElementById('lock-notice').classList.add('show');
+    document.getElementById('lock-text').textContent = t('lockText', era.label[currentLang]);
+    return;
+  }
+  document.getElementById('lock-notice').classList.remove('show');
+  selectedEra = era;
+  conversationHistory = [];
+  document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('era-' + era.id).classList.add('active');
+  buildQuickBtns(era);
+  const cw = document.getElementById('chat-window');
+  cw.innerHTML = '';
+  addAIMessage(era.emoji + ' <strong>' + era.label[currentLang] + '</strong> — ' + t('eraWelcome', era.label[currentLang]));
+  document.getElementById('hint-text').textContent = t('eraHint', era.label[currentLang]);
+}
+
+// =====================================================
+// CHAT
+// =====================================================
 async function sendMessage() {
   const input = document.getElementById('user-input');
   const text = input.value.trim();
   if (!text || isLoading) return;
-  if (!selectedEra) { showToast('Önce bir dönem seç ⬆'); return; }
-  if (!isPremium && usedToday >= DAILY_LIMIT) { openModal(); showToast('Günlük hakkın doldu — Premium\'a geç'); return; }
+  if (!selectedEra) { showToast(t('toastSelectEra')); return; }
+  if (!isPremium && usedToday >= DAILY_LIMIT) { openModal('payment'); showToast(t('toastLimitReached')); return; }
 
   addUserMessage(text);
   input.value = '';
@@ -607,7 +1137,7 @@ async function sendMessage() {
     buildModeBar();
   }
 
-  const systemPrompt = selectedEra.system + (isPremium ? ' Premium üye — daha uzun, daha zengin ve ayrıntılı yanıtlar ver.' : ' Yanıtları orta uzunlukta tut.');
+  const systemPrompt = selectedEra.system[currentLang] + (isPremium ? (currentLang === 'tr' ? ' Premium üye — daha uzun, daha zengin ve ayrıntılı yanıtlar ver.' : ' Premium member — give longer, richer, and more detailed answers.') : (currentLang === 'tr' ? ' Yanıtları orta uzunlukta tut.' : ' Keep answers moderate in length.'));
 
   isLoading = true;
   document.getElementById('send-btn').disabled = true;
@@ -617,27 +1147,21 @@ async function sendMessage() {
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        question: text,
-        system: systemPrompt,
-        history: conversationHistory
-      })
+      body: JSON.stringify({ question: text, system: systemPrompt, history: conversationHistory })
     });
-
     removeTypingIndicator(typingId);
     const data = await res.json();
-
     if (data.error) {
       addAIMessage(escHtml(data.error));
     } else {
-      const reply = data.answer || 'Bir hata oluştu, lütfen tekrar dene.';
+      const reply = data.answer || t('apiError');
       conversationHistory.push({ role: 'user', content: text });
       conversationHistory.push({ role: 'assistant', content: reply });
       addAIMessage(escHtml(reply).replace(/\n/g, '<br>'));
     }
   } catch(err) {
     removeTypingIndicator(typingId);
-    addAIMessage('Bağlantı hatası oluştu. Lütfen tekrar dene.');
+    addAIMessage(t('connectionError'));
   }
 
   isLoading = false;
@@ -648,11 +1172,10 @@ function addUserMessage(text) {
   clearEmpty();
   const div = document.createElement('div');
   div.className = 'msg user';
-  div.innerHTML = '<div class="msg-avatar user-avatar">Sen</div><div class="msg-bubble">'+escHtml(text).replace(/\n/g,'<br>')+'</div>';
+  div.innerHTML = '<div class="msg-avatar user-avatar">'+t('userAvatarLabel')+'</div><div class="msg-bubble">'+escHtml(text).replace(/\n/g,'<br>')+'</div>';
   document.getElementById('chat-window').appendChild(div);
   scrollChat();
 }
-
 function addAIMessage(html) {
   clearEmpty();
   const div = document.createElement('div');
@@ -661,7 +1184,6 @@ function addAIMessage(html) {
   document.getElementById('chat-window').appendChild(div);
   scrollChat();
 }
-
 function addTypingIndicator() {
   clearEmpty();
   const id = 'typing-' + Date.now();
@@ -672,7 +1194,6 @@ function addTypingIndicator() {
   scrollChat();
   return id;
 }
-
 function removeTypingIndicator(id) { const e = document.getElementById(id); if(e) e.remove(); }
 function clearEmpty() { const e = document.getElementById('empty-state'); if(e) e.remove(); }
 function scrollChat() { const cw = document.getElementById('chat-window'); cw.scrollTop = cw.scrollHeight; }
@@ -681,10 +1202,6 @@ function updateCharCount() { document.getElementById('char-count').textContent =
 function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();} }
 function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function openModal() { document.getElementById('modal').classList.add('open'); }
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
-document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
-
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -692,6 +1209,19 @@ function showToast(msg) {
   t.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// =====================================================
+// INIT
+// =====================================================
+function init() {
+  buildStars();
+  buildEraRow();
+  buildChipsGrid();
+  buildModeBar();
+  applyTranslations();
+  if (isPremium) applyPremiumUI();
+  checkPaymentReturn();
 }
 
 init();
