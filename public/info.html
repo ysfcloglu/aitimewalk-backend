@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AITimeWalk — Bilgi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --bg: #0c0d10;
+      --surface: #13151a;
+      --border: #2a2d35;
+      --gold: #c9a84c;
+      --gold-dim: #8a6e2f;
+      --text: #e8e3d8;
+      --muted: #7a7870;
+      --accent: #3a6ea8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(12,13,16,0.92);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: .08em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* language toggle */
+    .lang-toggle {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      padding: 5px 13px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .lang-toggle button.active {
+      background: var(--gold);
+      color: #0c0d10;
+    }
+
+    /* nav tabs */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      display: inline-block;
+      padding: 14px 20px;
+      font-size: .82rem;
+      font-weight: 400;
+      letter-spacing: .05em;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    nav a:hover { color: var(--text); }
+    nav a.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── CONTENT ── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 32px 80px;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: .85rem;
+      letter-spacing: .05em;
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: .04em;
+      margin: 36px 0 12px;
+    }
+
+    p { color: #b5b0a6; margin-bottom: 16px; font-size: .94rem; }
+
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 16px;
+    }
+    li {
+      color: #b5b0a6;
+      font-size: .94rem;
+      margin-bottom: 6px;
+    }
+
+    a.inline { color: var(--gold); text-decoration: none; }
+    a.inline:hover { text-decoration: underline; }
+
+    /* contact card */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-top: 28px;
+    }
+    .contact-card .label {
+      font-size: .72rem;
+      letter-spacing: .1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .contact-card a {
+      font-size: 1rem;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .contact-card a:hover { text-decoration: underline; }
+    .contact-card .note {
+      margin-top: 14px;
+      font-size: .84rem;
+      color: var(--muted);
+    }
+
+    /* paddle badge */
+    .paddle-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(58,110,168,.1);
+      border: 1px solid rgba(58,110,168,.3);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: .87rem;
+      color: #9ab8d8;
+    }
+    .paddle-note .icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* back to app */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 52px;
+      padding: 10px 20px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--muted);
+      font-size: .83rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .back-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 14px 18px; }
+      nav { padding: 0 12px; }
+      nav a { padding: 12px 14px; font-size: .78rem; }
+      main { padding: 36px 18px 60px; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="/">⏳ AITimeWalk</a>
+  <div class="header-right">
+    <div class="lang-toggle">
+      <button id="btn-tr" class="active" onclick="setLang('tr')">TR</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="#" class="nav-link active" data-page="about"     data-tr="Hakkında"          data-en="About">Hakkında</a>
+  <a href="#" class="nav-link"        data-page="aboutme"   data-tr="Hakkımda"           data-en="About Me">Hakkımda</a>
+  <a href="#" class="nav-link"        data-page="contact"   data-tr="İletişim"            data-en="Contact">İletişim</a>
+  <a href="#" class="nav-link"        data-page="privacy"   data-tr="Gizlilik Politikası" data-en="Privacy Policy">Gizlilik Politikası</a>
+  <a href="#" class="nav-link"        data-page="terms"     data-tr="Kullanım Koşulları"  data-en="Terms of Use">Kullanım Koşulları</a>
+</nav>
+
+<main>
+
+  <!-- ═══════════════ HAKKINDA / ABOUT ═══════════════ -->
+  <section id="page-about" class="page active">
+    <h1 data-tr="Hakkında" data-en="About">Hakkında</h1>
+    <p class="subtitle" data-tr="AITimeWalk nedir?" data-en="What is AITimeWalk?">AITimeWalk nedir?</p>
+
+    <div class="tr-content">
+      <p>AITimeWalk, yapay zekâ destekli bir tarihsel simülasyon platformudur. Kullanıcılar farklı tarihi dönemleri seçerek o dönemin atmosferinde sorular sorabilir, karakterlerle konuşabilir ve tarihe dair meraklarını giderebilir.</p>
+      <h2>Ne Sunar?</h2>
+      <ul>
+        <li>Antik uygarlıklardan modern tarihe onlarca dönem seçeneği</li>
+        <li>Yapay zekâ destekli, bağlamsal ve akıcı yanıtlar</li>
+        <li>Premium kullanıcılar için özel dönemler ve kendi senaryonu oluşturma</li>
+        <li>Reklamsız, kesintisiz bir deneyim (Premium)</li>
+      </ul>
+      <h2>Vizyon</h2>
+      <p>Tarihi sıkıcı bulmak zorunda değilsin. AITimeWalk, geçmişi canlı, erişilebilir ve ilgi çekici hâle getirerek herkese zaman yolculuğu imkânı sunmayı hedefler.</p>
+    </div>
+
+    <div class="en-content" style="display:none">
+      <p>AITimeWalk is an AI-powered historical simulation platform. Users can select different historical periods, ask questions in the atmosphere of that era, converse with characters, and satisfy their curiosity about history.</p>
+      <h2>What Does It Offer?</h2>
+      <ul>
+        <li>Dozens of periods spanning ancient civilizations to modern history</li>
+        <li>AI-driven, contextual, and fluent responses</li>
+        <li>Exclusive periods and custom scenario creation for Premium users</li>
+        <li>Ad-free, uninterrupted experience (Premium)</li>
+      </ul>
+      <h2>Vision</h2>
+      <p>History doesn't have to be boring. AITimeWalk aims to make the past vivid, accessible, and engaging — giving everyone the chance to travel through time.</p>
+    </div>
+
+    <a class="back-btn" href="/">← <span data-tr="Uygulamaya Dön" data-en="Back to App">Uygulamaya Dön</span></a>
+  </section>
+
+  <!-- ═══════════════ HAKKIMDA / ABOUT ME ═══════════════ -->
+  <section id="page-aboutme" class="page">
+    <h1 data-tr="Hakkımda" data-en="About Me">Hakkımda</h1>
+    <p class="subtitle" data-tr="Projenin arkasındaki kişi" data-en="The person behind the project">Projenin arkasındaki kişi</p>
+
+    <div class="tr-content">
+      <p>Merhaba, ben Yusuf. Yazılım geliştirici ve tarih meraklısıyım. AITimeWalk'u, tarihi öğrenmenin daha etkileşimli ve eğlenceli olabileceğine inandığım için geliştirdim.</p>
+      <p>Yapay zekânın insanlara farklı bir zihinsel deneyim sunabileceğini, sıkıcı ders kitaplarının ötesine geçilebileceğini göstermek istedim. Bu proje o inancın ürünü.</p>
+      <h2>İletişim</h2>
+      <p>Proje hakkında fikir, öneri veya iş birliği teklifleri için <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a> adresine ulaşabilirsin.</p>
+    </div>
+
+    <div class="en-content" style="display:none">
+      <p>Hi, I'm Yusuf — a software developer and history enthusiast. I built AITimeWalk because I believe learning history can be far more interactive and enjoyable than traditional methods.</p>
+      <p>I wanted to show that AI can offer people a different kind of intellectual experience — one that goes beyond boring textbooks. This project is the result of that belief.</p>
+      <h2>Get in Touch</h2>
+      <p>For ideas, suggestions, or collaboration inquiries, reach me at <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a>.</p>
+    </div>
+
+    <a class="back-btn" href="/">← <span data-tr="Uygulamaya Dön" data-en="Back to App">Uygulamaya Dön</span></a>
+  </section>
+
+  <!-- ═══════════════ İLETİŞİM / CONTACT ═══════════════ -->
+  <section id="page-contact" class="page">
+    <h1 data-tr="İletişim" data-en="Contact">İletişim</h1>
+    <p class="subtitle" data-tr="Bize ulaşın" data-en="Get in touch">Bize ulaşın</p>
+
+    <div class="tr-content">
+      <p>Soru, öneri veya destek talepleriniz için aşağıdaki adrese yazabilirsiniz. En kısa sürede geri döneceğiz.</p>
+    </div>
+    <div class="en-content" style="display:none">
+      <p>For questions, suggestions, or support requests, write to the address below. We'll get back to you as soon as possible.</p>
+    </div>
+
+    <div class="contact-card">
+      <div class="label" data-tr="E-posta" data-en="Email">E-posta</div>
+      <a href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a>
+      <p class="note" data-tr="Yanıt süresi genellikle 1–2 iş günüdür." data-en="Response time is usually 1–2 business days.">Yanıt süresi genellikle 1–2 iş günüdür.</p>
+    </div>
+
+    <div class="paddle-note">
+      <span class="icon">💳</span>
+      <span>
+        <span class="tr-content">Ödeme ve fatura işlemleri Paddle tarafından gerçekleştirilmektedir. Ödemeye ilişkin sorularınız için <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a> üzerinden bize ulaşabilirsiniz.</span>
+        <span class="en-content" style="display:none">Payments and billing are handled by Paddle. For billing-related inquiries, please contact us at <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a>.</span>
+      </span>
+    </div>
+
+    <a class="back-btn" href="/">← <span data-tr="Uygulamaya Dön" data-en="Back to App">Uygulamaya Dön</span></a>
+  </section>
+
+  <!-- ═══════════════ GİZLİLİK / PRIVACY ═══════════════ -->
+  <section id="page-privacy" class="page">
+    <h1 data-tr="Gizlilik Politikası" data-en="Privacy Policy">Gizlilik Politikası</h1>
+    <p class="subtitle" data-tr="Son güncelleme: Haziran 2025" data-en="Last updated: June 2025">Son güncelleme: Haziran 2025</p>
+
+    <div class="tr-content">
+      <p>AITimeWalk olarak kullanıcılarımızın gizliliğine saygı duyuyor ve kişisel verilerini korumayı taahhüt ediyoruz.</p>
+      <h2>Topladığımız Veriler</h2>
+      <ul>
+        <li><strong>Hesap bilgileri:</strong> Kayıt sırasında sağladığınız e-posta adresi.</li>
+        <li><strong>Kullanım verileri:</strong> Seçilen dönemler, soru sayısı ve oturum süresi gibi anonim istatistikler.</li>
+        <li><strong>Ödeme verileri:</strong> Kart bilgileri tarafımızda saklanmaz; tüm ödeme işlemleri Paddle aracılığıyla güvenle gerçekleştirilir.</li>
+      </ul>
+      <h2>Verilerin Kullanım Amacı</h2>
+      <ul>
+        <li>Hizmetin sunulması ve iyileştirilmesi</li>
+        <li>Abonelik ve fatura yönetimi</li>
+        <li>Kullanıcı desteği sağlanması</li>
+      </ul>
+      <h2>Üçüncü Taraf Hizmetler</h2>
+      <p>Ödeme altyapısı için <strong>Paddle</strong> kullanılmaktadır. Paddle'ın gizlilik politikasına <a class="inline" href="https://www.paddle.com/legal/privacy" target="_blank">paddle.com</a> adresinden ulaşabilirsiniz.</p>
+      <h2>Veri Güvenliği</h2>
+      <p>Verileriniz güvenli sunucularda saklanmakta ve yetkisiz erişime karşı korunmaktadır. Üçüncü taraflara pazarlama amacıyla satılmamaktadır.</p>
+      <h2>Çerezler</h2>
+      <p>Oturum yönetimi için zorunlu çerezler kullanılmaktadır. Analitik çerezler yalnızca anonim istatistik toplamak amacıyla kullanılır.</p>
+      <h2>İletişim</h2>
+      <p>Gizlilikle ilgili sorularınız için: <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a></p>
+    </div>
+
+    <div class="en-content" style="display:none">
+      <p>At AITimeWalk, we respect our users' privacy and are committed to protecting their personal data.</p>
+      <h2>Data We Collect</h2>
+      <ul>
+        <li><strong>Account information:</strong> The email address you provide at registration.</li>
+        <li><strong>Usage data:</strong> Anonymous statistics such as selected periods, number of questions, and session duration.</li>
+        <li><strong>Payment data:</strong> Card details are never stored by us; all payments are processed securely via Paddle.</li>
+      </ul>
+      <h2>How We Use Your Data</h2>
+      <ul>
+        <li>Providing and improving the service</li>
+        <li>Subscription and billing management</li>
+        <li>Providing user support</li>
+      </ul>
+      <h2>Third-Party Services</h2>
+      <p><strong>Paddle</strong> is used for payment infrastructure. You can access Paddle's privacy policy at <a class="inline" href="https://www.paddle.com/legal/privacy" target="_blank">paddle.com</a>.</p>
+      <h2>Data Security</h2>
+      <p>Your data is stored on secure servers and protected against unauthorized access. It is not sold to third parties for marketing purposes.</p>
+      <h2>Cookies</h2>
+      <p>Essential cookies are used for session management. Analytics cookies are used solely to collect anonymous statistics.</p>
+      <h2>Contact</h2>
+      <p>For privacy-related questions: <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a></p>
+    </div>
+
+    <a class="back-btn" href="/">← <span data-tr="Uygulamaya Dön" data-en="Back to App">Uygulamaya Dön</span></a>
+  </section>
+
+  <!-- ═══════════════ KULLANIM KOŞULLARI / TERMS ═══════════════ -->
+  <section id="page-terms" class="page">
+    <h1 data-tr="Kullanım Koşulları" data-en="Terms of Use">Kullanım Koşulları</h1>
+    <p class="subtitle" data-tr="Son güncelleme: Haziran 2025" data-en="Last updated: June 2025">Son güncelleme: Haziran 2025</p>
+
+    <div class="tr-content">
+      <p>AITimeWalk'u kullanarak aşağıdaki koşulları kabul etmiş olursunuz. Lütfen dikkatlice okuyun.</p>
+      <h2>1. Hizmet Kapsamı</h2>
+      <p>AITimeWalk, yapay zekâ destekli tarihsel simülasyon içerikleri sunar. Sunulan yanıtlar eğitim ve eğlence amaçlıdır; akademik kaynak olarak kullanılmamalıdır.</p>
+      <h2>2. Hesap ve Üyelik</h2>
+      <ul>
+        <li>Hizmeti kullanmak için geçerli bir e-posta adresi gereklidir.</li>
+        <li>Hesabınızın güvenliğinden siz sorumlusunuz.</li>
+        <li>Tek bir kişi tarafından kullanılmak üzere tasarlanmıştır; paylaşım yasaktır.</li>
+      </ul>
+      <h2>3. Abonelik ve Ödemeler</h2>
+      <p>Premium abonelikler aylık olarak yenilenir. İptal işlemleri bir sonraki fatura döneminden önce yapılmalıdır. Ödemeler Paddle altyapısı üzerinden güvenle işlenir. Satıcı kaydı Paddle tarafından yönetilir; Paddle kayıtlı satıcı (Merchant of Record) olarak hareket eder.</p>
+      <h2>4. Kabul Edilemez Kullanım</h2>
+      <ul>
+        <li>Platformun kötüye kullanılması veya otomatik araçlarla aşırı yüklenmesi</li>
+        <li>Diğer kullanıcılara zarar verecek içerik üretilmesi</li>
+        <li>Telif hakkı ihlali içeren materyallerin paylaşılması</li>
+      </ul>
+      <h2>5. Fikri Mülkiyet</h2>
+      <p>AITimeWalk markası, tasarımı ve özgün içerikleri telif hakkı kapsamındadır. Kaynak gösterilmeksizin kopyalanamaz veya dağıtılamaz.</p>
+      <h2>6. Sorumluluk Sınırlaması</h2>
+      <p>Hizmet "olduğu gibi" sunulmaktadır. Tarihsel simülasyon yanıtlarının doğruluğu garanti edilmez. AITimeWalk, hizmet kesintilerinden doğan zararlardan sorumlu tutulamaz.</p>
+      <h2>7. Değişiklikler</h2>
+      <p>Bu koşullar önceden bildirim yapılmaksızın güncellenebilir. Güncel versiyona her zaman bu sayfadan ulaşabilirsiniz.</p>
+      <h2>8. İletişim</h2>
+      <p>Sorularınız için: <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a></p>
+    </div>
+
+    <div class="en-content" style="display:none">
+      <p>By using AITimeWalk, you agree to the following terms. Please read them carefully.</p>
+      <h2>1. Scope of Service</h2>
+      <p>AITimeWalk provides AI-powered historical simulation content. Responses are for educational and entertainment purposes and should not be used as academic sources.</p>
+      <h2>2. Account & Membership</h2>
+      <ul>
+        <li>A valid email address is required to use the service.</li>
+        <li>You are responsible for the security of your account.</li>
+        <li>Designed for single-person use; sharing accounts is prohibited.</li>
+      </ul>
+      <h2>3. Subscriptions & Payments</h2>
+      <p>Premium subscriptions renew monthly. Cancellations must be made before the next billing period. Payments are processed securely through Paddle's infrastructure. Paddle acts as the Merchant of Record and manages seller registration.</p>
+      <h2>4. Prohibited Use</h2>
+      <ul>
+        <li>Abusing the platform or overloading it with automated tools</li>
+        <li>Generating content that could harm other users</li>
+        <li>Sharing material that infringes copyright</li>
+      </ul>
+      <h2>5. Intellectual Property</h2>
+      <p>The AITimeWalk brand, design, and original content are protected by copyright. They may not be copied or distributed without attribution.</p>
+      <h2>6. Limitation of Liability</h2>
+      <p>The service is provided "as is." The accuracy of historical simulation responses is not guaranteed. AITimeWalk cannot be held liable for damages arising from service interruptions.</p>
+      <h2>7. Changes</h2>
+      <p>These terms may be updated without prior notice. You can always access the current version on this page.</p>
+      <h2>8. Contact</h2>
+      <p>For questions: <a class="inline" href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a></p>
+    </div>
+
+    <a class="back-btn" href="/">← <span data-tr="Uygulamaya Dön" data-en="Back to App">Uygulamaya Dön</span></a>
+  </section>
+
+</main>
+
+<script>
+  let currentLang = 'tr';
+
+  // ── NAV ──
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const page = link.dataset.page;
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      link.classList.add('active');
+      document.getElementById('page-' + page).classList.add('active');
+    });
+  });
+
+  // ── LANGUAGE ──
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+
+    document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+    // show/hide content blocks
+    document.querySelectorAll('.tr-content').forEach(el => {
+      el.style.display = lang === 'tr' ? '' : 'none';
+    });
+    document.querySelectorAll('.en-content').forEach(el => {
+      el.style.display = lang === 'en' ? '' : 'none';
+    });
+
+    // swap nav labels + subtitles + h1 + other data-tr/en elements
+    document.querySelectorAll('[data-tr]').forEach(el => {
+      if (!el.classList.contains('tr-content') && !el.classList.contains('en-content')) {
+        el.textContent = lang === 'tr' ? el.dataset.tr : el.dataset.en;
+      }
+    });
+  }
+
+  // ── URL HASH ROUTING (optional: /info.html#privacy) ──
+  function routeFromHash() {
+    const hash = location.hash.replace('#', '');
+    const valid = ['about', 'aboutme', 'contact', 'privacy', 'terms'];
+    if (valid.includes(hash)) {
+      const link = document.querySelector(`.nav-link[data-page="${hash}"]`);
+      if (link) link.click();
+    }
+  }
+  routeFromHash();
+  window.addEventListener('hashchange', routeFromHash);
+</script>
+</body>
+</html>
