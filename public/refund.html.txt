@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Refund Policy / Geri Ödeme Politikası - AlTimeWalk</title>
+</head>
+<body>
+
+<h1>Refund Policy / Geri Ödeme Politikası</h1>
+
+<h2>Türkçe</h2>
+
+<p>AlTimeWalk Pro aboneliği aylık 129 TL olarak ücretlendirilmektedir.</p>
+
+<p>Abonelikler her ay otomatik olarak yenilenir ve kullanıcı tarafından istenildiği zaman iptal edilebilir.</p>
+
+<p>İptal işlemi mevcut faturalandırma döneminin sonunda yürürlüğe girer ve kullanıcıdan sonraki dönem için ücret alınmaz.</p>
+
+<p>Teknik hata, yanlış ücretlendirme veya yetkisiz ödeme durumlarında kullanıcılar destek ekibimizle iletişime geçebilir ve her talep ayrı ayrı değerlendirilir.</p>
+
+<p>Yürürlükteki tüketici koruma mevzuatının gerektirdiği durumlar dışında, kullanılmış abonelik dönemleri için geri ödeme yapılmayabilir.</p>
+
+
+<hr>
+
+<h2>English</h2>
+
+<p>The AlTimeWalk Pro subscription is billed at 129 TRY per month.</p>
+
+<p>Subscriptions renew automatically every month and may be cancelled by the user at any time.</p>
+
+<p>Cancellation becomes effective at the end of the current billing period and the user will not be charged for the next billing cycle.</p>
+
+<p>In cases of technical errors, incorrect charges, or unauthorized payments, users may contact our support team and each request will be reviewed individually.</p>
+
+<p>Except where required by applicable consumer protection laws, refunds may not be available for subscription periods that have already been used.</p>
+
+<p>Contact: yusufciloglu69@icloud.com</p>
+
+</body>
+</html>
