@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pricing - AlTimeWalk</title>
+</head>
+<body>
+  <h1>Pricing</h1>
+  <p>Price: 129 TL/month</p>
+  <p>Subscription renews monthly and can be cancelled at any time.</p>
+</body>
+</html>
