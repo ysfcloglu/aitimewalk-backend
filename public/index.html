@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AITimeWalk — Tarihte Zaman Yolculuğuna Çık</title>
+<title>AITimeWalk — Zaman ve Evren Yolculuğu</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
   --gold:#c9a84c; --gold-light:#e8d5a3; --gold-dim:#8a6f35;
@@ -16,8 +17,6 @@
 body{font-family:'Crimson Pro',Georgia,serif;background:var(--dark);color:var(--parchment);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 100%,rgba(201,168,76,0.04) 0%,transparent 60%);pointer-events:none;z-index:0;}
 .stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
-.star{position:absolute;border-radius:50%;background:rgba(201,168,76,0.6);animation:twinkle var(--d,3s) ease-in-out infinite alternate;animation-delay:var(--delay,0s);}
-@keyframes twinkle{from{opacity:0.1;transform:scale(1);}to{opacity:0.7;transform:scale(1.3);}}
 .page{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 6rem;}
 
 /* ── LANGUAGE TOGGLE ── */
@@ -36,34 +35,30 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .mode-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.8);}}
 .mode-label{font-size:0.88rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);}
-.usage-pills{display:flex;gap:6px;}
-.usage-pip{width:28px;height:8px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);transition:background 0.3s;}
-.usage-pip.used{background:var(--gold);border-color:var(--gold);}
-.usage-pip.empty{background:rgba(255,255,255,0.04);}
 .btn-upgrade-mini{background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:8px;padding:0.45rem 1.1rem;font-family:'Crimson Pro',serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
 .btn-upgrade-mini:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);transform:translateY(-1px);}
+
+/* Dinamik Dönem Satırı */
 .era-row{display:flex;gap:0.6rem;overflow-x:auto;padding-bottom:0.5rem;margin-bottom:1.5rem;scrollbar-width:none;}
 .era-row::-webkit-scrollbar{display:none;}
-.era-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.6rem 0.9rem;cursor:pointer;transition:all 0.2s;position:relative;min-width:80px;}
+.era-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.8rem 1rem;cursor:pointer;transition:all 0.2s;position:relative;min-width:95px;}
 .era-btn:hover:not(.locked-era){border-color:var(--border-strong);background:rgba(201,168,76,0.05);}
 .era-btn.active{border-color:var(--gold);background:rgba(201,168,76,0.1);}
-.era-btn.locked-era{cursor:default;opacity:0.45;}
-.era-emoji{font-size:1.4rem;line-height:1;}
-.era-label{font-size:0.7rem;color:var(--muted);text-align:center;line-height:1.2;}
-.era-lock{position:absolute;top:4px;right:5px;font-size:0.6rem;}
+.era-btn.locked-era{cursor:default;opacity:0.5;}
+.era-emoji{font-size:1.5rem;line-height:1;color:var(--gold-light);}
+.era-label{font-size:0.75rem;color:var(--parchment2);text-align:center;line-height:1.2;}
+.era-lock{position:absolute;top:6px;right:6px;font-size:0.65rem;color:var(--gold);}
+
 .lock-notice{display:none;background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:0.88rem;color:var(--gold-light);align-items:center;gap:10px;}
 .lock-notice.show{display:flex;}
 .lock-notice button{margin-left:auto;flex-shrink:0;background:var(--gold);color:var(--dark);border:none;border-radius:8px;padding:0.35rem 0.85rem;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.82rem;cursor:pointer;}
-.quick-btns{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;}
-.quick-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:100px;padding:0.4rem 0.9rem;font-family:'Crimson Pro',serif;font-size:0.85rem;font-style:italic;color:var(--muted);cursor:pointer;transition:all 0.2s;}
-.quick-btn:hover{border-color:var(--border);color:var(--gold-light);background:rgba(201,168,76,0.06);}
-.chat-window{background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:16px;margin-bottom:1.25rem;min-height:300px;max-height:460px;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,0.2) transparent;}
-.chat-window::-webkit-scrollbar{width:4px;}
-.chat-window::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);border-radius:100px;}
+
+.chat-window{background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:16px;margin-bottom:1.25rem;min-height:300px;max-height:460px;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;gap:0.75rem;}
 .empty-icon{font-size:2.5rem;opacity:0.5;}
 .empty-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--parchment2);opacity:0.6;}
 .empty-desc{font-size:0.88rem;color:var(--muted);font-style:italic;line-height:1.6;max-width:300px;}
+
 .msg{display:flex;gap:10px;animation:fadeUp 0.35s ease;align-items:flex-start;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 .msg.user{flex-direction:row-reverse;}
@@ -73,1158 +68,296 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .msg-bubble{max-width:78%;padding:0.85rem 1.1rem;border-radius:14px;font-size:0.95rem;line-height:1.7;}
 .msg.ai .msg-bubble{background:var(--dark4);border:1px solid rgba(255,255,255,0.07);color:var(--parchment2);border-top-left-radius:4px;}
 .msg.user .msg-bubble{background:rgba(201,168,76,0.12);border:1px solid var(--border);color:var(--parchment);border-top-right-radius:4px;}
-.typing-dots{display:flex;gap:5px;align-items:center;padding:4px 0;}
-.typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:dot-bounce 1.2s ease-in-out infinite;}
-.typing-dots span:nth-child(2){animation-delay:0.2s;}
-.typing-dots span:nth-child(3){animation-delay:0.4s;}
-@keyframes dot-bounce{0%,60%,100%{transform:translateY(0);opacity:0.5;}30%{transform:translateY(-6px);opacity:1;}}
+
 .input-area{background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1rem 1.1rem;transition:border-color 0.2s;margin-bottom:3rem;}
 .input-area:focus-within{border-color:var(--border-strong);}
 .input-row{display:flex;gap:10px;align-items:flex-end;}
 textarea{flex:1;background:transparent;border:none;outline:none;color:var(--parchment);font-family:'Crimson Pro',serif;font-size:1rem;line-height:1.5;resize:none;min-height:48px;max-height:140px;}
 textarea::placeholder{color:var(--muted);font-style:italic;}
-.send-btn{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#a8862f);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.2s;flex-shrink:0;color:var(--dark);}
-.send-btn:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);transform:translateY(-1px);}
-.send-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-.input-hint{margin-top:0.6rem;font-size:0.78rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
-.section-divider{display:flex;align-items:center;gap:12px;margin-bottom:2rem;}
-.section-divider span{font-size:0.78rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
-.divider-line{flex:1;height:1px;background:rgba(255,255,255,0.06);}
+.send-btn{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#a8862f);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.2s;color:var(--dark);}
+
 .plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
 @media(max-width:600px){.plans-grid{grid-template-columns:1fr;}}
-.plan-card{border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:transform 0.3s ease;cursor:default;}
-.plan-card:hover{transform:translateY(-3px);}
+.plan-card{border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:transform 0.3s ease;}
 .plan-normal{background:var(--dark3);border:1px solid rgba(255,255,255,0.08);}
-.plan-normal::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.03) 0%,transparent 60%);pointer-events:none;}
 .plan-premium{background:linear-gradient(145deg,#1a1508 0%,#0f0d07 100%);border:1px solid var(--border-strong);}
-.plan-premium::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.plan-premium::after{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%);pointer-events:none;}
-.badge-popular{position:absolute;top:1.25rem;right:1.25rem;background:var(--gold);color:var(--dark);font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:100px;}
-.plan-icon{font-size:2rem;margin-bottom:1rem;}
-.plan-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:0.3rem;color:var(--parchment);}
-.plan-premium .plan-name{color:var(--gold-light);}
-.plan-tagline{font-size:0.9rem;color:var(--muted);font-style:italic;margin-bottom:1.5rem;font-weight:300;}
+.badge-popular{position:absolute;top:1.25rem;right:1.25rem;background:var(--gold);color:var(--dark);font-size:0.7rem;font-weight:600;padding:4px 12px;border-radius:100px;text-transform:uppercase;}
 .price-row{display:flex;align-items:baseline;gap:4px;margin-bottom:1.75rem;}
-.price-free{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--parchment2);}
 .price-amount{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--gold);line-height:1;}
-.price-currency{font-size:1.1rem;color:var(--gold-dim);align-self:flex-start;margin-top:8px;}
-.price-period{font-size:0.85rem;color:var(--muted);margin-left:2px;}
 .features-list{list-style:none;display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem;}
-.feature-item{display:flex;align-items:flex-start;gap:10px;font-size:0.95rem;color:var(--parchment2);line-height:1.4;}
-.feature-check{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;margin-top:2px;}
-.check-normal{background:rgba(255,255,255,0.08);color:var(--muted);}
-.check-premium{background:rgba(201,168,76,0.15);color:var(--gold);}
-.feature-locked{color:var(--muted);opacity:0.6;}
-.feature-locked .feature-check{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);}
-.limit-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:2px 8px;font-size:0.72rem;color:var(--muted);margin-left:6px;vertical-align:middle;}
-.btn-plan{width:100%;padding:0.85rem 1.5rem;border-radius:10px;font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.25s;border:none;text-align:center;}
-.btn-normal-plan{background:rgba(255,255,255,0.07);color:var(--parchment2);border:1px solid rgba(255,255,255,0.12);}
-.btn-normal-plan:hover{background:rgba(255,255,255,0.12);}
-.btn-premium-plan{background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);font-weight:700;font-size:1.05rem;}
-.btn-premium-plan:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,0.3);}
-.locked-section{background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:1.5rem 2rem;margin-bottom:2rem;}
-.section-inner-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
-.section-inner-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.06);}
-.eras-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.75rem;}
-.era-chip{position:relative;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:0.75rem 1rem;text-align:center;overflow:hidden;transition:border-color 0.2s;}
-.era-chip.unlocked{cursor:pointer;}
-.era-chip.unlocked:hover{border-color:var(--border-strong);background:rgba(201,168,76,0.06);}
-.chip-emoji{font-size:1.5rem;display:block;margin-bottom:0.3rem;}
-.chip-name{font-size:0.8rem;color:var(--muted);font-style:italic;}
-.era-chip.locked-chip .chip-name{color:rgba(255,255,255,0.2);}
-.lock-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,6,0.65);font-size:1rem;}
-.compare-section{background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:1.5rem 2rem;margin-bottom:2rem;}
-.compare-table{width:100%;border-collapse:collapse;font-size:0.9rem;}
-.compare-table th{text-align:center;padding:0.5rem 1rem;font-family:'Playfair Display',serif;font-size:0.85rem;color:var(--muted);font-weight:400;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.06);}
-.compare-table th:first-child{text-align:left;}
-.compare-table td{padding:0.6rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--parchment2);vertical-align:middle;}
-.compare-table td:not(:first-child){text-align:center;}
-.compare-table tr:last-child td{border-bottom:none;}
-.c-gold{color:var(--gold);}
-.c-muted{color:var(--muted);opacity:0.4;}
+.feature-item{display:flex;align-items:flex-start;gap:10px;font-size:0.95rem;color:var(--parchment2);}
+.feature-check{color:var(--gold);}
+.btn-plan{width:100%;padding:0.85rem 1.5rem;border-radius:10px;font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;cursor:pointer;border:none;}
+.btn-premium-plan{background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);font-weight:700;}
 
-/* ── FOOTER ── */
-.site-footer{border-top:1px solid rgba(255,255,255,0.06);padding-top:2rem;margin-top:1rem;text-align:center;}
-.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem;margin-bottom:1rem;}
-.footer-link{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color 0.2s;cursor:pointer;background:none;border:none;font-family:'Crimson Pro',serif;}
+/* Alt Bölüm Grid Sistemi */
+.eras-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.75rem;}
+.era-chip{position:relative;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1rem;text-align:center;overflow:hidden;transition:all 0.2s;cursor:pointer;}
+.era-chip.unlocked-chip:hover{border-color:var(--border-strong);background:rgba(201,168,76,0.06);}
+.era-chip.locked-chip{opacity:0.5;}
+.chip-emoji{font-size:1.8rem;display:block;margin-bottom:0.4rem;}
+.chip-name{font-size:0.85rem;color:var(--parchment2);font-weight:600;}
+.lock-overlay{position:absolute;top:8px;right:8px;color:var(--gold);font-size:0.8rem;}
+
+/* Footer & Modals */
+.site-footer{border-top:1px solid rgba(255,255,255,0.06);padding:2rem 0;text-align:center;font-size:0.85rem;color:var(--muted);}
+.footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem;}
+.footer-link{background:none;border:none;color:var(--muted);cursor:pointer;font-family:inherit;}
 .footer-link:hover{color:var(--gold-light);}
-.footer-note{font-size:0.78rem;color:var(--muted);font-style:italic;opacity:0.6;line-height:1.7;}
-.footer-note a{color:var(--gold-dim);text-decoration:underline;text-underline-offset:3px;}
-
-/* ── MODALS (shared) ── */
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:100;align-items:center;justify-content:center;padding:1.5rem;}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;padding:1.5rem;}
 .modal-backdrop.open{display:flex;}
-.modal{background:var(--dark2);border:1px solid var(--border-strong);border-radius:20px;padding:2.5rem;max-width:420px;width:100%;position:relative;text-align:center;animation:modalIn 0.3s ease;}
-.modal-wide{max-width:600px;text-align:left;}
-@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.97);}to{opacity:1;transform:none;}}
-.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0;}
-.modal-close{position:absolute;top:1rem;right:1rem;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
-.modal-close:hover{background:rgba(255,255,255,0.07);color:var(--parchment);}
-.modal-icon{font-size:2.5rem;margin-bottom:1rem;}
-.modal-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold-light);margin-bottom:0.5rem;}
-.modal-desc{color:var(--muted);font-size:0.95rem;font-style:italic;margin-bottom:1.5rem;line-height:1.6;}
-.modal-features{text-align:left;margin-bottom:1.5rem;display:flex;flex-direction:column;gap:0.5rem;}
-.modal-feat{display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--parchment2);}
-.modal-feat-icon{color:var(--gold);font-size:0.8rem;}
-.modal-price-box{background:rgba(201,168,76,0.07);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;margin-bottom:1.5rem;}
-.modal-price-amount{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);font-weight:900;}
-.modal-price-label{font-size:0.82rem;color:var(--muted);margin-top:0.2rem;}
-.btn-pay{width:100%;padding:1rem;background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:10px;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.25s;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-pay:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);box-shadow:0 8px 24px rgba(201,168,76,0.3);transform:translateY(-1px);}
-.btn-pay:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
-.modal-legal{font-size:0.75rem;color:var(--muted);opacity:0.6;line-height:1.5;}
-.modal-legal a{color:var(--gold-dim);cursor:pointer;}
-
-/* ── LEGAL / CONTACT MODAL CONTENT ── */
-.legal-body{max-height:60vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,0.2) transparent;padding-right:0.5rem;}
-.legal-body::-webkit-scrollbar{width:4px;}
-.legal-body::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);border-radius:100px;}
-.legal-body h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-light);margin:1.25rem 0 0.4rem;}
-.legal-body h3:first-child{margin-top:0;}
-.legal-body p{font-size:0.9rem;color:var(--parchment2);line-height:1.8;margin-bottom:0.5rem;}
-.legal-body ul{padding-left:1.25rem;margin-bottom:0.5rem;}
-.legal-body ul li{font-size:0.9rem;color:var(--parchment2);line-height:1.7;}
-.legal-last-updated{font-size:0.75rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;}
-
-/* Contact form */
-.contact-form{display:flex;flex-direction:column;gap:0.85rem;margin-top:1.25rem;}
-.contact-form label{font-size:0.82rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:0.3rem;}
-.contact-form input,
-.contact-form textarea{width:100%;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.75rem 1rem;color:var(--parchment);font-family:'Crimson Pro',serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;resize:vertical;}
-.contact-form input:focus,
-.contact-form textarea:focus{border-color:var(--border-strong);}
-.contact-form input::placeholder,
-.contact-form textarea::placeholder{color:var(--muted);font-style:italic;}
-.contact-form textarea{min-height:100px;}
-.btn-contact-send{padding:0.85rem 1.5rem;background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:10px;font-family:'Crimson Pro',serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.2s;width:100%;}
-.btn-contact-send:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);transform:translateY(-1px);}
-
-/* Premium banner */
-.premium-banner{display:none;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:1px solid var(--border-strong);border-radius:14px;padding:1rem 1.5rem;margin-bottom:1.5rem;text-align:center;}
-.premium-banner.show{display:block;}
-.premium-banner-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:0.25rem;}
-.premium-banner-sub{font-size:0.85rem;color:var(--muted);font-style:italic;}
-
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark3);border:1px solid var(--border-strong);border-radius:100px;padding:0.75rem 1.75rem;font-size:0.88rem;color:var(--gold-light);z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;pointer-events:none;}
-.toast.show{transform:translateX(-50%) translateY(0);}
-
-@media(max-width:520px){.mode-bar{flex-direction:column;align-items:flex-start;}.msg-bubble{max-width:88%;}}
+.modal{background:var(--dark2);border:1px solid var(--border-strong);border-radius:20px;padding:2.5rem;max-width:440px;width:100%;position:relative;text-align:center;}
+.modal-close{position:absolute;top:1rem;right:1rem;background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;}
+.btn-pay{width:100%;padding:1rem;background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:10px;font-size:1.1rem;font-weight:700;cursor:pointer;margin-top:1.5rem;}
 </style>
 </head>
 <body>
+
 <div class="stars" id="stars"></div>
 
 <div class="page">
-
-  <!-- LANGUAGE BAR -->
+  <!-- DİL SEÇİMİ -->
   <div class="lang-bar">
     <div class="lang-toggle">
-      <button class="lang-btn active" id="lang-tr" onclick="setLang('tr')">TR</button>
-      <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn active" id="lang-tr" onclick="changeLanguage('tr')">TR</button>
+      <button class="lang-btn" id="lang-en" onclick="changeLanguage('en')">EN</button>
     </div>
   </div>
 
   <div class="site-header">
     <div class="logo-row"><div class="logo-line"></div>aitimewalk.com<div class="logo-line"></div></div>
-    <h1 class="main-title" id="main-title">Tarihte Zaman Yolculuğuna Çık</h1>
-    <p class="main-sub" id="main-sub">Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al</p>
-  </div>
-
-  <!-- Premium aktivasyon banner -->
-  <div class="premium-banner" id="premium-banner">
-    <div class="premium-banner-title">🎉 Premium aktif! Tüm dönemler açıldı.</div>
-    <div class="premium-banner-sub">Ödemen alındı — sınırsız zaman yolculuğunun tadını çıkar.</div>
+    <h1 class="main-title" id="main-title">Zaman ve Evren Yolculuğu</h1>
+    <p class="main-sub" id="main-sub">Yapay zekâyla kadim tarihleri ve alternatif boyutları keşfet</p>
   </div>
 
   <div class="mode-bar">
     <div class="mode-left">
-      <div class="mode-dot" id="mode-dot"></div>
-      <span class="mode-label" id="mode-label">Normal Mod</span>
-      <div class="usage-pills" id="usage-pills"></div>
+      <div class="mode-dot"></div>
+      <span class="mode-label" id="mode-label">Gezgin Modu</span>
     </div>
-    <button class="btn-upgrade-mini" id="upgrade-btn" onclick="openModal('payment')">&#x1F451; Premium — &#x20BA;129/ay</button>
+    <button class="btn-upgrade-mini" onclick="openModal('payment')">&#x1F451; Premium — &#x20BA;129/ay</button>
   </div>
 
+  <!-- Üst Yatay Menü (Dinamik Yüklenecek) -->
   <div class="era-row" id="era-row"></div>
 
   <div class="lock-notice" id="lock-notice">
     <span>&#x1F512;</span>
-    <span id="lock-text">Bu dönem Premium'a özeldir.</span>
-    <button onclick="openModal('payment')" id="lock-upgrade-btn">Premium'a Geç</button>
+    <span id="lock-text">Bu boyut veya dönem Premium sürümüne özeldir.</span>
+    <button onclick="openModal('payment')">Kilidi Aç</button>
   </div>
 
-  <div class="quick-btns" id="quick-btns"></div>
-
+  <!-- Sohbet Penceresi -->
   <div class="chat-window" id="chat-window">
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">&#x23F3;</div>
-      <div class="empty-title" id="empty-title">Geçmişe açılan kapı</div>
-      <div class="empty-desc" id="empty-desc">Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.</div>
+      <div class="empty-title" id="empty-title">Keşif Kapısı</div>
+      <div class="empty-desc" id="empty-desc">Yukarıdan açmak istediğin bir modu seç, ardından evrene mesajını gönder!</div>
     </div>
   </div>
 
+  <!-- Giriş Alanı -->
   <div class="input-area">
     <div class="input-row">
-      <textarea id="user-input" placeholder="Tarihe dair ne merak ediyorsun?" rows="1"
-        oninput="autoResize(this);updateCharCount()"
-        onkeydown="handleKey(event)"></textarea>
-      <button class="send-btn" id="send-btn" onclick="sendMessage()" title="Gönder">&#10148;</button>
-    </div>
-    <div class="input-hint">
-      <span id="hint-text">Bir dönem seç · Enter ile gönder · Shift+Enter yeni satır</span>
-      <span id="char-count">0 / 500</span>
+      <textarea id="user-input" placeholder="Zaman çizgisine bir mesaj bırak..." rows="1"></textarea>
+      <button class="send-btn" onclick="sendMessage()">&#10148;</button>
     </div>
   </div>
 
-  <div class="section-divider">
-    <div class="divider-line"></div>
-    <span id="plans-label">Planlar</span>
-    <div class="divider-line"></div>
-  </div>
+  <!-- Gelişmiş Mod Kart Grid Görünümü -->
+  <div style="margin: 2rem 0 1rem;" id="all-modes-title" class="main-sub">TÜM BOYUTLAR VE MODLAR</div>
+  <div class="eras-grid" id="chips-grid"></div>
 
-  <div class="plans-grid">
+  <!-- Planlar Bölümü -->
+  <div class="plans-grid" style="margin-top: 3rem;">
     <div class="plan-card plan-normal">
-      <div class="plan-icon">&#x1F552;</div>
-      <div class="plan-name" id="plan-normal-name">Normal Mod</div>
-      <div class="plan-tagline" id="plan-normal-tag">Tarihle tanışmanın başlangıcı</div>
-      <div class="price-row"><span class="price-free" id="price-free-label">Ücretsiz</span></div>
-      <ul class="features-list" id="normal-features-list">
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf1">Günde 3 zaman yolculuğu</span></li>
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf2">5 temel tarihsel senaryo</span></li>
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf3">Mitoloji, Bilim Kurgu &amp; daha fazlası</span> <span class="limit-badge" id="nf3-badge">günlük 3 hak</span></li>
-        <li class="feature-item"><span class="feature-check check-normal">&#10003;</span><span id="nf4">Standart AI yanıtları</span></li>
-        <li class="feature-item feature-locked"><span class="feature-check">&#x1F512;</span><span id="nf5">Premium dönemler &amp; kendi senaryom</span> <span class="limit-badge" id="nf5-badge">kilitli</span></li>
-        <li class="feature-item feature-locked"><span class="feature-check">&#x1F512;</span><span id="nf6">Reklamsız deneyim</span> <span class="limit-badge" id="nf6-badge">kilitli</span></li>
+      <div class="plan-name">Ücretsiz Plan</div>
+      <div class="price-row"><span class="price-amount">Ücretsiz</span></div>
+      <ul class="features-list">
+        <li class="feature-item"><span class="feature-check">&#10003;</span> Antik Mısır, Mitoloji ve Lucid Rüya</li>
+        <li class="feature-item"><span class="feature-check">&#10003;</span> Standart AI Zaman Akışı</li>
       </ul>
-      <button class="btn-plan btn-normal-plan" id="normal-plan-btn">&#x2714; Şu An Aktif</button>
+      <button class="btn-plan" style="background: rgba(255,255,255,0.1); color: white;">Aktif</button>
     </div>
 
     <div class="plan-card plan-premium">
-      <div class="badge-popular" id="badge-popular">En Popüler</div>
-      <div class="plan-icon">&#x1F451;</div>
-      <div class="plan-name" id="plan-premium-name">Premium Mod</div>
-      <div class="plan-tagline" id="plan-premium-tag">Tam tarihin içinde yaşa</div>
-      <div class="price-row">
-        <span class="price-currency">&#x20BA;</span>
-        <span class="price-amount">129</span>
-        <span class="price-period" id="price-period">/ ay</span>
-      </div>
+      <div class="badge-popular">Önerilen</div>
+      <div class="plan-name">Chronos Premium</div>
+      <div class="price-row"><span class="price-amount">&#x20BA;129</span><span style="color: var(--muted)"> / ay</span></div>
       <ul class="features-list">
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf1">Sınırsız zaman yolculuğu</span></li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf2">Gelişmiş AI karakterlerle konuşma</span></li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf3">Reklamsız deneyim</span></li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf4">Özel dönemler: Antik Mısır, Dünya Savaşları…</span></li>
-        <li class="feature-item"><span class="feature-check check-premium">&#x2736;</span><span id="pf5">Kendi senaryonu oluştur</span></li>
+        <li class="feature-item"><span class="feature-check">&#x2736;</span> Osmanlı, Roma, Çoklu ve Paralel Evrenler</li>
+        <li class="feature-item"><span class="feature-check">&#x2736;</span> Sınırsız Yapay Zeka Cevap Mekaniği</li>
       </ul>
-      <button class="btn-plan btn-premium-plan" onclick="openModal('payment')" id="btn-go-premium">Premium'a Geç &#x2736;</button>
+      <button class="btn-plan btn-premium-plan" onclick="openModal('payment')">Premium'a Yükselt</button>
     </div>
   </div>
 
-  <div class="locked-section">
-    <div class="section-inner-title" id="eras-section-title">Dönemler</div>
-    <div class="eras-grid" id="chips-grid"></div>
-  </div>
-
-  <div class="compare-section">
-    <div class="section-inner-title" id="compare-title">Detaylı Karşılaştırma</div>
-    <table class="compare-table">
-      <thead><tr>
-        <th id="th-feature">Özellik</th>
-        <th id="th-normal">Normal</th>
-        <th id="th-premium">Premium</th>
-      </tr></thead>
-      <tbody>
-        <tr><td id="ct1">Günlük yolculuk</td><td>3</td><td class="c-gold" id="ct1v">Sınırsız</td></tr>
-        <tr><td id="ct2">Tarihsel senaryo</td><td>5</td><td class="c-gold" id="ct2v">Tümü + Özel</td></tr>
-        <tr><td id="ct3">AI yanıt kalitesi</td><td id="ct3n">Standart</td><td class="c-gold" id="ct3v">Gelişmiş</td></tr>
-        <tr><td id="ct4">Reklamlar</td><td id="ct4n">Var</td><td class="c-gold" id="ct4v">Yok</td></tr>
-        <tr><td id="ct5">Kilitli dönemler</td><td class="c-muted">—</td><td class="c-gold" id="ct5v">Açık</td></tr>
-        <tr><td id="ct6">Kendi senaryon</td><td class="c-muted">—</td><td class="c-gold">&#x2736;</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- FOOTER -->
+  <!-- Footer -->
   <div class="site-footer">
     <div class="footer-links">
-      <button class="footer-link" onclick="openModal('contact')" id="fl-contact">İletişim</button>
-      <button class="footer-link" onclick="openModal('privacy')" id="fl-privacy">Gizlilik Politikası</button>
-      <button class="footer-link" onclick="openModal('terms')" id="fl-terms">Kullanım Şartları</button>
+      <button class="footer-link" onclick="openModal('contact')">İletişim</button>
+      <button class="footer-link" onclick="openModal('privacy')">Gizlilik</button>
     </div>
-    <p class="footer-note" id="footer-note">
-      İstediğin zaman iptal edebilirsin · Ödeme güvenli şekilde işlenir<br>
-      Sorular için <a href="mailto:destek@aitimewalk.com">destek@aitimewalk.com</a>
-    </p>
+    <p>AITimeWalk © 2026 — Güvenli Shopier Altyapısı Entegrasyonu</p>
   </div>
+</div>
 
-</div><!-- /page -->
-
-<!-- ═══════════════════════════════════════
-     ÖDEME MODALİ
-════════════════════════════════════════ -->
+<!-- Ödeme Modali -->
 <div class="modal-backdrop" id="modal-payment">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('payment')">&#x2715;</button>
-    <div class="modal-icon">&#x1F451;</div>
-    <h2 class="modal-title" id="pm-title">Premium'a Hoş Geldin</h2>
-    <p class="modal-desc" id="pm-desc">Tarihin tüm kapılarını aç — sınırsız yolculuk, özel dönemler seni bekliyor.</p>
-    <div class="modal-features">
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf1">Sınırsız zaman yolculuğu</span></div>
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf2">Antik Mısır, Dünya Savaşları ve daha fazlası</span></div>
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf3">Kendi senaryonu oluştur</span></div>
-      <div class="modal-feat"><span class="modal-feat-icon">&#x2736;</span> <span id="pmf4">Reklamsız deneyim</span></div>
+    <h2 class="modal-title">Boyut Kapılarını Tamamen Aç</h2>
+    <p style="color: var(--muted); margin: 1rem 0;">Osmanlı, Roma, Bilim Kurgu ve Çoklu Evren simülasyonları dahil tüm kilitleri kaldırın.</p>
+    <div style="background: rgba(201,168,76,0.1); padding: 1rem; border-radius: 10px; font-weight: bold; color: var(--gold);">
+      Abonelik Bedeli: &#x20BA;129 / Ay
     </div>
-    <div class="modal-price-box">
-      <div class="modal-price-amount">&#x20BA;129</div>
-      <div class="modal-price-label" id="pm-price-label">aylık abonelik · istediğin zaman iptal</div>
-    </div>
-    <button class="btn-pay" id="btn-pay" onclick="goToShopier()">
-      <span id="pm-pay-btn">Ödemeyi Tamamla</span> <span>&#x2736;</span>
-    </button>
-    <p class="modal-legal" id="pm-legal">
-      Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek
-      <a onclick="openModal('terms')">Kullanım Şartları</a>'nı ve
-      <a onclick="openModal('privacy')">Gizlilik Politikası</a>'nı kabul etmiş olursun.
-    </p>
+    <!-- PWA ve Shopier Bağlantı Noktası -->
+    <button class="btn-pay" onclick="triggerPayment()">Shopier ile Güvenli Öde</button>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════
-     İLETİŞİM MODALİ
-════════════════════════════════════════ -->
-<div class="modal-backdrop" id="modal-contact">
-  <div class="modal modal-wide">
-    <button class="modal-close" onclick="closeModal('contact')">&#x2715;</button>
-    <div class="modal-icon">✉️</div>
-    <h2 class="modal-title" id="contact-title">İletişim</h2>
-    <p class="modal-desc" id="contact-desc">Sorularını ve görüşlerini bekliyoruz.</p>
-    <div class="contact-form">
-      <div>
-        <label id="contact-name-label">İsim</label>
-        <input type="text" id="contact-name" placeholder="Adın" />
-      </div>
-      <div>
-        <label id="contact-email-label">E-posta</label>
-        <input type="email" id="contact-email" placeholder="ornek@email.com" />
-      </div>
-      <div>
-        <label id="contact-msg-label">Mesaj</label>
-        <textarea id="contact-message" placeholder="Mesajını buraya yaz..."></textarea>
-      </div>
-      <button class="btn-contact-send" onclick="sendContactForm()" id="contact-send-btn">Gönder ✦</button>
-    </div>
-    <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);font-style:italic;" id="contact-alt">
-      Ya da doğrudan yaz: <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a>
-    </p>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     GİZLİLİK POLİTİKASI MODALİ
-════════════════════════════════════════ -->
-<div class="modal-backdrop" id="modal-privacy">
-  <div class="modal modal-wide">
-    <button class="modal-close" onclick="closeModal('privacy')">&#x2715;</button>
-    <div class="modal-icon">🔒</div>
-    <h2 class="modal-title" id="privacy-title">Gizlilik Politikası</h2>
-    <p class="legal-last-updated" id="privacy-updated">Son güncelleme: Haziran 2025</p>
-    <div class="legal-body" id="privacy-body">
-      <h3>1. Toplanan Veriler</h3>
-      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Shopier altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
-      <h3>2. Verilerin Kullanımı</h3>
-      <p>Topladığımız veriler yalnızca şu amaçlarla kullanılır:</p>
-      <ul>
-        <li>Hizmetin kesintisiz sunulması</li>
-        <li>Premium abonelik yönetimi</li>
-        <li>Teknik destek ve iletişim</li>
-        <li>Hizmet kalitesinin iyileştirilmesi</li>
-      </ul>
-      <h3>3. Üçüncü Taraflarla Paylaşım</h3>
-      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Shopier'in güvenli altyapısı üzerinden gerçekleştirilir.</p>
-      <h3>4. Çerezler (Cookies)</h3>
-      <p>Sitede oturum yönetimi ve tercih kaydı amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri devre dışı bırakabilirsiniz; ancak bu durum bazı özelliklerin çalışmasını etkileyebilir.</p>
-      <h3>5. Veri Güvenliği</h3>
-      <p>Verileriniz endüstri standardı SSL şifrelemesiyle korunmaktadır. Sunucularımız güvenli veri merkezlerinde barındırılmaktadır.</p>
-      <h3>6. Haklarınız</h3>
-      <p>KVKK kapsamında verilerinize erişim, düzeltme veya silme talebinde bulunabilirsiniz. Bunun için <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a> adresine yazabilirsiniz.</p>
-      <h3>7. İletişim</h3>
-      <p>Gizlilik politikamıza ilişkin sorularınız için: <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     KULLANIM ŞARTLARI MODALİ
-════════════════════════════════════════ -->
-<div class="modal-backdrop" id="modal-terms">
-  <div class="modal modal-wide">
-    <button class="modal-close" onclick="closeModal('terms')">&#x2715;</button>
-    <div class="modal-icon">📜</div>
-    <h2 class="modal-title" id="terms-title">Kullanım Şartları</h2>
-    <p class="legal-last-updated" id="terms-updated">Son güncelleme: Haziran 2025</p>
-    <div class="legal-body" id="terms-body">
-      <h3>1. Hizmet Tanımı</h3>
-      <p>AITimeWalk, yapay zekâ destekli tarihsel sohbet deneyimi sunan bir web uygulamasıdır. Hizmet, ücretsiz (Normal Mod) ve ücretli (Premium Mod) seçenekler ile sunulmaktadır.</p>
-      <h3>2. Kullanım Koşulları</h3>
-      <ul>
-        <li>Hizmet yalnızca kişisel ve eğitim amaçlı kullanılabilir.</li>
-        <li>İçeriklerin ticari amaçla kopyalanması veya dağıtılması yasaktır.</li>
-        <li>Sistemi kötüye kullanmaya yönelik her türlü girişim hesabın askıya alınmasıyla sonuçlanabilir.</li>
-        <li>18 yaş altı kullanıcıların ebeveyn gözetiminde kullanması önerilir.</li>
-      </ul>
-      <h3>3. Premium Abonelik</h3>
-      <p>Premium abonelik aylık olarak yenilenir. Aboneliğinizi istediğiniz zaman iptal edebilirsiniz. İptal işlemi mevcut dönem sonunda geçerlilik kazanır; kalan süre için iade yapılmaz.</p>
-      <h3>4. Yapay Zekâ Yanıtları</h3>
-      <p>Sistemimiz tarafından üretilen yanıtlar eğlence ve eğitim amacıyla tasarlanmıştır. AITimeWalk, yapay zekânın ürettiği içeriklerin tarihsel doğruluğunu garanti etmez; bu içerikler akademik kaynak olarak kullanılmamalıdır.</p>
-      <h3>5. Sorumluluk Sınırı</h3>
-      <p>AITimeWalk, hizmet kesintileri, veri kayıpları veya üçüncü taraf hizmetlerden kaynaklanan sorunlar nedeniyle doğabilecek zararlardan sorumlu tutulamaz.</p>
-      <h3>6. Değişiklikler</h3>
-      <p>Kullanım şartları önceden bildirim yapılmaksızın güncellenebilir. Değişiklikler sitede yayımlandığı andan itibaren geçerlidir.</p>
-      <h3>7. İletişim</h3>
-      <p>Kullanım şartlarına ilişkin sorularınız için: <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-// =====================================================
-// AYARLAR
-// =====================================================
-const SHOPIER_URL = 'https://www.shopier.com/aitimewalk/47778139';
-
-// =====================================================
-// ÇEVİRİLER (TR / EN)
-// =====================================================
-const TRANSLATIONS = {
+// Dil ve Mod Veri Yapısı
+const MODES_DATA = {
   tr: {
-    mainTitle: 'Tarihte Zaman Yolculuğuna Çık',
-    mainSub: 'Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al',
-    modeLabel: 'Normal Mod',
-    modeLabelPremium: 'Premium Mod ✦',
-    upgradeBtn: '👑 Premium — ₺129/ay',
-    emptyTitle: 'Geçmişe açılan kapı',
-    emptyDesc: 'Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.',
-    placeholder: 'Tarihe dair ne merak ediyorsun?',
-    hintText: 'Bir dönem seç · Enter ile gönder · Shift+Enter yeni satır',
-    plansLabel: 'Planlar',
-    planNormalName: 'Normal Mod',
-    planNormalTag: 'Tarihle tanışmanın başlangıcı',
-    priceFree: 'Ücretsiz',
-    pricePeriod: '/ ay',
-    planPremiumName: 'Premium Mod',
-    planPremiumTag: 'Tam tarihin içinde yaşa',
-    badgePopular: 'En Popüler',
-    normalPlanBtn: '✔ Şu An Aktif',
-    btnGoPremium: "Premium'a Geç ✶",
-    nf1: 'Günde 3 zaman yolculuğu',
-    nf2: '5 temel tarihsel senaryo',
-    nf3: 'Mitoloji, Bilim Kurgu & daha fazlası',
-    nf3Badge: 'günlük 3 hak',
-    nf4: 'Standart AI yanıtları',
-    nf5: 'Premium dönemler & kendi senaryom',
-    nf5Badge: 'kilitli',
-    nf6: 'Reklamsız deneyim',
-    nf6Badge: 'kilitli',
-    pf1: 'Sınırsız zaman yolculuğu',
-    pf2: 'Gelişmiş AI karakterlerle konuşma',
-    pf3: 'Reklamsız deneyim',
-    pf4: 'Özel dönemler: Antik Mısır, Dünya Savaşları…',
-    pf5: 'Kendi senaryonu oluştur',
-    erasSectionTitle: 'Dönemler',
-    compareTitle: 'Detaylı Karşılaştırma',
-    thFeature: 'Özellik', thNormal: 'Normal', thPremium: 'Premium',
-    ct1: 'Günlük yolculuk', ct1v: 'Sınırsız',
-    ct2: 'Tarihsel senaryo', ct2v: 'Tümü + Özel',
-    ct3: 'AI yanıt kalitesi', ct3n: 'Standart', ct3v: 'Gelişmiş',
-    ct4: 'Reklamlar', ct4n: 'Var', ct4v: 'Yok',
-    ct5: 'Kilitli dönemler', ct5v: 'Açık',
-    ct6: 'Kendi senaryon',
-    flContact: 'İletişim', flPrivacy: 'Gizlilik Politikası', flTerms: 'Kullanım Şartları',
-    footerNote: "İstediğin zaman iptal edebilirsin · Ödeme güvenli şekilde işlenir<br>Sorular için <a href='mailto:destek@aitimewalk.com'>destek@aitimewalk.com</a>",
-    pmTitle: "Premium'a Hoş Geldin",
-    pmDesc: 'Tarihin tüm kapılarını aç — sınırsız yolculuk, özel dönemler seni bekliyor.',
-    pmf1: 'Sınırsız zaman yolculuğu',
-    pmf2: 'Antik Mısır, Dünya Savaşları ve daha fazlası',
-    pmf3: 'Kendi senaryonu oluştur',
-    pmf4: 'Reklamsız deneyim',
-    pmPriceLabel: 'aylık abonelik · istediğin zaman iptal',
-    pmPayBtn: 'Ödemeyi Tamamla',
-    pmLegal: "Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek <a onclick=\"openModal('terms')\">Kullanım Şartları</a>'nı ve <a onclick=\"openModal('privacy')\">Gizlilik Politikası</a>'nı kabul etmiş olursun.",
-    contactTitle: 'İletişim',
-    contactDesc: 'Sorularını ve görüşlerini bekliyoruz.',
-    contactNameLabel: 'İsim', contactEmailLabel: 'E-posta', contactMsgLabel: 'Mesaj',
-    contactNamePlaceholder: 'Adın', contactEmailPlaceholder: 'ornek@email.com', contactMsgPlaceholder: 'Mesajını buraya yaz...',
-    contactSendBtn: 'Gönder ✦',
-    contactAlt: "Ya da doğrudan yaz: <a href='mailto:destek@aitimewalk.com' style='color:var(--gold-dim);'>destek@aitimewalk.com</a>",
-    privacyTitle: 'Gizlilik Politikası',
-    privacyUpdated: 'Son güncelleme: Haziran 2025',
-    termsTitle: 'Kullanım Şartları',
-    termsUpdated: 'Son güncelleme: Haziran 2025',
-    lockUpgradeBtn: "Premium'a Geç",
-    toastLimitReached: "Günlük hakkın doldu — Premium'a geç",
-    toastSelectEra: 'Önce bir dönem seç ⬆',
-    toastPremiumActive: '🎉 Ödemen alındı! Premium aktif.',
-    toastPaymentCancelled: 'Ödeme iptal edildi.',
-    toastContactSent: '✦ Mesajın iletildi!',
-    premiumBannerTitle: '🎉 Premium aktif! Tüm dönemler açıldı.',
-    premiumBannerSub: 'Ödemen alındı — sınırsız zaman yolculuğunun tadını çıkar.',
-    userAvatarLabel: 'Sen',
-    connectionError: 'Bağlantı hatası oluştu. Lütfen tekrar dene.',
-    apiError: 'Bir hata oluştu, lütfen tekrar dene.',
-    eraWelcome: (label) => `Bu çağa dair ne merak ediyorsun?`,
-    eraHint: (label) => `${label} dönemi · Enter ile gönder · Shift+Enter yeni satır`,
-    lockText: (label) => `"${label}" dönemi Premium'a özeldir.`,
-    unlimitedLabel: 'Sınırsız',
-    shopierRedirect: "Shopier'e yönlendiriliyorsunuz...",
+    title: "Zaman ve Evren Yolculuğu",
+    sub: "Yapay zekâyla kadim tarihleri ve alternatif boyutları keşfet",
+    modes: [
+      { id: "egypt", name: "Antik Mısır", emoji: "𓁹", locked: false, desc: "Firavunların gizemli dünyası." },
+      { id: "mythology", name: "Mitoloji", emoji: "🔱", locked: false, desc: "Tanrılar ve efsanevi canavarlar." },
+      { id: "lucid", name: "Lucid Rüya", emoji: "🌙", locked: false, desc: "Bilinçaltının kontrol edilebilir boyutları." },
+      { id: "ottoman", name: "Osmanlı", emoji: "🏹", locked: true, desc: "Görkemli imparatorluk yılları." },
+      { id: "roma", name: "Antik Roma", emoji: "🏛️", locked: true, desc: "Gladyatörler ve Sezar dönemi." },
+      { id: "scifi", name: "Bilim Kurgu", emoji: "🚀", locked: true, desc: "Yapay zeka ve galaktik gelecek." },
+      { id: "parallel", name: "Paralel Evrenler", emoji: "🌀", locked: true, desc: "Farklı seçimlerin alternatif hayatları." },
+      { id: "multiverse", name: "Çoklu Evrenler", emoji: "🌌", locked: true, desc: "Aynı anda var olan kozmik varyasyonlar." }
+    ]
   },
   en: {
-    mainTitle: 'Travel Through Time with AI',
-    mainSub: 'Explore history with artificial intelligence — get fluent answers to every question',
-    modeLabel: 'Free Mode',
-    modeLabelPremium: 'Premium Mode ✦',
-    upgradeBtn: '👑 Premium — ₺129/mo',
-    emptyTitle: 'A gateway to the past',
-    emptyDesc: 'Select an era above, then ask anything about history.',
-    placeholder: 'What do you want to know about history?',
-    hintText: 'Select an era · Press Enter to send · Shift+Enter for new line',
-    plansLabel: 'Plans',
-    planNormalName: 'Free Mode',
-    planNormalTag: 'Your first step into history',
-    priceFree: 'Free',
-    pricePeriod: '/ mo',
-    planPremiumName: 'Premium Mode',
-    planPremiumTag: 'Live fully inside history',
-    badgePopular: 'Most Popular',
-    normalPlanBtn: '✔ Currently Active',
-    btnGoPremium: 'Go Premium ✶',
-    nf1: '3 journeys per day',
-    nf2: '5 core historical scenarios',
-    nf3: 'Mythology, Sci-Fi & more',
-    nf3Badge: '3 daily uses',
-    nf4: 'Standard AI responses',
-    nf5: 'Premium eras & custom scenarios',
-    nf5Badge: 'locked',
-    nf6: 'Ad-free experience',
-    nf6Badge: 'locked',
-    pf1: 'Unlimited time travel',
-    pf2: 'Chat with advanced AI characters',
-    pf3: 'Ad-free experience',
-    pf4: 'Special eras: Ancient Egypt, World Wars…',
-    pf5: 'Create your own scenario',
-    erasSectionTitle: 'Eras',
-    compareTitle: 'Detailed Comparison',
-    thFeature: 'Feature', thNormal: 'Free', thPremium: 'Premium',
-    ct1: 'Daily journeys', ct1v: 'Unlimited',
-    ct2: 'Historical scenarios', ct2v: 'All + Custom',
-    ct3: 'AI response quality', ct3n: 'Standard', ct3v: 'Advanced',
-    ct4: 'Ads', ct4n: 'Yes', ct4v: 'No',
-    ct5: 'Locked eras', ct5v: 'Unlocked',
-    ct6: 'Your own scenario',
-    flContact: 'Contact', flPrivacy: 'Privacy Policy', flTerms: 'Terms of Use',
-    footerNote: "Cancel anytime · Payments are processed securely<br>Questions? <a href='mailto:destek@aitimewalk.com'>destek@aitimewalk.com</a>",
-    pmTitle: 'Welcome to Premium',
-    pmDesc: 'Unlock all of history — unlimited journeys, exclusive eras await.',
-    pmf1: 'Unlimited time travel',
-    pmf2: 'Ancient Egypt, World Wars and more',
-    pmf3: 'Create your own scenario',
-    pmf4: 'Ad-free experience',
-    pmPriceLabel: 'monthly subscription · cancel anytime',
-    pmPayBtn: 'Complete Payment',
-    pmLegal: "Powered by Shopier secure payments. By continuing you agree to our <a onclick=\"openModal('terms')\">Terms of Use</a> and <a onclick=\"openModal('privacy')\">Privacy Policy</a>.",
-    contactTitle: 'Contact',
-    contactDesc: "We'd love to hear from you.",
-    contactNameLabel: 'Name', contactEmailLabel: 'Email', contactMsgLabel: 'Message',
-    contactNamePlaceholder: 'Your name', contactEmailPlaceholder: 'example@email.com', contactMsgPlaceholder: 'Write your message here...',
-    contactSendBtn: 'Send ✦',
-    contactAlt: "Or write directly: <a href='mailto:destek@aitimewalk.com' style='color:var(--gold-dim);'>destek@aitimewalk.com</a>",
-    privacyTitle: 'Privacy Policy',
-    privacyUpdated: 'Last updated: June 2025',
-    termsTitle: 'Terms of Use',
-    termsUpdated: 'Last updated: June 2025',
-    lockUpgradeBtn: 'Go Premium',
-    toastLimitReached: 'Daily limit reached — go Premium',
-    toastSelectEra: 'Select an era first ⬆',
-    toastPremiumActive: '🎉 Payment received! Premium is active.',
-    toastPaymentCancelled: 'Payment cancelled.',
-    toastContactSent: '✦ Message sent!',
-    premiumBannerTitle: '🎉 Premium active! All eras unlocked.',
-    premiumBannerSub: 'Payment received — enjoy unlimited time travel.',
-    userAvatarLabel: 'You',
-    connectionError: 'Connection error. Please try again.',
-    apiError: 'An error occurred, please try again.',
-    eraWelcome: (label) => `What would you like to know about this era?`,
-    eraHint: (label) => `${label} era · Press Enter to send · Shift+Enter for new line`,
-    lockText: (label) => `"${label}" era is for Premium members only.`,
-    unlimitedLabel: 'Unlimited',
-    shopierRedirect: 'Redirecting to Shopier...',
+    title: "Time & Multiverse Walk",
+    sub: "Explore ancient history and alternative dimensions with AI",
+    modes: [
+      { id: "egypt", name: "Ancient Egypt", emoji: "𓁹", locked: false, desc: "Mysterious world of Pharaohs." },
+      { id: "mythology", name: "Mythology", emoji: "🔱", locked: false, desc: "Gods and mythical creatures." },
+      { id: "lucid", name: "Lucid Dream", emoji: "🌙", locked: false, desc: "Controllable realms of subconscious." },
+      { id: "ottoman", name: "Ottoman Empire", emoji: "🏹", locked: true, desc: "Glorious imperial eras." },
+      { id: "roma", name: "Ancient Rome", emoji: "🏛️", locked: true, desc: "Gladiators and Caesar's reign." },
+      { id: "scifi", name: "Sci-Fi Future", emoji: "🚀", locked: true, desc: "AI tech and galactic futures." },
+      { id: "parallel", name: "Parallel Worlds", emoji: "🌀", locked: true, desc: "Alternative lives from different choices." },
+      { id: "multiverse", name: "Multiverse", emoji: "🌌", locked: true, desc: "Simultaneous cosmic variations." }
+    ]
   }
 };
 
-// =====================================================
-// ERAS
-// =====================================================
-const ERAS = [
-  { id:'ottoman', emoji:'⚔️', label:{tr:'Osmanlı',en:'Ottoman'}, premium:false,
-    system:{tr:'Sen 15. yüzyılda Osmanlı İmparatorluğu\'nda yaşayan bilge bir tarihçisin. Kullanıcıya Osmanlı tarihi, kültürü, savaşları ve gündelik yaşamı hakkında akıcı, etkileyici ve detaylı Türkçe yanıtlar ver.',
-            en:'You are a wise historian living in the 15th-century Ottoman Empire. Give the user fluent, vivid, and detailed answers in English about Ottoman history, culture, wars, and daily life.'},
-    quick:{tr:['Osmanlı nasıl kuruldu?','Fatih İstanbul\'u nasıl fethetti?','Yeniçeriler kimdir?','Osmanlı\'da günlük hayat nasıldı?'],
-           en:['How was the Ottoman Empire founded?','How did Mehmed II conquer Istanbul?','Who were the Janissaries?','What was daily life like in the Ottoman Empire?']}},
-  { id:'rome', emoji:'🏛️', label:{tr:'Roma',en:'Rome'}, premium:false,
-    system:{tr:'Sen antik Roma döneminin bilge bir tarihçisisin. Roma İmparatorluğu\'nun yükselişi, çöküşü, yasaları, mimarisi ve kültürü hakkında akıcı Türkçe yanıtlar ver.',
-            en:'You are a wise historian of ancient Rome. Give the user fluent answers in English about the rise and fall of the Roman Empire, its laws, architecture, and culture.'},
-    quick:{tr:['Roma neden çöktü?','Gladyatörler nasıldı?','Sezar kim?','Roma mimarisi nasıl inşa edildi?'],
-           en:['Why did Rome fall?','What were gladiators like?','Who was Caesar?','How was Roman architecture built?']}},
-  { id:'republic', emoji:'🇹🇷', label:{tr:'Cumhuriyet',en:'Turkish Republic'}, premium:false,
-    system:{tr:'Sen Türk Kurtuluş Savaşı ve Cumhuriyet\'in kuruluş döneminin bilge bir tarihçisisin. Atatürk, İnkılaplar ve o dönemin ruhunu doğru Türkçe yanıtlarla aktar.',
-            en:'You are a wise historian of the Turkish War of Independence and the founding of the Republic. Convey the spirit of Atatürk, the reforms, and that era in fluent English.'},
-    quick:{tr:['Cumhuriyet nasıl ilan edildi?','Kurtuluş Savaşı\'nın dönüm noktaları?','Atatürk\'ün reformları nelerdir?'],
-           en:['How was the Republic proclaimed?','Turning points of the War of Independence?','What were Atatürk\'s reforms?']}},
-  { id:'egypt', emoji:'🔱', label:{tr:'Antik Mısır',en:'Ancient Egypt'}, premium:true,
-    system:{tr:'Sen antik Mısır\'ın bilge bir rahibisin. Piramitlerin inşasına tanıklık etmiş birisin. Mısır tarihi, mitolojisi ve gündelik yaşamı hakkında mistik Türkçe yanıtlar ver.',
-            en:'You are a wise priest of ancient Egypt who witnessed the building of the pyramids. Give mystical answers in English about Egyptian history, mythology, and daily life.'},
-    quick:{tr:['Piramitler nasıl inşa edildi?','Firavunlar neden tanrı sayılırdı?','Kleopatra kimdir?'],
-           en:['How were the pyramids built?','Why were pharaohs considered gods?','Who was Cleopatra?']}},
-  { id:'ww1', emoji:'💣', label:{tr:'I. Dünya Savaşı',en:'World War I'}, premium:true,
-    system:{tr:'Sen Birinci Dünya Savaşı\'nı yakından yaşamış bir tarih tanığısın. Savaşın nedenleri, cephe koşulları, Osmanlı\'nın rolü ve sonuçları hakkında derin Türkçe yanıtlar ver.',
-            en:'You are a witness who lived through World War I. Give deep answers in English about the causes, trench conditions, the Ottoman role, and the consequences of the war.'},
-    quick:{tr:['Savaş neden çıktı?','Çanakkale nasıl geçti?','Osmanlı neden savaşa girdi?'],
-           en:['Why did the war start?','What happened at Gallipoli?','Why did the Ottoman Empire enter the war?']}},
-  { id:'ww2', emoji:'⚡', label:{tr:'II. Dünya Savaşı',en:'World War II'}, premium:true,
-    system:{tr:'Sen İkinci Dünya Savaşı\'nın tüm boyutlarına hâkim bir tarihçisin. Savaşın nedenleri, önemli muharebeler, liderler ve insanlık tarihi üzerindeki etkileri hakkında akıcı Türkçe yanıtlar ver.',
-            en:'You are a historian who knows every dimension of World War II. Give fluent answers in English about causes, major battles, leaders, and the war\'s impact on human history.'},
-    quick:{tr:['Hitler nasıl iktidara geldi?','Normandiya çıkarması neydi?','Atom bombası neden atıldı?'],
-           en:['How did Hitler rise to power?','What was the D-Day landing?','Why was the atomic bomb dropped?']}},
-  { id:'seljuk', emoji:'🏹', label:{tr:'Selçuklu',en:'Seljuk Empire'}, premium:true,
-    system:{tr:'Sen Büyük Selçuklu İmparatorluğu döneminin bilge bir vezirisin. Türklerin Anadolu\'ya yerleşmesi, Malazgirt Savaşı ve Selçuklu medeniyeti hakkında akıcı Türkçe yanıtlar ver.',
-            en:'You are a wise vizier of the Great Seljuk Empire. Give fluent answers in English about the Turks\' settlement in Anatolia, the Battle of Manzikert, and Seljuk civilization.'},
-    quick:{tr:['Malazgirt neden önemli?','Türkler Anadolu\'ya nasıl geldi?','Selçuklu bilim adamları kimler?'],
-           en:['Why is Manzikert important?','How did the Turks come to Anatolia?','Who were the Seljuk scientists?']}},
-  { id:'mythology', emoji:'⚡', label:{tr:'Mitoloji',en:'Mythology'}, premium:false,
-    system:{tr:'Sen antik mitolojilerin derin bilgisine sahip bir bilge anlatıcısın. Yunan, Roma, Türk, Mezopotamya mitolojilerindeki tanrılar, kahramanlar ve destanlar hakkında büyülü Türkçe yanıtlar ver.',
-            en:'You are a wise storyteller with deep knowledge of ancient mythologies. Give enchanting answers in English about gods, heroes, and epics from Greek, Roman, Turkish, and Mesopotamian myths.'},
-    quick:{tr:['Zeus kimdir?','Prometheus ateşi nasıl çaldı?','Türk mitolojisinde Tengri nedir?'],
-           en:['Who is Zeus?','How did Prometheus steal fire?','What is Tengri in Turkish mythology?']}},
-  { id:'scifi', emoji:'🚀', label:{tr:'Bilim Kurgu',en:'Sci-Fi'}, premium:false,
-    system:{tr:'Sen bilim kurgunun sınırlarında gezinen uzman bir anlatıcısın. Yapay zeka, uzay kolonileri, zaman yolculuğu ve distopik gelecekler hakkında heyecan verici Türkçe yanıtlar ver.',
-            en:'You are an expert narrator roaming the frontiers of science fiction. Give exciting answers in English about AI, space colonies, time travel, and dystopian futures.'},
-    quick:{tr:['2150\'de dünya nasıl görünür?','Yapay zeka insanlığı geçer mi?','Zaman yolculuğu mümkün mü?'],
-           en:['What will the world look like in 2150?','Will AI surpass humanity?','Is time travel possible?']}},
-  { id:'parallel', emoji:'🌀', label:{tr:'Paralel Evrenler',en:'Parallel Universes'}, premium:false,
-    system:{tr:'Sen kuantum fiziği ve çok dünya yorumundan ilham alan, paralel evrenler konusunda uzman mistik bir rehbersin. Alternatif tarih senaryolarını yaratıcı Türkçe yanıtlarla canlandır.',
-            en:'You are a mystical guide inspired by quantum physics and the many-worlds interpretation. Bring alternative history scenarios to life with creative answers in English.'},
-    quick:{tr:['Osmanlı hiç yıkılmasaydı ne olurdu?','Dinozorlar yaşasaydı medeniyet kurabilir miydi?','Kuantum süperpozisyonu nedir?'],
-           en:['What if the Ottoman Empire never fell?','Could dinosaurs have built a civilization?','What is quantum superposition?']}},
-  { id:'fantasy', emoji:'🐉', label:{tr:'Fantastik Dünyalar',en:'Fantasy Worlds'}, premium:false,
-    system:{tr:'Sen fantastik edebiyatın büyüleyici atmosferini bilen, büyü sistemleri, mitik yaratıklar ve kahramanlık yolculukları konusunda uzman bir anlatıcısın. Türkçe rehberlik et.',
-            en:'You are a storyteller who knows the enchanting atmosphere of fantasy literature, expert in magic systems, mythic creatures, and heroic journeys. Guide users in English.'},
-    quick:{tr:['Bir ejderha uygarlığı nasıl olurdu?','Büyünün fizik kuralları olsaydı neler değişirdi?'],
-           en:['What would a dragon civilization look like?','What if magic obeyed the laws of physics?']}},
-  { id:'multiverse', emoji:'🌌', label:{tr:'Çoklu Evrenler',en:'Multiverse'}, premium:false,
-    system:{tr:'Sen kozmoloji ve kuantum mekaniğinin kesişiminde var olan çoklu evrenler teorisinin uzman rehberisin. Evrenin en derin sırlarını akıcı Türkçe ile anlat.',
-            en:'You are an expert guide in multiverse theory, at the intersection of cosmology and quantum mechanics. Explain the universe\'s deepest secrets in fluent English.'},
-    quick:{tr:['Büyük Patlama\'dan önce ne vardı?','Evrenimiz bir simülasyon mu?','Karanlık madde nedir?'],
-           en:['What existed before the Big Bang?','Is our universe a simulation?','What is dark matter?']}},
-  { id:'custom', emoji:'✍️', label:{tr:'Kendi Senaryom',en:'My Own Scenario'}, premium:true,
-    system:{tr:'Kullanıcı sana kendi tarihi senaryosunu anlatacak. O senaryonun içinde yaşıyormuş gibi davran ve soruları en yaratıcı şekilde Türkçe yanıtla.',
-            en:'The user will tell you their own historical scenario. Act as if you are living inside that scenario and answer questions as creatively as possible in English.'},
-    quick:{tr:['Kendi dönemimi tanımlarım...','Farklı bir senaryo kur...'],
-           en:['Let me describe my era...','Build a different scenario...']}}
-];
+let currentLang = 'tr';
+let selectedModeId = 'egypt';
 
-const API_URL = '/api/ask';
+function renderInterface() {
+  const data = MODES_DATA[currentLang];
+  document.getElementById('main-title').innerText = data.title;
+  document.getElementById('main-sub').innerText = data.sub;
 
-// =====================================================
-// STATE
-// =====================================================
-let currentLang = localStorage.getItem('atw_lang') || 'tr';
-let isPremium = loadPremiumState();
-let selectedEra = null;
-let usedToday = loadUsedToday();
-const DAILY_LIMIT = 3;
-let isLoading = false;
-let conversationHistory = [];
+  const eraRow = document.getElementById('era-row');
+  const chipsGrid = document.getElementById('chips-grid');
+  eraRow.innerHTML = '';
+  chipsGrid.innerHTML = '';
 
-// =====================================================
-// PREMIUM STATE
-// =====================================================
-function loadPremiumState() {
-  const saved = localStorage.getItem('atw_premium');
-  if (!saved) return false;
-  try {
-    const data = JSON.parse(saved);
-    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
-    if (Date.now() - data.ts < THIRTY_DAYS) return true;
-    localStorage.removeItem('atw_premium');
-    return false;
-  } catch { return false; }
-}
-function savePremiumState() {
-  localStorage.setItem('atw_premium', JSON.stringify({ ts: Date.now() }));
-}
-function loadUsedToday() {
-  const saved = localStorage.getItem('atw_usage');
-  if (!saved) return 0;
-  try {
-    const data = JSON.parse(saved);
-    const today = new Date().toDateString();
-    if (data.date !== today) return 0;
-    return data.count || 0;
-  } catch { return 0; }
-}
-function saveUsedToday(count) {
-  localStorage.setItem('atw_usage', JSON.stringify({ date: new Date().toDateString(), count }));
-}
-
-// =====================================================
-// LANGUAGE
-// =====================================================
-function setLang(lang) {
-  currentLang = lang;
-  localStorage.setItem('atw_lang', lang);
-  document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
-  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-  document.documentElement.lang = lang;
-  applyTranslations();
-  // Rebuild era row and chips with new language
-  document.getElementById('era-row').innerHTML = '';
-  document.getElementById('chips-grid').innerHTML = '';
-  buildEraRow();
-  buildChipsGrid();
-  // Reset chat
-  if (selectedEra) {
-    selectedEra = ERAS.find(e => e.id === selectedEra.id);
-    buildQuickBtns(selectedEra);
-  }
-}
-
-function t(key, ...args) {
-  const val = TRANSLATIONS[currentLang][key];
-  return typeof val === 'function' ? val(...args) : val;
-}
-
-function applyTranslations() {
-  const keys = [
-    ['main-title','mainTitle'],['main-sub','mainSub'],
-    ['empty-title','emptyTitle'],['empty-desc','emptyDesc'],
-    ['plans-label','plansLabel'],['badge-popular','badgePopular'],
-    ['plan-normal-name','planNormalName'],['plan-normal-tag','planNormalTag'],
-    ['price-free-label','priceFree'],['price-period','pricePeriod'],
-    ['plan-premium-name','planPremiumName'],['plan-premium-tag','planPremiumTag'],
-    ['normal-plan-btn','normalPlanBtn'],['btn-go-premium','btnGoPremium'],
-    ['nf1','nf1'],['nf2','nf2'],['nf3','nf3'],['nf3-badge','nf3Badge'],
-    ['nf4','nf4'],['nf5','nf5'],['nf5-badge','nf5Badge'],['nf6','nf6'],['nf6-badge','nf6Badge'],
-    ['pf1','pf1'],['pf2','pf2'],['pf3','pf3'],['pf4','pf4'],['pf5','pf5'],
-    ['eras-section-title','erasSectionTitle'],['compare-title','compareTitle'],
-    ['th-feature','thFeature'],['th-normal','thNormal'],['th-premium','thPremium'],
-    ['ct1','ct1'],['ct1v','ct1v'],['ct2','ct2'],['ct2v','ct2v'],
-    ['ct3','ct3'],['ct3n','ct3n'],['ct3v','ct3v'],['ct4','ct4'],['ct4n','ct4n'],['ct4v','ct4v'],
-    ['ct5','ct5'],['ct5v','ct5v'],['ct6','ct6'],
-    ['fl-contact','flContact'],['fl-privacy','flPrivacy'],['fl-terms','flTerms'],
-    ['pm-title','pmTitle'],['pm-desc','pmDesc'],
-    ['pmf1','pmf1'],['pmf2','pmf2'],['pmf3','pmf3'],['pmf4','pmf4'],
-    ['pm-price-label','pmPriceLabel'],['pm-pay-btn','pmPayBtn'],
-    ['contact-title','contactTitle'],['contact-desc','contactDesc'],
-    ['contact-name-label','contactNameLabel'],['contact-email-label','contactEmailLabel'],
-    ['contact-msg-label','contactMsgLabel'],
-    ['contact-send-btn','contactSendBtn'],
-    ['privacy-title','privacyTitle'],['privacy-updated','privacyUpdated'],
-    ['terms-title','termsTitle'],['terms-updated','termsUpdated'],
-    ['lock-upgrade-btn','lockUpgradeBtn'],
-  ];
-  keys.forEach(([id, key]) => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = t(key);
-  });
-  // Placeholders
-  document.getElementById('user-input').placeholder = t('placeholder');
-  document.getElementById('contact-name').placeholder = t('contactNamePlaceholder');
-  document.getElementById('contact-email').placeholder = t('contactEmailPlaceholder');
-  document.getElementById('contact-message').placeholder = t('contactMsgPlaceholder');
-  // innerHTML items
-  document.getElementById('footer-note').innerHTML = t('footerNote');
-  document.getElementById('pm-legal').innerHTML = t('pmLegal');
-  document.getElementById('contact-alt').innerHTML = t('contactAlt');
-  // Mode labels
-  document.getElementById('mode-label').textContent = isPremium ? t('modeLabelPremium') : t('modeLabel');
-  document.getElementById('hint-text').textContent = t('hintText');
-  document.getElementById('upgrade-btn').innerHTML = t('upgradeBtn');
-  // Privacy/Terms bodies (only TR has full text; EN shows simplified)
-  applyLegalBodies();
-}
-
-function applyLegalBodies() {
-  if (currentLang === 'en') {
-    document.getElementById('privacy-body').innerHTML = `
-      <h3>1. Data We Collect</h3>
-      <p>AITimeWalk collects only the data necessary to provide our service: email address (optional), payment details (processed securely via Shopier), and site usage statistics.</p>
-      <h3>2. How We Use Your Data</h3>
-      <p>Collected data is used solely to: deliver the service, manage Premium subscriptions, provide technical support, and improve service quality.</p>
-      <h3>3. Third-Party Sharing</h3>
-      <p>Your personal data is never shared with third parties unless required by law or with your explicit consent. Payments are processed via Shopier's secure infrastructure.</p>
-      <h3>4. Cookies</h3>
-      <p>We use cookies for session management and preference storage. You may disable cookies in your browser settings, though this may affect some features.</p>
-      <h3>5. Data Security</h3>
-      <p>Your data is protected with industry-standard SSL encryption on secure servers.</p>
-      <h3>6. Your Rights</h3>
-      <p>You may request access, correction, or deletion of your data at any time by contacting <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a>.</p>`;
-    document.getElementById('terms-body').innerHTML = `
-      <h3>1. Service Description</h3>
-      <p>AITimeWalk is a web application providing AI-powered historical conversation experiences, available in Free and Premium tiers.</p>
-      <h3>2. Usage Rules</h3>
-      <ul>
-        <li>The service may only be used for personal and educational purposes.</li>
-        <li>Copying or distributing content for commercial purposes is prohibited.</li>
-        <li>Any attempt to abuse the system may result in account suspension.</li>
-        <li>Users under 18 are advised to use the service under parental supervision.</li>
-      </ul>
-      <h3>3. Premium Subscription</h3>
-      <p>Premium renews monthly. You may cancel at any time; cancellation takes effect at the end of the current billing period. No refunds are issued for unused time.</p>
-      <h3>4. AI Responses</h3>
-      <p>Responses generated by our system are designed for entertainment and education. AITimeWalk does not guarantee the historical accuracy of AI-generated content; it should not be used as an academic source.</p>
-      <h3>5. Limitation of Liability</h3>
-      <p>AITimeWalk is not liable for damages arising from service interruptions, data loss, or issues caused by third-party services.</p>
-      <h3>6. Changes</h3>
-      <p>These terms may be updated without prior notice. Changes take effect upon publication on the site.</p>
-      <h3>7. Contact</h3>
-      <p><a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>`;
-  } else {
-    document.getElementById('privacy-body').innerHTML = `
-      <h3>1. Toplanan Veriler</h3>
-      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Shopier altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
-      <h3>2. Verilerin Kullanımı</h3>
-      <p>Topladığımız veriler yalnızca şu amaçlarla kullanılır:</p>
-      <ul>
-        <li>Hizmetin kesintisiz sunulması</li>
-        <li>Premium abonelik yönetimi</li>
-        <li>Teknik destek ve iletişim</li>
-        <li>Hizmet kalitesinin iyileştirilmesi</li>
-      </ul>
-      <h3>3. Üçüncü Taraflarla Paylaşım</h3>
-      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Shopier'in güvenli altyapısı üzerinden gerçekleştirilir.</p>
-      <h3>4. Çerezler (Cookies)</h3>
-      <p>Sitede oturum yönetimi ve tercih kaydı amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri devre dışı bırakabilirsiniz; ancak bu durum bazı özelliklerin çalışmasını etkileyebilir.</p>
-      <h3>5. Veri Güvenliği</h3>
-      <p>Verileriniz endüstri standardı SSL şifrelemesiyle korunmaktadır.</p>
-      <h3>6. Haklarınız</h3>
-      <p>KVKK kapsamında verilerinize erişim, düzeltme veya silme talebinde bulunabilirsiniz. Bunun için <a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a> adresine yazabilirsiniz.</p>
-      <h3>7. İletişim</h3>
-      <p><a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>`;
-    document.getElementById('terms-body').innerHTML = `
-      <h3>1. Hizmet Tanımı</h3>
-      <p>AITimeWalk, yapay zekâ destekli tarihsel sohbet deneyimi sunan bir web uygulamasıdır.</p>
-      <h3>2. Kullanım Koşulları</h3>
-      <ul>
-        <li>Hizmet yalnızca kişisel ve eğitim amaçlı kullanılabilir.</li>
-        <li>İçeriklerin ticari amaçla kopyalanması veya dağıtılması yasaktır.</li>
-        <li>Sistemi kötüye kullanmaya yönelik girişimler hesabın askıya alınmasıyla sonuçlanabilir.</li>
-        <li>18 yaş altı kullanıcıların ebeveyn gözetiminde kullanması önerilir.</li>
-      </ul>
-      <h3>3. Premium Abonelik</h3>
-      <p>Premium abonelik aylık olarak yenilenir. İstediğiniz zaman iptal edebilirsiniz. İptal mevcut dönem sonunda geçerlilik kazanır; kalan süre için iade yapılmaz.</p>
-      <h3>4. Yapay Zekâ Yanıtları</h3>
-      <p>Üretilen yanıtlar eğlence ve eğitim amacıylıdır; tarihsel doğruluk garanti edilmez ve akademik kaynak olarak kullanılmamalıdır.</p>
-      <h3>5. Sorumluluk Sınırı</h3>
-      <p>AITimeWalk, hizmet kesintileri veya üçüncü taraf sorunlarından kaynaklanan zararlardan sorumlu tutulamaz.</p>
-      <h3>6. Değişiklikler</h3>
-      <p>Kullanım şartları önceden bildirim yapılmaksızın güncellenebilir.</p>
-      <h3>7. İletişim</h3>
-      <p><a href="mailto:destek@aitimewalk.com" style="color:var(--gold-dim);">destek@aitimewalk.com</a></p>`;
-  }
-}
-
-// =====================================================
-// MODALS
-// =====================================================
-function openModal(type) {
-  closeAllModals();
-  document.getElementById('modal-' + type).classList.add('open');
-}
-function closeModal(type) {
-  document.getElementById('modal-' + type).classList.remove('open');
-}
-function closeAllModals() {
-  ['payment','contact','privacy','terms'].forEach(t => {
-    document.getElementById('modal-' + t).classList.remove('open');
-  });
-}
-['payment','contact','privacy','terms'].forEach(type => {
-  document.getElementById('modal-' + type).addEventListener('click', function(e) {
-    if (e.target === this) closeModal(type);
-  });
-});
-
-// =====================================================
-// SHOPIER
-// =====================================================
-function goToShopier() {
-  const btn = document.getElementById('btn-pay');
-  btn.disabled = true;
-  btn.innerHTML = '<span>' + t('shopierRedirect') + '</span>';
-  window.location.href = SHOPIER_URL;
-}
-
-function checkPaymentReturn() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('premium') === 'success') {
-    savePremiumState();
-    isPremium = true;
-    window.history.replaceState({}, document.title, window.location.pathname);
-    document.getElementById('premium-banner').classList.add('show');
-    document.getElementById('premium-banner').querySelector('.premium-banner-title').textContent = t('premiumBannerTitle');
-    document.getElementById('premium-banner').querySelector('.premium-banner-sub').textContent = t('premiumBannerSub');
-    applyPremiumUI();
-    showToast(t('toastPremiumActive'));
-  }
-  if (params.get('premium') === 'cancel') {
-    window.history.replaceState({}, document.title, window.location.pathname);
-    showToast(t('toastPaymentCancelled'));
-  }
-}
-
-function applyPremiumUI() {
-  document.getElementById('mode-label').textContent = t('modeLabelPremium');
-  document.getElementById('mode-dot').style.background = '#c9a84c';
-  document.getElementById('upgrade-btn').style.display = 'none';
-  document.getElementById('usage-pills').innerHTML = '<span style="font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">' + t('unlimitedLabel') + '</span>';
-  document.getElementById('normal-plan-btn').textContent = t('planNormalName');
-  document.getElementById('normal-plan-btn').style.opacity = '0.5';
-  document.querySelectorAll('.era-btn').forEach(btn => {
-    btn.classList.remove('locked-era');
-    const lock = btn.querySelector('.era-lock');
-    if (lock) lock.remove();
-  });
-  document.querySelectorAll('.era-chip').forEach(chip => {
-    chip.classList.remove('locked-chip');
-    chip.classList.add('unlocked');
-    const ov = chip.querySelector('.lock-overlay');
-    if (ov) ov.remove();
-  });
-}
-
-// =====================================================
-// CONTACT FORM
-// =====================================================
-function sendContactForm() {
-  const name = document.getElementById('contact-name').value.trim();
-  const email = document.getElementById('contact-email').value.trim();
-  const msg = document.getElementById('contact-message').value.trim();
-  if (!name || !email || !msg) { showToast('⚠ ' + (currentLang === 'tr' ? 'Tüm alanları doldur.' : 'Please fill in all fields.')); return; }
-  // mailto fallback (backend entegrasyonu yoksa)
-  const subject = encodeURIComponent('AITimeWalk - ' + name);
-  const body = encodeURIComponent(msg + '\n\n' + name + ' <' + email + '>');
-  window.open('mailto:destek@aitimewalk.com?subject=' + subject + '&body=' + body);
-  closeModal('contact');
-  showToast(t('toastContactSent'));
-  document.getElementById('contact-name').value = '';
-  document.getElementById('contact-email').value = '';
-  document.getElementById('contact-message').value = '';
-}
-
-// =====================================================
-// BUILD UI
-// =====================================================
-function buildStars() {
-  const el = document.getElementById('stars');
-  for (let i = 0; i < 80; i++) {
-    const s = document.createElement('div');
-    s.className = 'star';
-    const sz = Math.random() * 2.5 + 0.5;
-    s.style.cssText = 'left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+sz+'px;height:'+sz+'px;--d:'+(2+Math.random()*4)+'s;--delay:'+(Math.random()*5)+'s;';
-    el.appendChild(s);
-  }
-}
-
-function buildEraRow() {
-  const row = document.getElementById('era-row');
-  ERAS.forEach(era => {
+  data.modes.forEach(mode => {
+    // Üst Menü Elemanları
     const btn = document.createElement('div');
-    const label = era.label[currentLang];
-    btn.className = 'era-btn' + (era.premium && !isPremium ? ' locked-era' : '');
-    btn.id = 'era-' + era.id;
-    btn.innerHTML = '<span class="era-emoji">'+era.emoji+'</span><span class="era-label">'+label+'</span>'+(era.premium && !isPremium ? '<span class="era-lock">🔒</span>' : '');
-    btn.onclick = () => selectEra(era);
-    row.appendChild(btn);
-  });
-}
+    btn.className = `era-btn ${mode.locked ? 'locked-era' : ''} ${mode.id === selectedModeId ? 'active' : ''}`;
+    btn.onclick = () => selectMode(mode.id, mode.locked);
+    btn.innerHTML = `
+      <span class="era-emoji">${mode.emoji}</span>
+      <span class="era-label">${mode.name}</span>
+      ${mode.locked ? '<span class="era-lock">🔒</span>' : ''}
+    `;
+    eraRow.appendChild(btn);
 
-function buildChipsGrid() {
-  const grid = document.getElementById('chips-grid');
-  ERAS.forEach(era => {
-    const label = era.label[currentLang];
+    // Alt Grid Kart Elemanları
     const chip = document.createElement('div');
-    chip.className = 'era-chip ' + (era.premium && !isPremium ? 'locked-chip' : 'unlocked');
-    chip.id = 'chip-' + era.id;
-    chip.innerHTML = '<span class="chip-emoji">'+era.emoji+'</span><span class="chip-name">'+label+'</span>'+(era.premium && !isPremium ? '<div class="lock-overlay">🔒</div>' : '');
-    chip.onclick = () => {
-      if (era.premium && !isPremium) { openModal('payment'); return; }
-      selectEra(era);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-    grid.appendChild(chip);
+    chip.className = `era-chip ${mode.locked ? 'locked-chip' : 'unlocked-chip'}`;
+    chip.onclick = () => selectMode(mode.id, mode.locked);
+    chip.innerHTML = `
+      <span class="chip-emoji">${mode.emoji}</span>
+      <span class="chip-name">${mode.name}</span>
+      <div style="font-size:0.7rem; color:var(--muted); margin-top:4px;">${mode.desc}</div>
+      ${mode.locked ? '<div class="lock-overlay">🔒</div>' : ''}
+    `;
+    chipsGrid.appendChild(chip);
   });
 }
 
-function buildModeBar() {
-  const pills = document.getElementById('usage-pills');
-  pills.innerHTML = '';
-  if (!isPremium) {
-    for (let i = 0; i < DAILY_LIMIT; i++) {
-      const p = document.createElement('div');
-      p.className = 'usage-pip ' + (i < usedToday ? 'used' : 'empty');
-      pills.appendChild(p);
-    }
-  } else {
-    pills.innerHTML = '<span style="font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">' + t('unlimitedLabel') + '</span>';
-  }
-}
-
-function buildQuickBtns(era) {
-  const qb = document.getElementById('quick-btns');
-  qb.innerHTML = '';
-  const questions = era.quick[currentLang] || era.quick['tr'];
-  questions.forEach(q => {
-    const b = document.createElement('button');
-    b.className = 'quick-btn';
-    b.textContent = q;
-    b.onclick = () => {
-      document.getElementById('user-input').value = q;
-      autoResize(document.getElementById('user-input'));
-      updateCharCount();
-      sendMessage();
-    };
-    qb.appendChild(b);
-  });
-}
-
-function selectEra(era) {
-  if (era.premium && !isPremium) {
+function selectMode(id, isLocked) {
+  if (isLocked) {
     document.getElementById('lock-notice').classList.add('show');
-    document.getElementById('lock-text').textContent = t('lockText', era.label[currentLang]);
+    openModal('payment');
     return;
   }
   document.getElementById('lock-notice').classList.remove('show');
-  selectedEra = era;
-  conversationHistory = [];
-  document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('era-' + era.id).classList.add('active');
-  buildQuickBtns(era);
-  const cw = document.getElementById('chat-window');
-  cw.innerHTML = '';
-  addAIMessage(era.emoji + ' <strong>' + era.label[currentLang] + '</strong> — ' + t('eraWelcome', era.label[currentLang]));
-  document.getElementById('hint-text').textContent = t('eraHint', era.label[currentLang]);
+  selectedModeId = id;
+  renderInterface();
+  
+  // Boş durumu simüle et
+  const activeModeName = MODES_DATA[currentLang].modes.find(m => m.id === id).name;
+  document.getElementById('empty-title').innerText = `${activeModeName} Kapısı Açık`;
 }
 
-// =====================================================
-// CHAT
-// =====================================================
-async function sendMessage() {
+function changeLanguage(lang) {
+  currentLang = lang;
+  document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  renderInterface();
+}
+
+function openModal(type) {
+  if(type === 'payment') document.getElementById('modal-payment').classList.add('open');
+}
+function closeModal(type) {
+  if(type === 'payment') document.getElementById('modal-payment').classList.remove('open');
+}
+
+function triggerPayment() {
+  alert("Shopier Güvenli Ödeme sayfasına yönlendiriliyorsunuz... (PWA Entegrasyonu Tetiklendi)");
+  // Buraya kendi Shopier linkini atayabilirsin: window.location.href = "SHOPIER_LINKIN";
+}
+
+function sendMessage() {
   const input = document.getElementById('user-input');
-  const text = input.value.trim();
-  if (!text || isLoading) return;
-  if (!selectedEra) { showToast(t('toastSelectEra')); return; }
-  if (!isPremium && usedToday >= DAILY_LIMIT) { openModal('payment'); showToast(t('toastLimitReached')); return; }
+  if(!input.value.trim()) return;
+  
+  const chatWindow = document.getElementById('chat-window');
+  const emptyState = document.getElementById('empty-state');
+  if(emptyState) emptyState.remove();
 
-  addUserMessage(text);
+  // Kullanıcı Mesajı
+  chatWindow.innerHTML += `
+    <div class="msg user">
+      <div class="msg-avatar user-avatar">Siz</div>
+      <div class="msg-bubble">${input.value}</div>
+    </div>
+  `;
   input.value = '';
-  autoResize(input);
-  updateCharCount();
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
 
-  if (!isPremium) {
-    usedToday++;
-    saveUsedToday(usedToday);
-    buildModeBar();
+// Yıldızları arka plana ekleyen küçük görsel detay
+function createStars() {
+  const container = document.getElementById('stars');
+  for(let i=0; i<40; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.width = star.style.height = Math.random() * 3 + 'px';
+    star.style.top = Math.random() * 100 + 'vh';
+    star.style.left = Math.random() * 100 + 'vw';
+    container.appendChild(star);
   }
-
-  const systemPrompt = selectedEra.system[currentLang] + (isPremium ? (currentLang === 'tr' ? ' Premium üye — daha uzun, daha zengin ve ayrıntılı yanıtlar ver.' : ' Premium member — give longer, richer, and more detailed answers.') : (currentLang === 'tr' ? ' Yanıtları orta uzunlukta tut.' : ' Keep answers moderate in length.'));
-
-  isLoading = true;
-  document.getElementById('send-btn').disabled = true;
-  const typingId = addTypingIndicator();
-
-  try {
-    const res = await fetch(API_URL, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ question: text, system: systemPrompt, history: conversationHistory, isPremium: isPremium })
-});
-    removeTypingIndicator(typingId);
-    const data = await res.json();
-    if (data.error) {
-      addAIMessage(escHtml(data.error));
-    } else {
-      const reply = data.answer || t('apiError');
-      conversationHistory.push({ role: 'user', content: text });
-      conversationHistory.push({ role: 'assistant', content: reply });
-      addAIMessage(escHtml(reply).replace(/\n/g, '<br>'));
-    }
-  } catch(err) {
-    removeTypingIndicator(typingId);
-    addAIMessage(t('connectionError'));
-  }
-
-  isLoading = false;
-  document.getElementById('send-btn').disabled = false;
 }
 
-function addUserMessage(text) {
-  clearEmpty();
-  const div = document.createElement('div');
-  div.className = 'msg user';
-  div.innerHTML = '<div class="msg-avatar user-avatar">'+t('userAvatarLabel')+'</div><div class="msg-bubble">'+escHtml(text).replace(/\n/g,'<br>')+'</div>';
-  document.getElementById('chat-window').appendChild(div);
-  scrollChat();
-}
-function addAIMessage(html) {
-  clearEmpty();
-  const div = document.createElement('div');
-  div.className = 'msg ai';
-  div.innerHTML = '<div class="msg-avatar ai-avatar">⏳</div><div class="msg-bubble">'+html+'</div>';
-  document.getElementById('chat-window').appendChild(div);
-  scrollChat();
-}
-function addTypingIndicator() {
-  clearEmpty();
-  const id = 'typing-' + Date.now();
-  const div = document.createElement('div');
-  div.className = 'msg ai'; div.id = id;
-  div.innerHTML = '<div class="msg-avatar ai-avatar">⏳</div><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
-  document.getElementById('chat-window').appendChild(div);
-  scrollChat();
-  return id;
-}
-function removeTypingIndicator(id) { const e = document.getElementById(id); if(e) e.remove(); }
-function clearEmpty() { const e = document.getElementById('empty-state'); if(e) e.remove(); }
-function scrollChat() { const cw = document.getElementById('chat-window'); cw.scrollTop = cw.scrollHeight; }
-function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,140)+'px'; }
-function updateCharCount() { document.getElementById('char-count').textContent = document.getElementById('user-input').value.length + ' / 500'; }
-function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();} }
-function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
-}
-
-// =====================================================
-// INIT
-// =====================================================
-function init() {
-  buildStars();
-  buildEraRow();
-  buildChipsGrid();
-  buildModeBar();
-  applyTranslations();
-  if (isPremium) applyPremiumUI();
-  checkPaymentReturn();
-}
-
-init();
+window.onload = () => {
+  renderInterface();
+  createStars();
+};
 </script>
 </body>
 </html>
