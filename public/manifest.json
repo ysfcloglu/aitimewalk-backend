@@ -2,19 +2,19 @@
   "name": "AITimeWalk — Zaman Yolculuğu",
   "short_name": "AITimeWalk",
   "description": "Yapay zekâyla kadim tarihleri ve alternatif boyutları keşfet.",
-  "start_url": "index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#0a0806",
   "theme_color": "#c9a84c",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3565/3565418.png",
+      "src": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=192&h=192",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3565/3565418.png",
+      "src": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=512&h=512",
       "type": "image/png",
       "sizes": "512x512"
     }
