@@ -1,363 +1,681 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AITimeWalk — Zaman ve Evren Yolculuğu</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root {
-  --gold:#c9a84c; --gold-light:#e8d5a3; --gold-dim:#8a6f35;
-  --dark:#0a0806; --dark2:#12100d; --dark3:#1c1a16; --dark4:#252219;
-  --parchment:#f4ede0; --parchment2:#e8dcc8; --muted:#7a6e5f;
-  --border:rgba(201,168,76,0.25); --border-strong:rgba(201,168,76,0.55);
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Crimson Pro',Georgia,serif;background:var(--dark);color:var(--parchment);min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 100%,rgba(201,168,76,0.04) 0%,transparent 60%);pointer-events:none;z-index:0;}
-.stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
-.page{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 6rem;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AITimeWalk — Zaman ve Boyut Portalı</title>
 
-/* ── LANGUAGE TOGGLE ── */
-.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.25rem;}
-.lang-toggle{display:flex;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:100px;padding:3px;gap:3px;}
-.lang-btn{padding:0.3rem 0.85rem;border-radius:100px;border:none;background:transparent;font-family:'Crimson Pro',serif;font-size:0.82rem;letter-spacing:0.08em;color:var(--muted);cursor:pointer;transition:all 0.2s;}
-.lang-btn.active{background:var(--gold);color:var(--dark);font-weight:700;}
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0a0806">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AITimeWalk">
+    <link rel="apple-touch-icon" href="/icon-192.png">
 
-.site-header{text-align:center;margin-bottom:2rem;}
-.logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:0.75rem;opacity:0.6;font-size:0.78rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-light);}
-.logo-line{width:36px;height:1px;background:var(--border-strong);}
-.main-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:900;line-height:1.1;color:var(--gold-light);text-shadow:0 2px 20px rgba(201,168,76,0.25);margin-bottom:0.5rem;}
-.main-sub{font-size:1rem;color:var(--muted);font-style:italic;font-weight:300;}
-.mode-bar{display:flex;align-items:center;justify-content:space-between;background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:0.85rem 1.25rem;margin-bottom:1.5rem;gap:1rem;flex-wrap:wrap;}
-.mode-left{display:flex;align-items:center;gap:10px;}
-.mode-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.8);}}
-.mode-label{font-size:0.88rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);}
-.btn-upgrade-mini{background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:8px;padding:0.45rem 1.1rem;font-family:'Crimson Pro',serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
-.btn-upgrade-mini:hover{background:linear-gradient(135deg,#e0bf70,#c9a84c);transform:translateY(-1px);}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-/* Dinamik Dönem Satırı */
-.era-row{display:flex;gap:0.6rem;overflow-x:auto;padding-bottom:0.5rem;margin-bottom:1.5rem;scrollbar-width:none;}
-.era-row::-webkit-scrollbar{display:none;}
-.era-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.8rem 1rem;cursor:pointer;transition:all 0.2s;position:relative;min-width:95px;}
-.era-btn:hover:not(.locked-era){border-color:var(--border-strong);background:rgba(201,168,76,0.05);}
-.era-btn.active{border-color:var(--gold);background:rgba(201,168,76,0.1);}
-.era-btn.locked-era{cursor:default;opacity:0.5;}
-.era-emoji{font-size:1.5rem;line-height:1;color:var(--gold-light);}
-.era-label{font-size:0.75rem;color:var(--parchment2);text-align:center;line-height:1.2;}
-.era-lock{position:absolute;top:6px;right:6px;font-size:0.65rem;color:var(--gold);}
+    <style>
+        :root {
+            --bg-dark: #0a0806;
+            --bg-card: #14110e;
+            --accent-gold: #c9a84c;
+            --accent-gold-dim: #947a32;
+            --text-light: #f5f2eb;
+            --text-dim: #a39e93;
+            --border-color: #2c2519;
+            --glass-bg: rgba(20, 17, 14, 0.75);
+            --shadow-gold: rgba(201, 168, 76, 0.15);
+        }
 
-.lock-notice{display:none;background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:0.88rem;color:var(--gold-light);align-items:center;gap:10px;}
-.lock-notice.show{display:flex;}
-.lock-notice button{margin-left:auto;flex-shrink:0;background:var(--gold);color:var(--dark);border:none;border-radius:8px;padding:0.35rem 0.85rem;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.82rem;cursor:pointer;}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-.chat-window{background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:16px;margin-bottom:1.25rem;min-height:300px;max-height:460px;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
-.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;gap:0.75rem;}
-.empty-icon{font-size:2.5rem;opacity:0.5;}
-.empty-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--parchment2);opacity:0.6;}
-.empty-desc{font-size:0.88rem;color:var(--muted);font-style:italic;line-height:1.6;max-width:300px;}
+        body {
+            font-family: 'Crimson Pro', serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-.msg{display:flex;gap:10px;animation:fadeUp 0.35s ease;align-items:flex-start;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-.msg.user{flex-direction:row-reverse;}
-.msg-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;margin-top:2px;}
-.ai-avatar{background:rgba(201,168,76,0.15);border:1px solid var(--border);}
-.user-avatar{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);font-size:0.68rem;color:var(--muted);}
-.msg-bubble{max-width:78%;padding:0.85rem 1.1rem;border-radius:14px;font-size:0.95rem;line-height:1.7;}
-.msg.ai .msg-bubble{background:var(--dark4);border:1px solid rgba(255,255,255,0.07);color:var(--parchment2);border-top-left-radius:4px;}
-.msg.user .msg-bubble{background:rgba(201,168,76,0.12);border:1px solid var(--border);color:var(--parchment);border-top-right-radius:4px;}
+        /* Arka Plan Yıldız Animasyonu */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
 
-.input-area{background:var(--dark3);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1rem 1.1rem;transition:border-color 0.2s;margin-bottom:3rem;}
-.input-area:focus-within{border-color:var(--border-strong);}
-.input-row{display:flex;gap:10px;align-items:flex-end;}
-textarea{flex:1;background:transparent;border:none;outline:none;color:var(--parchment);font-family:'Crimson Pro',serif;font-size:1rem;line-height:1.5;resize:none;min-height:48px;max-height:140px;}
-textarea::placeholder{color:var(--muted);font-style:italic;}
-.send-btn{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#a8862f);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.2s;color:var(--dark);}
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle var(--duration, 4s) infinite ease-in-out;
+            animation-delay: var(--delay, 0s);
+        }
 
-.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
-@media(max-width:600px){.plans-grid{grid-template-columns:1fr;}}
-.plan-card{border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:transform 0.3s ease;}
-.plan-normal{background:var(--dark3);border:1px solid rgba(255,255,255,0.08);}
-.plan-premium{background:linear-gradient(145deg,#1a1508 0%,#0f0d07 100%);border:1px solid var(--border-strong);}
-.badge-popular{position:absolute;top:1.25rem;right:1.25rem;background:var(--gold);color:var(--dark);font-size:0.7rem;font-weight:600;padding:4px 12px;border-radius:100px;text-transform:uppercase;}
-.price-row{display:flex;align-items:baseline;gap:4px;margin-bottom:1.75rem;}
-.price-amount{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--gold);line-height:1;}
-.features-list{list-style:none;display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem;}
-.feature-item{display:flex;align-items:flex-start;gap:10px;font-size:0.95rem;color:var(--parchment2);}
-.feature-check{color:var(--gold);}
-.btn-plan{width:100%;padding:0.85rem 1.5rem;border-radius:10px;font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;cursor:pointer;border:none;}
-.btn-premium-plan{background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);font-weight:700;}
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity, 0.7); transform: scale(1.2); }
+        }
 
-/* Alt Bölüm Grid Sistemi */
-.eras-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.75rem;}
-.era-chip{position:relative;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1rem;text-align:center;overflow:hidden;transition:all 0.2s;cursor:pointer;}
-.era-chip.unlocked-chip:hover{border-color:var(--border-strong);background:rgba(201,168,76,0.06);}
-.era-chip.locked-chip{opacity:0.5;}
-.chip-emoji{font-size:1.8rem;display:block;margin-bottom:0.4rem;}
-.chip-name{font-size:0.85rem;color:var(--parchment2);font-weight:600;}
-.lock-overlay{position:absolute;top:8px;right:8px;color:var(--gold);font-size:0.8rem;}
+        /* Uygulama Düzeni */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
 
-/* Footer & Modals */
-.site-footer{border-top:1px solid rgba(255,255,255,0.06);padding:2rem 0;text-align:center;font-size:0.85rem;color:var(--muted);}
-.footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem;}
-.footer-link{background:none;border:none;color:var(--muted);cursor:pointer;font-family:inherit;}
-.footer-link:hover{color:var(--gold-light);}
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;padding:1.5rem;}
-.modal-backdrop.open{display:flex;}
-.modal{background:var(--dark2);border:1px solid var(--border-strong);border-radius:20px;padding:2.5rem;max-width:440px;width:100%;position:relative;text-align:center;}
-.modal-close{position:absolute;top:1rem;right:1rem;background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;}
-.btn-pay{width:100%;padding:1rem;background:linear-gradient(135deg,#c9a84c,#a8862f);color:var(--dark);border:none;border-radius:10px;font-size:1.1rem;font-weight:700;cursor:pointer;margin-top:1.5rem;}
-</style>
+        /* Üst Menü / Navigasyon */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 24px;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px var(--shadow-gold);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 6px var(--accent-gold)); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-light);
+        }
+
+        h1 span {
+            color: var(--accent-gold);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            background: rgba(201, 168, 76, 0.05);
+        }
+
+        /* Yatay Kaydırılabilir Dönem Menüsü (Üst Şerit) */
+        .era-scroller {
+            width: 100%;
+            background: rgba(10, 8, 6, 0.6);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .era-scroller::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        .era-row {
+            display: inline-flex;
+            gap: 10px;
+            padding: 0 10px;
+        }
+
+        .era-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .era-tab.active {
+            background: rgba(201, 168, 76, 0.12);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.1);
+        }
+
+        .era-tab i {
+            font-size: 12px;
+        }
+
+        /* Ana İçerik Alanı */
+        .main-layout {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 145px);
+            min-height: 450px;
+        }
+
+        /* Sol Taraf: İnteraktif Chat Paneli */
+        .chat-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            background: rgba(14, 17, 20, 0.2);
+            position: relative;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Chat Balonları Stilleri */
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.system {
+            align-self: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .msg-sender {
+            font-family: 'Playfair Display', serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .system .msg-sender { color: var(--accent-gold); }
+        .user .msg-sender { color: var(--text-dim); text-align: right; }
+
+        .msg-bubble {
+            padding: 14px 18px;
+            border-radius: 12px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .system .msg-bubble {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            border-top-left-radius: 0;
+        }
+
+        .user .msg-bubble {
+            background: rgba(201, 168, 76, 0.15);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            color: var(--text-light);
+            border-top-right-radius: 0;
+        }
+
+        /* Chat Alt Giriş Kısmı */
+        .chat-input-area {
+            padding: 16px 20px;
+            background: rgba(10, 8, 6, 0.8);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .input-wrapper {
+            display: flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px var(--shadow-gold);
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-light);
+            padding: 10px 14px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 16px;
+        }
+
+        .input-wrapper input::placeholder {
+            color: rgba(163, 158, 147, 0.5);
+        }
+
+        .btn-send {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .btn-send:hover {
+            background: #ebd180;
+            transform: scale(1.02);
+        }
+
+        /* Sağ Taraf: Tüm Evrenler Grid Görünümü */
+        .universe-grid-panel {
+            width: 380px;
+            border-left: 1px solid var(--border-color);
+            background: rgba(20, 17, 14, 0.4);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 900px) {
+            .universe-grid-panel {
+                display: none; /* Mobilde sadece chat kalır, üst şerit kullanılabilir */
+            }
+            .main-layout {
+                height: calc(100vh - 125px);
+            }
+        }
+
+        .panel-title {
+            padding: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-color);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .grid-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .universe-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .universe-card:hover {
+            border-color: var(--accent-gold-dim);
+            transform: translateY(-2px);
+            background: rgba(20, 17, 14, 0.8);
+        }
+
+        .universe-card.active {
+            border-color: var(--accent-gold);
+            background: rgba(201, 168, 76, 0.04);
+            box-shadow: inset 0 0 10px rgba(201, 168, 76, 0.05);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .universe-card.active .card-name {
+            color: var(--accent-gold);
+        }
+
+        .card-icon {
+            font-size: 16px;
+            color: var(--accent-gold-dim);
+        }
+
+        .universe-card.active .card-icon {
+            color: var(--accent-gold);
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        .lock-badge {
+            position: absolute;
+            top: 0; right: 0;
+            background: #4a1515;
+            color: #ff9e9e;
+            font-size: 9px;
+            padding: 2px 8px;
+            border-bottom-left-radius: 6px;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: none;
+        }
+
+        .universe-card.premium .lock-badge {
+            display: block;
+        }
+
+        .universe-card.premium {
+            opacity: 0.75;
+        }
+    </style>
 </head>
 <body>
 
-<div class="stars" id="stars"></div>
+    <div id="stars-container"></div>
 
-<div class="page">
-  <!-- DİL SEÇİMİ -->
-  <div class="lang-bar">
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="lang-tr" onclick="changeLanguage('tr')">TR</button>
-      <button class="lang-btn" id="lang-en" onclick="changeLanguage('en')">EN</button>
-    </div>
-  </div>
+    <div class="app-container">
+        <header>
+            <div class="logo-area">
+                <i class="fa-solid fa-hourglass-half logo-icon"></i>
+                <h1 id="app-title">AI<span>TimeWalk</span></h1>
+            </div>
+            <div class="control-buttons">
+                <button class="btn-icon" id="lang-btn" onclick="toggleLanguage()">
+                    <i class="fa-solid fa-globe"></i> <span>EN</span>
+                </button>
+            </div>
+        </header>
 
-  <div class="site-header">
-    <div class="logo-row"><div class="logo-line"></div>aitimewalk.com<div class="logo-line"></div></div>
-    <h1 class="main-title" id="main-title">Zaman ve Evren Yolculuğu</h1>
-    <p class="main-sub" id="main-sub">Yapay zekâyla kadim tarihleri ve alternatif boyutları keşfet</p>
-  </div>
+        <div class="era-scroller">
+            <div class="era-row" id="era-row-container">
+                </div>
+        </div>
 
-  <div class="mode-bar">
-    <div class="mode-left">
-      <div class="mode-dot"></div>
-      <span class="mode-label" id="mode-label">Gezgin Modu</span>
-    </div>
-    <button class="btn-upgrade-mini" onclick="openModal('payment')">&#x1F451; Premium — &#x20BA;129/ay</button>
-  </div>
+        <div class="main-layout">
+            <div class="chat-panel">
+                <div class="chat-messages" id="chat-box">
+                    <div class="message system">
+                        <span class="msg-sender" id="sender-title">ZAMAN REHBERİ</span>
+                        <div class="msg-bubble" id="welcome-msg">
+                            Zaman ve boyut portalına hoş geldin yolcu. Gitmek istediğin dönemi veya paralel evreni seç, gerisini kuantum yapay zekâ motoruna bırak. Kronoloji kırılmasına hazır mısın?
+                        </div>
+                    </div>
+                </div>
 
-  <!-- Üst Yatay Menü (Dinamik Yüklenecek) -->
-  <div class="era-row" id="era-row"></div>
+                <div class="chat-input-area">
+                    <div class="input-wrapper">
+                        <input type="text" id="user-input" placeholder="Zaman çizgisini değiştirecek bir şey yazın..." onkeypress="handleKeyPress(event)">
+                        <button class="btn-send" onclick="sendMessage()">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-  <div class="lock-notice" id="lock-notice">
-    <span>&#x1F512;</span>
-    <span id="lock-text">Bu boyut veya dönem Premium sürümüne özeldir.</span>
-    <button onclick="openModal('payment')">Kilidi Aç</button>
-  </div>
-
-  <!-- Sohbet Penceresi -->
-  <div class="chat-window" id="chat-window">
-    <div class="empty-state" id="empty-state">
-      <div class="empty-icon">&#x23F3;</div>
-      <div class="empty-title" id="empty-title">Keşif Kapısı</div>
-      <div class="empty-desc" id="empty-desc">Yukarıdan açmak istediğin bir modu seç, ardından evrene mesajını gönder!</div>
-    </div>
-  </div>
-
-  <!-- Giriş Alanı -->
-  <div class="input-area">
-    <div class="input-row">
-      <textarea id="user-input" placeholder="Zaman çizgisine bir mesaj bırak..." rows="1"></textarea>
-      <button class="send-btn" onclick="sendMessage()">&#10148;</button>
-    </div>
-  </div>
-
-  <!-- Gelişmiş Mod Kart Grid Görünümü -->
-  <div style="margin: 2rem 0 1rem;" id="all-modes-title" class="main-sub">TÜM BOYUTLAR VE MODLAR</div>
-  <div class="eras-grid" id="chips-grid"></div>
-
-  <!-- Planlar Bölümü -->
-  <div class="plans-grid" style="margin-top: 3rem;">
-    <div class="plan-card plan-normal">
-      <div class="plan-name">Ücretsiz Plan</div>
-      <div class="price-row"><span class="price-amount">Ücretsiz</span></div>
-      <ul class="features-list">
-        <li class="feature-item"><span class="feature-check">&#10003;</span> Antik Mısır, Mitoloji ve Lucid Rüya</li>
-        <li class="feature-item"><span class="feature-check">&#10003;</span> Standart AI Zaman Akışı</li>
-      </ul>
-      <button class="btn-plan" style="background: rgba(255,255,255,0.1); color: white;">Aktif</button>
+            <div class="universe-grid-panel">
+                <div class="panel-title" id="grid-title">Tüm Boyutlar & Modlar</div>
+                <div class="grid-container" id="grid-container-box">
+                    </div>
+            </div>
+        </div>
     </div>
 
-    <div class="plan-card plan-premium">
-      <div class="badge-popular">Önerilen</div>
-      <div class="plan-name">Chronos Premium</div>
-      <div class="price-row"><span class="price-amount">&#x20BA;129</span><span style="color: var(--muted)"> / ay</span></div>
-      <ul class="features-list">
-        <li class="feature-item"><span class="feature-check">&#x2736;</span> Osmanlı, Roma, Çoklu ve Paralel Evrenler</li>
-        <li class="feature-item"><span class="feature-check">&#x2736;</span> Sınırsız Yapay Zeka Cevap Mekaniği</li>
-      </ul>
-      <button class="btn-plan btn-premium-plan" onclick="openModal('payment')">Premium'a Yükselt</button>
-    </div>
-  </div>
+    <script>
+        // Dil ve Veri Altyapısı
+        let currentLang = 'TR';
+        let currentSelectedId = 'egypt';
 
-  <!-- Footer -->
-  <div class="site-footer">
-    <div class="footer-links">
-      <button class="footer-link" onclick="openModal('contact')">İletişim</button>
-      <button class="footer-link" onclick="openModal('privacy')">Gizlilik</button>
-    </div>
-    <p>AITimeWalk © 2026 — Güvenli Shopier Altyapısı Entegrasyonu</p>
-  </div>
-</div>
+        const localization = {
+            TR: {
+                appTitle: 'AI<span>TimeWalk</span>',
+                senderTitle: 'ZAMAN REHBERİ',
+                welcomeMsg: 'Zaman ve boyut portalına hoş geldin yolcu. Gitmek istediğin dönemi veya paralel evreni seç, gerisini kuantum yapay zekâ motoruna bırak. Kronoloji kırılmasına hazır mısın?',
+                placeholder: 'Zaman çizgisini değiştirecek bir şey yazın...',
+                gridTitle: 'Tüm Boyutlar & Modlar',
+                premiumLock: 'KİLİTLİ',
+                systemPrefix: 'Sistem Odak Modu: '
+            },
+            EN: {
+                appTitle: 'AI<span>TimeWalk</span>',
+                senderTitle: 'TIME GUIDE',
+                welcomeMsg: 'Welcome to the time and dimension portal, traveler. Select the era or parallel universe you wish to visit, and leave the rest to the quantum AI engine. Ready for a timeline split?',
+                placeholder: 'Write something to alter the timeline...',
+                gridTitle: 'All Dimensions & Modes',
+                premiumLock: 'LOCKED',
+                systemPrefix: 'System Focus Mode: '
+            }
+        };
 
-<!-- Ödeme Modali -->
-<div class="modal-backdrop" id="modal-payment">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('payment')">&#x2715;</button>
-    <h2 class="modal-title">Boyut Kapılarını Tamamen Aç</h2>
-    <p style="color: var(--muted); margin: 1rem 0;">Osmanlı, Roma, Bilim Kurgu ve Çoklu Evren simülasyonları dahil tüm kilitleri kaldırın.</p>
-    <div style="background: rgba(201,168,76,0.1); padding: 1rem; border-radius: 10px; font-weight: bold; color: var(--gold);">
-      Abonelik Bedeli: &#x20BA;129 / Ay
-    </div>
-    <!-- PWA ve Shopier Bağlantı Noktası -->
-    <button class="btn-pay" onclick="triggerPayment()">Shopier ile Güvenli Öde</button>
-  </div>
-</div>
+        const universes = [
+            { id: 'egypt', icon: '𓁹', nameTR: 'Antik Mısır Simülasyonu', nameEN: 'Ancient Egypt Sim', descTR: 'Firavunlar dönemi, piramitlerin inşası ve gizemli ritüeller.', descEN: 'The era of pharaohs, pyramid constructions, and mystic rituals.', premium: false },
+            { id: 'mythology', icon: '🔱', nameTR: 'Mitolojik Evren', nameEN: 'Mythological Universe', descTR: 'Tanrılar, efsanevi yaratıklar ve epik destanların dünyası.', descEN: 'A world of ancient gods, legendary beasts, and epic sagas.', premium: false },
+            { id: 'lucid', icon: '👁️', nameTR: 'Lucid Rüya Kontrolü', nameEN: 'Lucid Dream Control', descTR: 'Bilinçaltının derinlikleri ve bükülebilir rüya evrenleri.', descEN: 'Deep subconscious realms and bendable dreamscapes.', premium: false },
+            { id: 'ottoman', icon: '🏹', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', descTR: 'Cihan imparatorluğunun yükselişi, fetihler ve saray sırları.', descEN: 'The rise of a global empire, conquests, and palace secrets.', premium: false },
+            { id: 'rome', icon: '🏛️', nameTR: 'Roma İmparatorluğu', nameEN: 'Roman Empire', descTR: 'Gladyatör dövüşleri, senato entrikaları ve Sezar dönemi.', descEN: 'Gladiator matches, senate intrigues, and the age of Caesar.', premium: false },
+            { id: 'scifi', icon: '🌌', nameTR: 'Cyberpunk 2099', nameEN: 'Cyberpunk 2099', descTR: 'Neon ışıklı distopik gelecek, yapay zekâ isyanları ve siber uzay.', descEN: 'Neon-lit dystopian future, AI rebellions, and cyberspace.', premium: true },
+            { id: 'multiverse', icon: '🌀', nameTR: 'Paralel ve Çoklu Evrenler', nameEN: 'Parallel & Multiverses', descTR: 'Farklı kararlarınızla şekillenmiş sonsuz alternatif hayatlar.', descEN: 'Infinite alternative lives shaped by your different choices.', premium: true }
+        ];
 
-<script>
-// Dil ve Mod Veri Yapısı
-const MODES_DATA = {
-  tr: {
-    title: "Zaman ve Evren Yolculuğu",
-    sub: "Yapay zekâyla kadim tarihleri ve alternatif boyutları keşfet",
-    modes: [
-      { id: "egypt", name: "Antik Mısır", emoji: "𓁹", locked: false, desc: "Firavunların gizemli dünyası." },
-      { id: "mythology", name: "Mitoloji", emoji: "🔱", locked: false, desc: "Tanrılar ve efsanevi canavarlar." },
-      { id: "lucid", name: "Lucid Rüya", emoji: "🌙", locked: false, desc: "Bilinçaltının kontrol edilebilir boyutları." },
-      { id: "ottoman", name: "Osmanlı", emoji: "🏹", locked: true, desc: "Görkemli imparatorluk yılları." },
-      { id: "roma", name: "Antik Roma", emoji: "🏛️", locked: true, desc: "Gladyatörler ve Sezar dönemi." },
-      { id: "scifi", name: "Bilim Kurgu", emoji: "🚀", locked: true, desc: "Yapay zeka ve galaktik gelecek." },
-      { id: "parallel", name: "Paralel Evrenler", emoji: "🌀", locked: true, desc: "Farklı seçimlerin alternatif hayatları." },
-      { id: "multiverse", name: "Çoklu Evrenler", emoji: "🌌", locked: true, desc: "Aynı anda var olan kozmik varyasyonlar." }
-    ]
-  },
-  en: {
-    title: "Time & Multiverse Walk",
-    sub: "Explore ancient history and alternative dimensions with AI",
-    modes: [
-      { id: "egypt", name: "Ancient Egypt", emoji: "𓁹", locked: false, desc: "Mysterious world of Pharaohs." },
-      { id: "mythology", name: "Mythology", emoji: "🔱", locked: false, desc: "Gods and mythical creatures." },
-      { id: "lucid", name: "Lucid Dream", emoji: "🌙", locked: false, desc: "Controllable realms of subconscious." },
-      { id: "ottoman", name: "Ottoman Empire", emoji: "🏹", locked: true, desc: "Glorious imperial eras." },
-      { id: "roma", name: "Ancient Rome", emoji: "🏛️", locked: true, desc: "Gladiators and Caesar's reign." },
-      { id: "scifi", name: "Sci-Fi Future", emoji: "🚀", locked: true, desc: "AI tech and galactic futures." },
-      { id: "parallel", name: "Parallel Worlds", emoji: "🌀", locked: true, desc: "Alternative lives from different choices." },
-      { id: "multiverse", name: "Multiverse", emoji: "🌌", locked: true, desc: "Simultaneous cosmic variations." }
-    ]
-  }
-};
+        window.onload = function() {
+            createStars();
+            renderComponents();
+        };
 
-let currentLang = 'tr';
-let selectedModeId = 'egypt';
+        // Rastgele Yıldız Üretici Efekti
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const starCount = 60;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.setProperty('--delay', `${Math.random() * 4}s`);
+                star.style.setProperty('--max-opacity', `${Math.random() * 0.5 + 0.3}`);
+                container.appendChild(star);
+            }
+        }
 
-function renderInterface() {
-  const data = MODES_DATA[currentLang];
-  document.getElementById('main-title').innerText = data.title;
-  document.getElementById('main-sub').innerText = data.sub;
+        // Dil Değiştirme Fonksiyonu
+        function toggleLanguage() {
+            currentLang = currentLang === 'TR' ? 'EN' : 'TR';
+            document.getElementById('lang-btn').querySelector('span').innerText = currentLang === 'TR' ? 'EN' : 'TR';
+            
+            // Dil güncellemesini uygula
+            document.getElementById('app-title').innerHTML = localization[currentLang].appTitle;
+            document.getElementById('sender-title').innerText = localization[currentLang].senderTitle;
+            document.getElementById('welcome-msg').innerText = localization[currentLang].welcomeMsg;
+            document.getElementById('user-input').placeholder = localization[currentLang].placeholder;
+            document.getElementById('grid-title').innerText = localization[currentLang].gridTitle;
 
-  const eraRow = document.getElementById('era-row');
-  const chipsGrid = document.getElementById('chips-grid');
-  eraRow.innerHTML = '';
-  chipsGrid.innerHTML = '';
+            renderComponents();
+        }
 
-  data.modes.forEach(mode => {
-    // Üst Menü Elemanları
-    const btn = document.createElement('div');
-    btn.className = `era-btn ${mode.locked ? 'locked-era' : ''} ${mode.id === selectedModeId ? 'active' : ''}`;
-    btn.onclick = () => selectMode(mode.id, mode.locked);
-    btn.innerHTML = `
-      <span class="era-emoji">${mode.emoji}</span>
-      <span class="era-label">${mode.name}</span>
-      ${mode.locked ? '<span class="era-lock">🔒</span>' : ''}
-    `;
-    eraRow.appendChild(btn);
+        // Dinamik Listeleri Render Etme (Üst Menü ve Sağ Grid)
+        function renderComponents() {
+            const eraRow = document.getElementById('era-row-container');
+            const gridBox = document.getElementById('grid-container-box');
 
-    // Alt Grid Kart Elemanları
-    const chip = document.createElement('div');
-    chip.className = `era-chip ${mode.locked ? 'locked-chip' : 'unlocked-chip'}`;
-    chip.onclick = () => selectMode(mode.id, mode.locked);
-    chip.innerHTML = `
-      <span class="chip-emoji">${mode.emoji}</span>
-      <span class="chip-name">${mode.name}</span>
-      <div style="font-size:0.7rem; color:var(--muted); margin-top:4px;">${mode.desc}</div>
-      ${mode.locked ? '<div class="lock-overlay">🔒</div>' : ''}
-    `;
-    chipsGrid.appendChild(chip);
-  });
-}
+            eraRow.innerHTML = '';
+            gridBox.innerHTML = '';
 
-function selectMode(id, isLocked) {
-  if (isLocked) {
-    document.getElementById('lock-notice').classList.add('show');
-    openModal('payment');
-    return;
-  }
-  document.getElementById('lock-notice').classList.remove('show');
-  selectedModeId = id;
-  renderInterface();
-  
-  // Boş durumu simüle et
-  const activeModeName = MODES_DATA[currentLang].modes.find(m => m.id === id).name;
-  document.getElementById('empty-title').innerText = `${activeModeName} Kapısı Açık`;
-}
+            universes.forEach(uni => {
+                const name = currentLang === 'TR' ? uni.nameTR : uni.nameEN;
+                const desc = currentLang === 'TR' ? uni.descTR : uni.descEN;
+                const activeClass = uni.id === currentSelectedId ? 'active' : '';
+                const premiumClass = uni.premium ? 'premium' : '';
 
-function changeLanguage(lang) {
-  currentLang = lang;
-  document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
-  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-  renderInterface();
-}
+                // 1. Üst Yatay Şerit için Tab Oluşturma
+                const tab = document.createElement('div');
+                tab.className = `era-tab ${activeClass}`;
+                tab.innerHTML = `<span>${uni.icon}</span> ${name}`;
+                tab.onclick = () => selectUniverse(uni.id);
+                eraRow.appendChild(tab);
 
-function openModal(type) {
-  if(type === 'payment') document.getElementById('modal-payment').classList.add('open');
-}
-function closeModal(type) {
-  if(type === 'payment') document.getElementById('modal-payment').classList.remove('open');
-}
+                // 2. Sağ Grid Paneli için Kart Oluşturma
+                const card = document.createElement('div');
+                card.className = `universe-card ${activeClass} ${premiumClass}`;
+                card.innerHTML = `
+                    <div class="lock-badge">${localization[currentLang].premiumLock}</div>
+                    <div class="card-header">
+                        <span class="card-name">${name}</span>
+                        <span class="card-icon">${uni.icon}</span>
+                    </div>
+                    <div class="card-desc">${desc}</div>
+                `;
+                card.onclick = () => selectUniverse(uni.id);
+                gridBox.appendChild(card);
+            });
+        }
 
-function triggerPayment() {
-  alert("Shopier Güvenli Ödeme sayfasına yönlendiriliyorsunuz... (PWA Entegrasyonu Tetiklendi)");
-  // Buraya kendi Shopier linkini atayabilirsin: window.location.href = "SHOPIER_LINKIN";
-}
+        // Evren Seçildiğinde Tetiklenen Fonksiyon
+        function selectUniverse(id) {
+            currentSelectedId = id;
+            renderComponents();
 
-function sendMessage() {
-  const input = document.getElementById('user-input');
-  if(!input.value.trim()) return;
-  
-  const chatWindow = document.getElementById('chat-window');
-  const emptyState = document.getElementById('empty-state');
-  if(emptyState) emptyState.remove();
+            const selectedUni = universes.find(u => u.id === id);
+            const uniName = currentLang === 'TR' ? selectedUni.nameTR : selectedUni.nameEN;
 
-  // Kullanıcı Mesajı
-  chatWindow.innerHTML += `
-    <div class="msg user">
-      <div class="msg-avatar user-avatar">Siz</div>
-      <div class="msg-bubble">${input.value}</div>
-    </div>
-  `;
-  input.value = '';
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
+            // Sistem bilgi mesajı bas
+            const chatBox = document.getElementById('chat-box');
+            const sysMsg = document.createElement('div');
+            sysMsg.className = 'message system';
+            sysMsg.innerHTML = `
+                <span class="msg-sender">${localization[currentLang].senderTitle}</span>
+                <div class="msg-bubble">
+                    <i>${localization[currentLang].systemPrefix} <b>${uniName}</b></i>
+                </div>
+            `;
+            chatBox.appendChild(sysMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
 
-// Yıldızları arka plana ekleyen küçük görsel detay
-function createStars() {
-  const container = document.getElementById('stars');
-  for(let i=0; i<40; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.width = star.style.height = Math.random() * 3 + 'px';
-    star.style.top = Math.random() * 100 + 'vh';
-    star.style.left = Math.random() * 100 + 'vw';
-    container.appendChild(star);
-  }
-}
+        // Chat Mesaj Gönderme Mekanizması
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (!text) return;
 
-window.onload = () => {
-  renderInterface();
-  createStars();
-};
-</script>
+            const chatBox = document.getElementById('chat-box');
+
+            // 1. Kullanıcı Balonunu Ekle
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.innerHTML = `
+                <span class="msg-sender">${currentLang === 'TR' ? 'YOLCU' : 'TRAVELER'}</span>
+                <div class="msg-bubble">${text}</div>
+            `;
+            chatBox.appendChild(userMsg);
+
+            // Girdiyi sıfırla
+            input.value = '';
+            
+            // Ekranı otomatik en aşağı kaydır
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Service Worker Kaydı (PWA'yı tetikler)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker kayıt başarılı: ', reg.scope))
+                    .catch(err => console.log('Service Worker kaydı başarısız: ', err));
+            });
+        }
+    </script>
 </body>
 </html>
