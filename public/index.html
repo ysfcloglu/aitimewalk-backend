@@ -671,7 +671,7 @@
         // Service Worker Kaydı (PWA'yı tetikler)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('service-worker.js')
                     .then(reg => console.log('Service Worker kayıt başarılı: ', reg.scope))
                     .catch(err => console.log('Service Worker kaydı başarısız: ', err));
             });
