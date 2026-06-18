@@ -345,7 +345,7 @@
             margin-top: 10px;
         }
 
-        /* PLANLAR VE FİYATLANDIRMA ALANI (Videodaki Birebir Tasarım) */
+        /* PLANLAR VE FİYATLANDIRMA ALANI */
         .section-separator {
             text-align: center;
             font-size: 11px;
@@ -632,6 +632,27 @@
         let selectedEraId = 'rome';
         let remainingQuestions = 10;
 
+        // DIŞ DOSYA ARAMADAN DOĞRUDAN HTML İÇİNDEN PWA TETİKLEMEK İÇİN SİHİRLİ ENJEKSİYON
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', (e) => self.skipWaiting());
+                self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
+                self.addEventListener('fetch', (e) => {});
+            `;
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(swUrl, { scope: './' })
+                .then(reg => console.log('Sihirli PWA Kaydı Başarılı!'))
+                .catch(err => console.error('PWA Hatası:', err));
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('Uygulamayı İndirme Eki Aktif!');
+        });
+
         const localization = {
             TR: {
                 mainTitle: 'Tarihte Zaman Yolculuğuna Çık',
@@ -716,8 +737,6 @@
 
         function renderAll() {
             const l = localization[currentLang];
-            
-            // Metin Değişimleri
             document.getElementById('main-title').innerText = l.mainTitle;
             document.getElementById('main-sub').innerText = l.mainSub;
             document.getElementById('txt-current-mod').innerText = l.currentMod;
@@ -726,7 +745,6 @@
             document.getElementById('txt-input-title').innerText = l.inputTitle;
             document.getElementById('txt-input-hint').innerText = l.inputHint;
             
-            // Plan 1 Verileri
             document.getElementById('p1-name').innerText = l.p1Name;
             document.getElementById('p1-sub').innerText = l.p1Sub;
             document.getElementById('p1-price').innerText = l.p1Price;
@@ -741,7 +759,6 @@
             document.getElementById('badge-kilit2').innerText = l.badgeKilit;
             document.getElementById('btn-p1-status').innerText = l.btnActive;
 
-            // Plan 2 Verileri
             document.getElementById('badge-popular-txt').innerText = l.badgePopular;
             document.getElementById('p2-name').innerText = l.p2Name;
             document.getElementById('p2-sub').innerText = l.p2Sub;
@@ -752,7 +769,6 @@
             document.getElementById('f2-5').innerText = l.f25;
             document.getElementById('btn-p2-action').innerText = l.btnGoPremium;
 
-            // Tablo Verileri
             document.getElementById('title-periods-grid').innerText = l.titlePeriods;
             document.getElementById('title-comp').innerText = l.titleComp;
             document.getElementById('th-feature').innerText = l.thFeature;
@@ -770,7 +786,6 @@
             document.getElementById('td-p5').innerText = l.tdP5;
             document.getElementById('td-f6').innerText = l.tdF6;
 
-            // Footer
             document.getElementById('link-contact').innerText = l.linkContact;
             document.getElementById('link-privacy').innerText = l.linkPrivacy;
             document.getElementById('link-terms').innerText = l.linkTerms;
@@ -789,14 +804,12 @@
                 const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
                 const isActive = era.id === selectedEraId;
                 
-                // Üst yatay menü tabları
                 const tab = document.createElement('div');
                 tab.className = `era-tab ${isActive ? 'active' : ''} ${era.premium ? 'locked' : ''}`;
                 tab.innerHTML = `${era.icon} ${name} ${era.premium ? '🔒' : ''}`;
                 tab.onclick = () => selectEra(era.id, era.premium);
                 tabsContainer.appendChild(tab);
 
-                // Alt Izgara Kartları (Videodaki 12'li Şema)
                 const card = document.createElement('div');
                 card.className = `grid-period-card ${isActive ? 'active' : ''}`;
                 card.innerHTML = `
@@ -820,7 +833,6 @@
             selectedEraId = id;
             renderErasAndGrids();
             
-            // Chat kutusunu temizle/sıfırla
             document.getElementById('chat-box-display').innerHTML = `
                 <div class="empty-state" id="chat-empty-state">
                     <i class="fa-solid fa-hourglass-start"></i>
@@ -863,13 +875,11 @@
             const emptyState = document.getElementById('chat-empty-state');
             if (emptyState) emptyState.remove();
 
-            // Kullanıcı sorusu baloncuğu
             const uDiv = document.createElement('div');
             uDiv.className = 'msg user';
             uDiv.innerHTML = `<div class="msg-bubble">${text}</div>`;
             chatBox.appendChild(uDiv);
 
-            // Yapay zeka yanıt simülasyonu
             setTimeout(() => {
                 const sDiv = document.createElement('div');
                 sDiv.className = 'msg system';
