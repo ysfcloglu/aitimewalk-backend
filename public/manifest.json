@@ -2,21 +2,23 @@
   "name": "AITimeWalk — Zaman Yolculuğu",
   "short_name": "AITimeWalk",
   "description": "Yapay zekâyla kadim tarihleri ve alternatif boyutları keşfet.",
-  "start_url": ".",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0a0806",
   "theme_color": "#c9a84c",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=192&h=192",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2314110e'/><text y='.72em' x='5' font-size='70' fill='%23c9a84c'>⏳</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=512&h=512",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2314110e'/><text y='.72em' x='5' font-size='70' fill='%23c9a84c'>⏳</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }
