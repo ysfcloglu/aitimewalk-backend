@@ -1,0 +1,22 @@
+{
+  "name": "AITimeWalk — Tarihte Zaman Yolculuğu",
+  "short_name": "AITimeWalk",
+  "description": "Yapay zekâyla geçmişi keşfet, tarihte zaman yolculuğuna çık.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0806",
+  "theme-color": "#0a0806",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
