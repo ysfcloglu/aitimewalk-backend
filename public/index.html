@@ -1,3 +1,64 @@
+
+Görevler tamamlandığında tarayıcı bildirimlerini açın.
+
+
+Yükselt
+
+Paylaş
+pasted_content.txt
+Metin · 78.07 KB
+https://timewalk.lemonsqueezy.com/checkout/buy/134188d9-31b8-408e-82b3-b725d2bc1c52 ürün linkim ve index html bu l
+Dosyanızı aldım, hemen inceliyorum ve düzenlemeye başlıyorum...
+
+
+
+
+
+Düzenleme tamamlandı! Dosyada yapılan tüm değişiklikler şunlardır:
+Konum
+Eski
+Yeni
+JS sabiti
+SHOPIER_URL
+LEMON_URL (yeni linkiniz)
+Ödeme fonksiyonu
+goToShopier()
+goToLemon()
+Yönlendirme metni (TR)
+Shopier'e yönlendiriliyorsunuz...
+Lemon Squeezy'e yönlendiriliyorsunuz...
+Yönlendirme metni (EN)
+Redirecting to Shopier...
+Redirecting to Lemon Squeezy...
+Ödeme modal yasal metni (TR)
+Shopier güvenli ödeme altyapısı...
+Lemon Squeezy güvenli ödeme altyapısı...
+Ödeme modal yasal metni (EN)
+Powered by Shopier secure payments...
+Powered by Lemon Squeezy secure payments...
+Gizlilik Politikası (TR + EN)
+Shopier referansları
+Lemon Squeezy referansları
+Dosyada artık hiç "Shopier" ifadesi kalmadı. Güncellenmiş index.html dosyası ektedir.
+index.html
+Kod · 78.16 KB
+Bu görevdeki tüm dosyaları görüntüle
+Görev tamamlandı
+Bu sonucun nasıl olduğunu düşündünüz?
+Bu mesaj için ücretsiz bir Manus 1.6 deneme hakkı kazandınız! En rafine ve yüksek kaliteli yanıtları almaya devam etmek için yükseltin.
+
+
+Yükselt
+Önerilen devam soruları
+
+
+
+Bulut bilgisayarlar
+Yeni
+
+Manus is an AI Agent and can make mistakes. Please double-check before use.
+
+index.html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -378,11 +439,11 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
       <div class="modal-price-amount">&#x20BA;129</div>
       <div class="modal-price-label" id="pm-price-label">aylık abonelik · istediğin zaman iptal</div>
     </div>
-    <button class="btn-pay" id="btn-pay" onclick="goToShopier()">
+    <button class="btn-pay" id="btn-pay" onclick="goToLemon()">
       <span id="pm-pay-btn">Ödemeyi Tamamla</span> <span>&#x2736;</span>
     </button>
     <p class="modal-legal" id="pm-legal">
-      Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek
+      Lemon Squeezy güvenli ödeme altyapısı kullanılmaktadır. Devam ederek
       <a onclick="openModal('terms')">Kullanım Şartları</a>'nı ve
       <a onclick="openModal('privacy')">Gizlilik Politikası</a>'nı kabul etmiş olursun.
     </p>
@@ -430,7 +491,7 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
     <p class="legal-last-updated" id="privacy-updated">Son güncelleme: Haziran 2025</p>
     <div class="legal-body" id="privacy-body">
       <h3>1. Toplanan Veriler</h3>
-      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Shopier altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
+      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Lemon Squeezy altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
       <h3>2. Verilerin Kullanımı</h3>
       <p>Topladığımız veriler yalnızca şu amaçlarla kullanılır:</p>
       <ul>
@@ -440,7 +501,7 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
         <li>Hizmet kalitesinin iyileştirilmesi</li>
       </ul>
       <h3>3. Üçüncü Taraflarla Paylaşım</h3>
-      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Shopier'in güvenli altyapısı üzerinden gerçekleştirilir.</p>
+      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Lemon Squeezy'nin güvenli altyapısı üzerinden gerçekleştirilir.</p>
       <h3>4. Çerezler (Cookies)</h3>
       <p>Sitede oturum yönetimi ve tercih kaydı amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri devre dışı bırakabilirsiniz; ancak bu durum bazı özelliklerin çalışmasını etkileyebilir.</p>
       <h3>5. Veri Güvenliği</h3>
@@ -492,7 +553,7 @@ textarea::placeholder{color:var(--muted);font-style:italic;}
 // =====================================================
 // AYARLAR
 // =====================================================
-const SHOPIER_URL = 'https://www.shopier.com/aitimewalk/47778139';
+const LEMON_URL = 'https://timewalk.lemonsqueezy.com/checkout/buy/134188d9-31b8-408e-82b3-b725d2bc1c52';
 
 // =====================================================
 // ÇEVİRİLER (TR / EN)
@@ -551,7 +612,7 @@ const TRANSLATIONS = {
     pmf4: 'Reklamsız deneyim',
     pmPriceLabel: 'aylık abonelik · istediğin zaman iptal',
     pmPayBtn: 'Ödemeyi Tamamla',
-    pmLegal: "Shopier güvenli ödeme altyapısı kullanılmaktadır. Devam ederek <a onclick=\"openModal('terms')\">Kullanım Şartları</a>'nı ve <a onclick=\"openModal('privacy')\">Gizlilik Politikası</a>'nı kabul etmiş olursun.",
+    pmLegal: "Lemon Squeezy güvenli ödeme altyapısı kullanılmaktadır. Devam ederek <a onclick=\"openModal('terms')\">Kullanım Şartları</a>'nı ve <a onclick=\"openModal('privacy')\">Gizlilik Politikası</a>'nı kabul etmiş olursun.",
     contactTitle: 'İletişim',
     contactDesc: 'Sorularını ve görüşlerini bekliyoruz.',
     contactNameLabel: 'İsim', contactEmailLabel: 'E-posta', contactMsgLabel: 'Mesaj',
@@ -577,7 +638,7 @@ const TRANSLATIONS = {
     eraHint: (label) => `${label} dönemi · Enter ile gönder · Shift+Enter yeni satır`,
     lockText: (label) => `"${label}" dönemi Premium'a özeldir.`,
     unlimitedLabel: 'Sınırsız',
-    shopierRedirect: "Shopier'e yönlendiriliyorsunuz...",
+    lemonRedirect: "Lemon Squeezy'e yönlendiriliyorsunuz...",
   },
   en: {
     mainTitle: 'Travel Through Time with AI',
@@ -632,7 +693,7 @@ const TRANSLATIONS = {
     pmf4: 'Ad-free experience',
     pmPriceLabel: 'monthly subscription · cancel anytime',
     pmPayBtn: 'Complete Payment',
-    pmLegal: "Powered by Shopier secure payments. By continuing you agree to our <a onclick=\"openModal('terms')\">Terms of Use</a> and <a onclick=\"openModal('privacy')\">Privacy Policy</a>.",
+    pmLegal: "Powered by Lemon Squeezy secure payments. By continuing you agree to our <a onclick=\"openModal('terms')\">Terms of Use</a> and <a onclick=\"openModal('privacy')\">Privacy Policy</a>.",
     contactTitle: 'Contact',
     contactDesc: "We'd love to hear from you.",
     contactNameLabel: 'Name', contactEmailLabel: 'Email', contactMsgLabel: 'Message',
@@ -658,7 +719,7 @@ const TRANSLATIONS = {
     eraHint: (label) => `${label} era · Press Enter to send · Shift+Enter for new line`,
     lockText: (label) => `"${label}" era is for Premium members only.`,
     unlimitedLabel: 'Unlimited',
-    shopierRedirect: 'Redirecting to Shopier...',
+    lemonRedirect: 'Redirecting to Lemon Squeezy...',
   }
 };
 
@@ -858,11 +919,11 @@ function applyLegalBodies() {
   if (currentLang === 'en') {
     document.getElementById('privacy-body').innerHTML = `
       <h3>1. Data We Collect</h3>
-      <p>AITimeWalk collects only the data necessary to provide our service: email address (optional), payment details (processed securely via Shopier), and site usage statistics.</p>
+      <p>AITimeWalk collects only the data necessary to provide our service: email address (optional), payment details (processed securely via Lemon Squeezy), and site usage statistics.</p>
       <h3>2. How We Use Your Data</h3>
       <p>Collected data is used solely to: deliver the service, manage Premium subscriptions, provide technical support, and improve service quality.</p>
       <h3>3. Third-Party Sharing</h3>
-      <p>Your personal data is never shared with third parties unless required by law or with your explicit consent. Payments are processed via Shopier's secure infrastructure.</p>
+      <p>Your personal data is never shared with third parties unless required by law or with your explicit consent. Payments are processed via Lemon Squeezy's secure infrastructure.</p>
       <h3>4. Cookies</h3>
       <p>We use cookies for session management and preference storage. You may disable cookies in your browser settings, though this may affect some features.</p>
       <h3>5. Data Security</h3>
@@ -892,7 +953,7 @@ function applyLegalBodies() {
   } else {
     document.getElementById('privacy-body').innerHTML = `
       <h3>1. Toplanan Veriler</h3>
-      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Shopier altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
+      <p>AITimeWalk olarak yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz. Bu veriler; e-posta adresi (isteğe bağlı), ödeme bilgileri (Lemon Squeezy altyapısı üzerinden güvenli şekilde işlenir) ve site kullanım istatistiklerini kapsar.</p>
       <h3>2. Verilerin Kullanımı</h3>
       <p>Topladığımız veriler yalnızca şu amaçlarla kullanılır:</p>
       <ul>
@@ -902,7 +963,7 @@ function applyLegalBodies() {
         <li>Hizmet kalitesinin iyileştirilmesi</li>
       </ul>
       <h3>3. Üçüncü Taraflarla Paylaşım</h3>
-      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Shopier'in güvenli altyapısı üzerinden gerçekleştirilir.</p>
+      <p>Kişisel verileriniz; yasal zorunluluk olmadıkça ve açık rızanız bulunmadıkça hiçbir üçüncü tarafla paylaşılmaz. Ödeme işlemleri Lemon Squeezy'nin güvenli altyapısı üzerinden gerçekleştirilir.</p>
       <h3>4. Çerezler (Cookies)</h3>
       <p>Sitede oturum yönetimi ve tercih kaydı amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri devre dışı bırakabilirsiniz; ancak bu durum bazı özelliklerin çalışmasını etkileyebilir.</p>
       <h3>5. Veri Güvenliği</h3>
@@ -956,13 +1017,13 @@ function closeAllModals() {
 });
 
 // =====================================================
-// SHOPIER
+// LEMON SQUEEZY
 // =====================================================
-function goToShopier() {
+function goToLemon() {
   const btn = document.getElementById('btn-pay');
   btn.disabled = true;
-  btn.innerHTML = '<span>' + t('shopierRedirect') + '</span>';
-  window.location.href = SHOPIER_URL;
+  btn.innerHTML = '<span>' + t('lemonRedirect') + '</span>';
+  window.location.href = LEMON_URL;
 }
 
 function checkPaymentReturn() {
@@ -1228,3 +1289,4 @@ init();
 </script>
 </body>
 </html>
+Shopier Ödeme Yöntemini Lemon ile Değiştirme - Manus
