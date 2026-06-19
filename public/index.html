@@ -695,17 +695,14 @@
             { id: 'rome', icon: '🏛️', nameTR: 'Roma', nameEN: 'Roman', premium: false, promptsTR: ['Roma neden çöktü?', 'Gladyatörler nasıldı?', 'Sezar kimdir?'], promptsEN: ['Why did Rome fall?', 'How were gladiators?', 'Who is Caesar?'] },
             { id: 'republic', icon: '🇹🇷', nameTR: 'Cumhuriyet', nameEN: 'Republic', premium: false, promptsTR: ['Cumhuriyet nasıl ilan edildi?', 'İlk reformlar nelerdi?'], promptsEN: ['How was republic declared?', 'What were the first reforms?'] },
             
-            // İstediğin yeni modlar:
             { id: 'character', icon: '👤', nameTR: 'İstediğin Karakter', nameEN: 'Any Character', premium: false, promptsTR: ['Atatürk ile konuş', 'Albert Einstein ile dertleş', 'Fatih Sultan Mehmet'], promptsEN: ['Talk with Tesla', 'Chat with Da Vinci', 'Marcus Aurelius'] },
             { id: 'future', icon: '🔮', nameTR: 'Gelecekteki Ben', nameEN: 'Future Self', premium: false, promptsTR: ['20 yıl sonraki halimle konuş', 'Gelecekteki benden tavsiye'], promptsEN: ['Talk to 20 years later', 'Advice from future me'] },
             { id: 'past', icon: '🧸', nameTR: 'Geçmişteki Ben', nameEN: 'Past Self', premium: false, promptsTR: ['Çocukluğuma mesaj gönder', '5 yıl önceki kendimle konuş'], promptsEN: ['Message to childhood', 'Talk to my 5 years ago'] },
             { id: 'if_you_were', icon: '🎭', nameTR: 'Tarihte Sen Olsaydın', nameEN: 'If You Were There', premium: true, promptsTR: ['Antik Mısırda ne olurdum?', 'Viking olsam nasıl yaşardım?'], promptsEN: ['What would I be in Egypt?', 'If I was a Viking?'] },
             
-            // Sürpriz Modlar:
             { id: 'time_capsule', icon: '📦', nameTR: 'Zaman Kapsülü', nameEN: 'Time Capsule', premium: true, promptsTR: ['Bugünün sırrını göm', 'Geleceğe anı bırak'], promptsEN: ['Bury a secret today', 'Leave a capsule'] },
             { id: 'butterfly', icon: '🦋', nameTR: 'Kelebek Etkisi', nameEN: 'Butterfly Effect', premium: true, promptsTR: ['İskenderiye kütüphanesi yanmasaydı?', 'Yazı hiç bulunmasaydı?'], promptsEN: ['If Alexandria never burned?', 'If writing was never found?'] },
 
-            // Temel Diğer Modlar
             { id: 'egypt', icon: '🔱', nameTR: 'Antik Mısır', nameEN: 'Ancient Egypt', premium: true, promptsTR: [], promptsEN: [] },
             { id: 'ww2', icon: '🎖️', nameTR: 'II. Dünya Savaşı', nameEN: 'World War II', premium: true, promptsTR: [], promptsEN: [] },
             { id: 'custom', icon: '🏰', nameTR: 'Kendi Senaryon', nameEN: 'Custom Scenario', premium: true, promptsTR: [], promptsEN: [] }
@@ -742,7 +739,6 @@
         function renderAll() {
             const l = localization[currentLang];
             
-            // Dil güncelleştirmeleri
             document.getElementById('main-title').innerText = l.mainTitle;
             document.getElementById('main-sub').innerText = l.mainSub;
             document.getElementById('txt-current-mod').innerText = l.currentMod;
@@ -810,14 +806,12 @@
             eras.forEach(era => {
                 const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
                 
-                // Üst Scroller Menüsü
                 const tab = document.createElement('div');
                 tab.className = `era-tab ${era.id === selectedEraId ? 'active' : ''} ${era.premium ? 'locked' : ''}`;
                 tab.innerHTML = `<span>${era.icon}</span> ${name} ${era.premium ? '👑' : ''}`;
                 tab.onclick = () => selectEra(era.id);
                 tabsContainer.appendChild(tab);
 
-                // Alt Grid Kartları
                 const card = document.createElement('div');
                 card.className = `grid-period-card ${era.id === selectedEraId ? 'active' : ''}`;
                 card.innerHTML = `
@@ -841,7 +835,6 @@
             }
             selectedEraId = id;
             
-            // Input placeholder güncelleme
             const currentEraName = currentLang === 'TR' ? era.nameTR : era.nameEN;
             document.getElementById('chat-user-input').placeholder = `${currentEraName} ${currentLang === 'TR' ? 'Modu aktif...' : 'Mode active...'}`;
 
@@ -873,7 +866,7 @@
             }
         }
 
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('chat-user-input');
             const text = input.value.trim();
             if (!text) return;
@@ -887,7 +880,7 @@
             const emptyState = document.getElementById('chat-empty-state');
             if (emptyState) emptyState.remove();
 
-            // Kullanıcı Mesajı
+            // 1. Kullanıcı Mesajını Yazdır
             const userMsg = document.createElement('div');
             userMsg.className = 'msg user';
             userMsg.innerHTML = `<div class="msg-bubble">${text}</div>`;
@@ -896,23 +889,67 @@
             input.value = '';
             remainingQuestions--;
             document.getElementById('right-counter').innerText = remainingQuestions;
+            display.scrollTop = display.scrollHeight;
 
-            // Simüle Edilmiş Yapay Zeka Cevabı (Buraya backend API entegre edilecek)
-            setTimeout(() => {
-                const systemMsg = document.createElement('div');
-                systemMsg.className = 'msg system';
-                let aiResponse = "";
+            // 2. "Yazıyor..." Efekti
+            const loadingMsg = document.createElement('div');
+            loadingMsg.className = 'msg system';
+            loadingMsg.id = 'ai-loading-indicator';
+            loadingMsg.innerHTML = `<div class="msg-bubble" style="opacity: 0.6;">⏳ Zaman çizgisine bağlanılıyor...</div>`;
+            display.appendChild(loadingMsg);
+            display.scrollTop = display.scrollHeight;
 
-                if (currentLang === 'TR') {
-                    aiResponse = `🔮 [${selectedEraId.toUpperCase()} PORTALI] İsteğin zaman çizgisine ulaştı. Yapay zeka motorun şu an API bağlantısı bekliyor, ancak konsept hazır! Girdiğin metin: "${text}"`;
-                } else {
-                    aiResponse = `🔮 [${selectedEraId.toUpperCase()} PORTAL] Your request has reached the timeline. The AI engine is waiting for API config, but the concept is ready! Your text: "${text}"`;
+            try {
+                // 3. API'ye İstek Gönderme
+                const response = await fetch('/api/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        question: text,
+                        mode: selectedEraId,
+                        lang: currentLang
+                    })
+                });
+
+                const data = await response.json();
+                
+                // Yükleniyor uyarısını temizle
+                document.getElementById('ai-loading-indicator').remove();
+
+                if (data.error) {
+                    throw new Error(data.error);
                 }
 
-                systemMsg.innerHTML = `<div class="msg-bubble">${aiResponse}</div>`;
+                // 4. Görseli ve Yapay Zeka Cevabını Bas
+                const systemMsg = document.createElement('div');
+                systemMsg.className = 'msg system';
+                
+                let imageHtml = '';
+                if (data.images && data.images.length > 0) {
+                    imageHtml = `<img src="${data.images[0].url}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 6px; margin-bottom: 8px; border: 1px solid var(--border-color);">`;
+                }
+
+                systemMsg.innerHTML = `
+                    <div class="msg-bubble">
+                        ${imageHtml}
+                        <div>${data.answer}</div>
+                    </div>
+                `;
                 display.appendChild(systemMsg);
-                display.scrollTop = display.scrollHeight;
-            }, 800);
+
+            } catch (error) {
+                console.error("API Hatası:", error);
+                if(document.getElementById('ai-loading-indicator')) {
+                    document.getElementById('ai-loading-indicator').remove();
+                }
+                
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'msg system';
+                errorMsg.innerHTML = `<div class="msg-bubble" style="color: #ff6b6b;">❌ Zaman portalında bir frekans hatası oluştu. Lütfen tekrar deneyin.</div>`;
+                display.appendChild(errorMsg);
+            }
 
             display.scrollTop = display.scrollHeight;
         }
