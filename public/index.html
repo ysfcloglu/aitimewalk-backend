@@ -389,11 +389,11 @@
             font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
         }
 
-        /* 👑👑 EN SÜPER YENİ PREMIUM KART TASARIMI (GÜNCEL COŞKULU HALİ) 👑👑 */
+        /* 👑 PREMIUM KART TASARIMI (Işıl Işıl & Cam Efekti) 👑 */
         .premium-glow-box {
             position: relative;
             border-radius: 16px;
-            padding: 3px; /* Hareketli çerçevenin kalınlığı */
+            padding: 3px; 
             background: linear-gradient(90deg, #947a32, #ebd180, #c9a84c, #947a32);
             background-size: 300% 300%;
             animation: borderMove 6s linear infinite;
@@ -408,7 +408,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* İç Kart Katmanı (Cam Efekti ve Akan Işık) */
         .premium-glow-box .plan-card.premium-card {
             margin-bottom: 0;
             border: none;
@@ -420,7 +419,6 @@
             position: relative;
         }
 
-        /* Akan Işık (Shimmer) Efekti */
         .premium-glow-box .plan-card.premium-card::after {
             content: '';
             position: absolute;
@@ -480,7 +478,6 @@
             font-weight: 600;
         }
 
-        /* Canlı Liste Tasarımı */
         .premium-glow-box .feature-item {
             font-size: 14.5px;
             font-weight: 500;
@@ -492,7 +489,6 @@
             filter: drop-shadow(0 0 4px #c9a84c);
         }
 
-        /* Canlı Seçim Butonu */
         .premium-glow-box .btn-plan-select.btn-premium-trigger {
             background: linear-gradient(135deg, #fff1c7 0%, #c9a84c 50%, #947a32 100%);
             background-size: 200% auto;
@@ -537,7 +533,7 @@
         .grid-card-name { font-family: 'Playfair Display', serif; font-size: 14px; }
         .grid-lock { position: absolute; top: 8px; right: 8px; font-size: 10px; color: var(--text-dim); opacity: 0.6; }
 
-        /* ✨ CANLI KARŞILAŞTIRMA TABLOSU YENİLENDİ */
+        /* Karşılaştırma Tablosu */
         .comparison-wrapper {
             overflow-x: auto; margin-bottom: 50px;
             background: linear-gradient(180deg, var(--bg-card), rgba(20, 17, 14, 0.95));
@@ -556,7 +552,6 @@
         td:first-child { color: var(--text-light); font-weight: 500; }
         td { color: var(--text-dim); }
 
-        /* Tabloda Sadece Premium Sütununu Parlatma Efekti */
         tr:hover td:nth-child(3), td:nth-child(3) {
             color: #ebd180;
             font-weight: 700;
@@ -564,7 +559,7 @@
             background: rgba(201, 168, 76, 0.02);
         }
         
-        /* Footer Sayfa Altı Linkleri */
+        /* Footer */
         footer {
             display: flex; flex-direction: column; align-items: center; gap: 15px;
             border-top: 1px solid var(--border-color); padding-top: 25px;
@@ -642,16 +637,16 @@
             <div class="plan-price" id="p1-price">Ücretsiz</div>
             <ul class="feature-list">
                 <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-1">Günde 10 zaman yolculuğu hakkı</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-2">5 temel tarihsel senaryo</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-3">Mitoloji, Bilim Kurgu & daha fazlası</span> <span class="feature-badge-count" id="badge-3hak">günlük 3 hak</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-4">Standart AI yanıtları</span></li>
+                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-2">5 temel tarihsel senaryo (Aktif)</span></li>
+                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-3">Mitoloji & Geçmişe Dönüş</span> <span class="feature-badge-count" id="badge-3hak">günlük 3 hak</span></li>
+                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-4">Standart AI yanıt hızı ve kalitesi</span></li>
                 <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-5">Premium dönemler & kendi senaryom</span> <span class="feature-badge-count" id="badge-kilit1">kilitli</span></li>
-                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-6">Reklamsız deneyim</span> <span class="feature-badge-count" id="badge-kilit2">kilitli</span></li>
+                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-6">Reklamsız kesintisiz deneyim</span> <span class="feature-badge-count" id="badge-kilit2">kilitli</span></li>
             </ul>
             <button class="btn-plan-select" id="btn-p1-status">✓ Şu An Aktif</button>
         </div>
 
-        <!-- 👑👑 HAREKETLİ, IŞILDAYAN YENİ PREMIUM KART KATMANI 👑👑 -->
+        <!-- 👑 DOPDOLU YENİ PREMIUM KART KATMANI 👑 -->
         <div class="premium-glow-box">
             <div class="badge-popular" id="badge-popular-txt">EN POPÜLER</div>
             <div class="plan-card premium-card">
@@ -659,13 +654,20 @@
                 <div class="plan-name" id="p2-name">Premium Mod</div>
                 <div class="plan-sub" id="p2-sub">Tam tarihin içinde yaşa</div>
                 <div class="plan-price">₺129 <span>/ ay</span></div>
+                
                 <ul class="feature-list">
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-1">Sınırsız zaman yolculuğu</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-2">Gelişmiş AI karakterlerle konuşma</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-3">Reklamsız deneyim</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-4">Özel dönemler: Antik Mısır, Dünya Savaşları...</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-5">Kendi senaryonu oluştur</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-1">Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-2">15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-3">Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-4">Kendi Özgün Senaryonu / Evrenini Yaratma Özelliği</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-5">Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-6">Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-7">Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-8">Zengin Medya: Wikipedia & AI Görsel Destekli Anlatım</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-9">Sesli Portal (Dönem hikayelerini sesli dinleme) — Çok Yakında!</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-10">Tamamen Reklamsız Deneyim & Özel Profil Rozeti</span></li>
                 </ul>
+                
                 <button class="btn-plan-select btn-premium-trigger" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
             </div>
         </div>
@@ -697,7 +699,7 @@
                     <tr>
                         <td id="td-f3">AI yanıt kalitesi</td>
                         <td id="td-n3">Standart</td>
-                        <td id="td-p3">Gelişmiş</td>
+                        <td id="td-p3">Gelişmiş (Rol Yapma)</td>
                     </tr>
                     <tr>
                         <td id="td-f4">Reklamlar</td>
@@ -707,12 +709,12 @@
                     <tr>
                         <td id="td-f5">Kilitli dönemler</td>
                         <td>—</td>
-                        <td id="td-p5">Açık</td>
+                        <td id="td-p5">Açık (Tümü)</td>
                     </tr>
                     <tr>
                         <td id="td-f6">Kendi senaryon</td>
                         <td>—</td>
-                        <td>★</td>
+                        <td>★ (Aktif)</td>
                     </tr>
                 </tbody>
             </table>
@@ -745,7 +747,7 @@
             const blob = new Blob([swCode], { type: 'application/javascript' });
             const swUrl = URL.createObjectURL(blob);
             navigator.serviceWorker.register(swUrl, { scope: './' })
-                .then(reg => console.log('Sihirli PWA Kaydı Başarılı!'))
+                .then(reg => console.log('PWA Kaydı Başarılı!'))
                 .catch(err => console.error('PWA Hatası:', err));
         }
 
@@ -763,12 +765,13 @@
                 inputTitle: 'Tarihe ve Boyutlara Dair Ne Merak Ediyorsun?',
                 inputHint: 'Bir mod seç · Enter ile gönder · Shift+Enter yeni satır',
                 p1Name: 'Normal Mod', p1Sub: 'Tarihle tanışmanın başlangıcı', p1Price: 'Ücretsiz',
-                f11: 'Günde 10 zaman yolculuğu hakkı', f12: '5 temel tarihsel senaryo', f13: 'Mitoloji, Bilim Kurgu & daha fazlası', f14: 'Standart AI yanıtları', f15: 'Premium dönemler & kendi senaryom', f16: 'Reklamsız deneyim',
+                f11: 'Günde 10 zaman yolculuğu hakkı', f12: '5 temel tarihsel senaryo (Aktif)', f13: 'Mitoloji & Geçmişe Dönüş', f14: 'Standart AI yanıt hızı ve kalitesi', f15: 'Premium dönemler & kendi senaryom', f16: 'Reklamsız kesintisiz deneyim',
                 badge3h: 'günlük 3 hak', badgeKilit: 'kilitli', btnActive: '✓ Şu An Aktif',
                 badgePopular: 'EN POPÜLER', p2Name: 'Premium Mod', p2Sub: 'Tam tarihin içinde yaşa',
-                f21: 'Sınırsız zaman yolculuğu', f22: 'Gelişmiş AI karakterlerle konuşma', f23: 'Reklamsız deneyim', f24: 'Özel dönemler: Antik Mısır, Dünya Savaşları...', f25: 'Kendi senaryonu oluştur',
+                f21: 'Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar', f22: '15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)', f23: 'Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)', f24: 'Kendi Özgün Senaryonu / Evrenini Yaratma Özelliği', f25: 'Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)',
+                f26: 'Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet', f27: 'Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı', f28: 'Zengin Medya: Wikipedia & AI Görsel Destekli Anlatım', f29: 'Sesli Portal (Dönem hikayelerini sesli dinleme) — Çok Yakında!', f210: 'Tamamen Reklamsız Deneyim & Özel Profil Rozeti',
                 btnGoPremium: "Premium'a Geç ★", titlePeriods: 'Dönemler & Boyutlar', titleComp: 'Detaylı Karşılaştırma',
-                thFeature: 'ÖZELLİK', tdF1: 'Günlük yolculuk', tdP1: 'Sınırsız', tdF2: 'Tarihsel senaryo', tdP2: 'Tümü + Özel', tdF3: 'AI yanıt kalitesi', tdN3: 'Standart', tdP3: 'Gelişmiş', tdF4: 'Reklamlar', tdN4: 'Var', tdP4: 'Yok', tdF5: 'Kilitli dönemler', tdP5: 'Açık', tdF6: 'Kendi senaryon',
+                thFeature: 'ÖZELLİK', tdF1: 'Günlük yolculuk', tdP1: 'Sınırsız', tdF2: 'Tarihsel senaryo', tdP2: 'Tümü + Özel', tdF3: 'AI yanıt kalitesi', tdN3: 'Standart', tdP3: 'Gelişmiş (Rol Yapma)', tdF4: 'Reklamlar', tdN4: 'Var', tdP4: 'Yok', tdF5: 'Kilitli dönemler', tdP5: 'Açık (Tümü)', tdF6: 'Kendi senaryon',
                 linkContact: 'İletişim', linkPrivacy: 'Gizlilik Politikası', linkTerms: 'Kullanım Şartları',
                 footerNotice: 'İstediğin zaman iptal edebilirsin. · Ödeme güvenli şekilde işlenir<br>Sorular için destek: destek@aitimewalk.com'
             },
@@ -781,12 +784,13 @@
                 inputTitle: 'What are you curious about history and dimensions?',
                 inputHint: 'Select era · Enter to send · Shift+Enter for new line',
                 p1Name: 'Normal Mode', p1Sub: 'The beginning of meeting history', p1Price: 'Free',
-                f11: '10 time travel rights per day', f12: '5 basic historical scenarios', f13: 'Mythology, Sci-Fi & more', f14: 'Standard AI responses', f15: 'Premium eras & custom scenario', f16: 'Ad-free experience',
+                f11: '10 time travel rights per day', f12: '5 basic historical scenarios (Active)', f13: 'Mythology & Back to Past', f14: 'Standard AI speed and quality', f15: 'Premium eras & custom scenario', f16: 'Ad-free seamless experience',
                 badge3h: '3 daily rights', badgeKilit: 'locked', btnActive: '✓ Currently Active',
                 badgePopular: 'MOST POPULAR', p2Name: 'Premium Mode', p2Sub: 'Live completely inside history',
-                f21: 'Unlimited time travel', f22: 'Talk to advanced AI characters', f23: 'Ad-free experience', f24: 'Special eras: Ancient Egypt, World Wars...', f25: 'Create your own scenario',
+                f21: 'Unlimited Time Travel & Jet Fast Responses', f22: '15+ Special Eras (Ancient Egypt, Maya, World War II...)', f23: 'Advanced AI Roleplay (Characters use historical dialect)', f24: 'Create Your Own Custom Scenario / Universe', f25: 'Butterfly Effect Simulator (What if history changed?)',
+                f26: 'Unlimited Chat with Historical Characters (Tesla, Caesar...)', f27: 'Time Capsule & Connect with Future/Past Self', f28: 'Rich Media: Wikipedia & AI Image Supported Narration', f29: 'Voice Portal (Listen to historical stories) — Coming Soon!', f210: 'Completely Ad-Free Experience & Special Profile Badge',
                 btnGoPremium: "Go Premium ★", titlePeriods: 'Eras & Dimensions', titleComp: 'Detailed Comparison',
-                thFeature: 'FEATURE', tdF1: 'Daily journeys', tdP1: 'Unlimited', tdF2: 'Historical scenario', tdP2: 'All + Special', tdF3: 'AI response quality', tdN3: 'Standard', tdP3: 'Advanced', tdF4: 'Ads', tdN4: 'Yes', tdP4: 'No', tdF5: 'Locked eras', tdP5: 'Unlocked', tdF6: 'Custom scenario',
+                thFeature: 'FEATURE', tdF1: 'Daily journeys', tdP1: 'Unlimited', tdF2: 'Historical scenario', tdP2: 'All + Special', tdF3: 'AI response quality', tdN3: 'Standard', tdP3: 'Advanced (Roleplay)', tdF4: 'Ads', tdN4: 'Yes', tdP4: 'No', tdF5: 'Locked eras', tdP5: 'Unlocked (All)', tdF6: 'Custom scenario',
                 linkContact: 'Contact', linkPrivacy: 'Privacy Policy', linkTerms: 'Terms of Use',
                 footerNotice: 'Cancel anytime. · Payment processed securely<br>Support: destek@aitimewalk.com'
             }
@@ -863,11 +867,19 @@
             document.getElementById('badge-popular-txt').innerText = l.badgePopular;
             document.getElementById('p2-name').innerText = l.p2Name;
             document.getElementById('p2-sub').innerText = l.p2Sub;
+            
+            // Premium maddeleri dinamik dilde doldur
             document.getElementById('f2-1').innerText = l.f21;
             document.getElementById('f2-2').innerText = l.f22;
             document.getElementById('f2-3').innerText = l.f23;
             document.getElementById('f2-4').innerText = l.f24;
             document.getElementById('f2-5').innerText = l.f25;
+            document.getElementById('f2-6').innerText = l.f26;
+            document.getElementById('f2-7').innerText = l.f27;
+            document.getElementById('f2-8').innerText = l.f28;
+            document.getElementById('f2-9').innerText = l.f29;
+            document.getElementById('f2-10').innerText = l.f210;
+            
             document.getElementById('btn-p2-action').innerText = l.btnGoPremium;
             
             document.getElementById('title-periods-grid').innerText = l.titlePeriods;
