@@ -27,9 +27,8 @@
             --text-dim: #a39e93;
             --border-color: #2c2519;
             --glass-bg: rgba(20, 17, 14, 0.85);
-            --shadow-gold: rgba(201, 168, 76, 0.15);
-            --bg-premium: rgba(201, 168, 76, 0.05);
-            --premium-neon: rgba(201, 168, 76, 0.35);
+            --shadow-gold: rgba(201, 168, 76, 0.25);
+            --premium-glow: rgba(235, 209, 128, 0.4);
         }
 
         * {
@@ -214,10 +213,6 @@
             background: rgba(201, 168, 76, 0.05);
         }
 
-        .era-tab.locked {
-            opacity: 0.5;
-        }
-
         /* İnteraktif Simülasyon / Chat Alanı */
         .simulation-container {
             background: var(--bg-card);
@@ -368,65 +363,19 @@
             padding: 24px;
             margin-bottom: 20px;
             position: relative;
-            transition: all 0.3s ease;
         }
 
-        /* ✨ YENİ CANLI PREMIUM KART TASARIMI */
-        .plan-card.premium-card {
-            border: 1px solid var(--accent-gold);
-            background: linear-gradient(145deg, rgba(20, 17, 14, 0.95), rgba(44, 37, 25, 0.6));
-            box-shadow: 0 10px 30px var(--shadow-gold), inset 0 0 15px rgba(201, 168, 76, 0.05);
-            transform: scale(1.01);
-        }
-        .plan-card.premium-card:hover {
-            box-shadow: 0 12px 35px var(--premium-neon), inset 0 0 20px rgba(201, 168, 76, 0.1);
-        }
-
-        .badge-popular {
-            position: absolute;
-            top: -12px; right: 20px;
-            background: linear-gradient(135deg, #ebd180, var(--accent-gold));
-            color: var(--bg-dark);
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(201, 168, 76, 0.4);
-        }
-
-        .plan-header-icon {
-            font-size: 24px;
-            color: var(--text-dim);
-            margin-bottom: 10px;
-        }
-        .premium-card .plan-header-icon { 
-            color: var(--accent-gold);
-            text-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
-        }
-
+        .plan-header-icon { font-size: 24px; color: var(--text-dim); margin-bottom: 10px; }
         .plan-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 4px;}
-        .premium-card .plan-name { color: var(--accent-gold); font-size: 20px; }
-        
         .plan-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 15px; }
-        
         .plan-price { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 20px; }
-        .premium-card .plan-price { color: var(--text-light); }
         .plan-price span { font-size: 14px; color: var(--text-dim); font-weight: 400; }
 
         .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .feature-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-light); }
         .feature-item i { font-size: 12px; color: var(--accent-gold); }
-        
-        /* Premium Özelliklerin Yıldız Parıltısı */
-        .premium-card .feature-item i {
-            color: #ebd180;
-            text-shadow: 0 0 6px var(--accent-gold);
-        }
-
         .feature-item.locked { color: var(--text-dim); opacity: 0.6; }
-        .feature-item.locked i { color: var(--text-dim); text-shadow: none; }
+        .feature-item.locked i { color: var(--text-dim); }
 
         .feature-badge-count {
             background: rgba(255,255,255,0.05);
@@ -439,18 +388,126 @@
             background: rgba(255,255,255,0.02); color: var(--text-light);
             font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
         }
-        
-        /* Premium Seçim Butonu */
-        .premium-card .btn-plan-select {
-            background: linear-gradient(135deg, #ebd180, var(--accent-gold));
-            color: var(--bg-dark);
-            border: none;
-            box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
-            font-size: 15px;
+
+        /* 👑👑 EN SÜPER YENİ PREMIUM KART TASARIMI (GÜNCEL COŞKULU HALİ) 👑👑 */
+        .premium-glow-box {
+            position: relative;
+            border-radius: 16px;
+            padding: 3px; /* Hareketli çerçevenin kalınlığı */
+            background: linear-gradient(90deg, #947a32, #ebd180, #c9a84c, #947a32);
+            background-size: 300% 300%;
+            animation: borderMove 6s linear infinite;
+            box-shadow: 0 15px 40px var(--shadow-gold), 0 0 25px rgba(201, 168, 76, 0.15);
+            margin-bottom: 20px;
+            overflow: hidden;
         }
-        .premium-card .btn-plan-select:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(201, 168, 76, 0.5);
+
+        @keyframes borderMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* İç Kart Katmanı (Cam Efekti ve Akan Işık) */
+        .premium-glow-box .plan-card.premium-card {
+            margin-bottom: 0;
+            border: none;
+            background: linear-gradient(135deg, rgba(25, 21, 16, 0.96) 0%, rgba(14, 12, 9, 0.99) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 26px;
+            border-radius: 13px;
+            position: relative;
+        }
+
+        /* Akan Işık (Shimmer) Efekti */
+        .premium-glow-box .plan-card.premium-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(235, 209, 128, 0.12), transparent);
+            transform: skewX(-25deg);
+            animation: shineEffect 4.5s infinite ease-in-out;
+        }
+
+        @keyframes shineEffect {
+            0% { left: -150%; }
+            30% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .premium-glow-box .badge-popular {
+            position: absolute;
+            top: 15px; right: 20px;
+            background: linear-gradient(135deg, #fff3d1, #c9a84c);
+            color: #0a0806;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 5px 14px;
+            border-radius: 25px;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(235, 209, 128, 0.4);
+            z-index: 2;
+        }
+
+        .premium-glow-box .plan-header-icon i {
+            color: #ebd180;
+            font-size: 28px;
+            text-shadow: 0 0 12px rgba(235, 209, 128, 0.6);
+            animation: crownPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes crownPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(235, 209, 128, 0.3)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(235, 209, 128, 0.7)); }
+        }
+
+        .premium-glow-box .plan-name {
+            color: #ebd180;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px rgba(201, 168, 76, 0.2);
+        }
+
+        .premium-glow-box .plan-price {
+            color: #f5f2eb;
+            font-size: 32px;
+        }
+        .premium-glow-box .plan-price span {
+            color: #ebd180;
+            font-weight: 600;
+        }
+
+        /* Canlı Liste Tasarımı */
+        .premium-glow-box .feature-item {
+            font-size: 14.5px;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .premium-glow-box .feature-item i {
+            color: #ebd180;
+            font-size: 13px;
+            filter: drop-shadow(0 0 4px #c9a84c);
+        }
+
+        /* Canlı Seçim Butonu */
+        .premium-glow-box .btn-plan-select.btn-premium-trigger {
+            background: linear-gradient(135deg, #fff1c7 0%, #c9a84c 50%, #947a32 100%);
+            background-size: 200% auto;
+            color: #0a0806;
+            border: none;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 20px rgba(201, 168, 76, 0.4);
+            transition: all 0.3s ease;
+        }
+        .premium-glow-box .btn-plan-select.btn-premium-trigger:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 25px rgba(235, 209, 128, 0.6);
         }
 
         /* Tüm Dönemler Izgarası (Grid) */
@@ -477,39 +534,34 @@
 
         .grid-card-icon { font-size: 20px; color: var(--text-dim); margin-bottom: 8px; display: block; }
         .grid-period-card.active .grid-card-icon { color: var(--accent-gold); }
-
         .grid-card-name { font-family: 'Playfair Display', serif; font-size: 14px; }
+        .grid-lock { position: absolute; top: 8px; right: 8px; font-size: 10px; color: var(--text-dim); opacity: 0.6; }
 
-        .grid-lock {
-            position: absolute; top: 8px; right: 8px; font-size: 10px; color: var(--text-dim); opacity: 0.6;
-        }
-
-        /* ✨ YENİ CANLI KARŞILAŞTIRMA TABLOSU */
+        /* ✨ CANLI KARŞILAŞTIRMA TABLOSU YENİLENDİ */
         .comparison-wrapper {
             overflow-x: auto; margin-bottom: 50px;
-            background: var(--bg-card);
+            background: linear-gradient(180deg, var(--bg-card), rgba(20, 17, 14, 0.95));
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 8px;
+            padding: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        table {
-            width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;
-        }
-
-        th, td { padding: 14px 12px; border-bottom: 1px solid var(--border-color); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
+        th, td { padding: 16px 14px; border-bottom: 1px solid rgba(44, 37, 25, 0.6); }
         tr:last-child td { border-bottom: none; }
 
-        th { font-family: 'Playfair Display', serif; color: var(--accent-gold); text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
-        
+        th { font-family: 'Playfair Display', serif; color: var(--accent-gold); text-transform: uppercase; font-size: 12px; letter-spacing: 1px; font-weight: 700; }
         td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3) { text-align: center; }
         td:first-child { color: var(--text-light); font-weight: 500; }
         td { color: var(--text-dim); }
 
-        /* Tablodaki Premium Sütun Canlandırması */
-        td:nth-child(3) {
+        /* Tabloda Sadece Premium Sütununu Parlatma Efekti */
+        tr:hover td:nth-child(3), td:nth-child(3) {
             color: #ebd180;
-            font-weight: 600;
+            font-weight: 700;
+            text-shadow: 0 0 4px rgba(201, 168, 76, 0.3);
+            background: rgba(201, 168, 76, 0.02);
         }
         
         /* Footer Sayfa Altı Linkleri */
@@ -582,6 +634,7 @@
 
         <div class="section-separator">Planlar</div>
 
+        <!-- ÜCRETSİZ KART -->
         <div class="plan-card">
             <div class="plan-header-icon"><i class="fa-regular fa-clock"></i></div>
             <div class="plan-name" id="p1-name">Normal Mod</div>
@@ -598,20 +651,23 @@
             <button class="btn-plan-select" id="btn-p1-status">✓ Şu An Aktif</button>
         </div>
 
-        <div class="plan-card premium-card">
+        <!-- 👑👑 HAREKETLİ, IŞILDAYAN YENİ PREMIUM KART KATMANI 👑👑 -->
+        <div class="premium-glow-box">
             <div class="badge-popular" id="badge-popular-txt">EN POPÜLER</div>
-            <div class="plan-header-icon"><i class="fa-solid fa-crown"></i></div>
-            <div class="plan-name" id="p2-name">Premium Mod</div>
-            <div class="plan-sub" id="p2-sub">Tam tarihin içinde yaşa</div>
-            <div class="plan-price">₺129 <span>/ ay</span></div>
-            <ul class="feature-list">
-                <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-1">Sınırsız zaman yolculuğu</span></li>
-                <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-2">Gelişmiş AI karakterlerle konuşma</span></li>
-                <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-3">Reklamsız deneyim</span></li>
-                <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-4">Özel dönemler: Antik Mısır, Dünya Savaşları...</span></li>
-                <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-5">Kendi senaryonu oluştur</span></li>
-            </ul>
-            <button class="btn-plan-select" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
+            <div class="plan-card premium-card">
+                <div class="plan-header-icon"><i class="fa-solid fa-crown"></i></div>
+                <div class="plan-name" id="p2-name">Premium Mod</div>
+                <div class="plan-sub" id="p2-sub">Tam tarihin içinde yaşa</div>
+                <div class="plan-price">₺129 <span>/ ay</span></div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-1">Sınırsız zaman yolculuğu</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-2">Gelişmiş AI karakterlerle konuşma</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-3">Reklamsız deneyim</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-4">Özel dönemler: Antik Mısır, Dünya Savaşları...</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-5">Kendi senaryonu oluştur</span></li>
+                </ul>
+                <button class="btn-plan-select btn-premium-trigger" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
+            </div>
         </div>
 
         <div class="section-separator" id="title-periods-grid">Dönemler & Boyutlar</div>
@@ -695,7 +751,6 @@
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
-            console.log('Uygulamayı İndirme Eki Aktif!');
         });
 
         const localization = {
@@ -741,15 +796,12 @@
             { id: 'ottoman', icon: '⚔️', nameTR: 'Osmanlı', nameEN: 'Ottoman', premium: false, promptsTR: ['İstanbul neden fethedildi?', 'Saray hayatı nasıldı?', 'Yeniçeriler kimlerdi?'], promptsEN: ['Why was Istanbul conquered?', 'How was palace life?', 'Who were the Janissaries?'] },
             { id: 'rome', icon: '🏛️', nameTR: 'Roma', nameEN: 'Roman', premium: false, promptsTR: ['Roma neden çöktü?', 'Gladyatörler nasıldı?', 'Sezar kimdir?'], promptsEN: ['Why did Rome fall?', 'How were gladiators?', 'Who is Caesar?'] },
             { id: 'republic', icon: '🇹🇷', nameTR: 'Cumhuriyet', nameEN: 'Republic', premium: false, promptsTR: ['Cumhuriyet nasıl ilan edildi?', 'İlk reformlar nelerdi?'], promptsEN: ['How was republic declared?', 'What were the first reforms?'] },
-            
             { id: 'character', icon: '👤', nameTR: 'İstediğin Karakter', nameEN: 'Any Character', premium: false, promptsTR: ['Atatürk ile konuş', 'Albert Einstein ile dertleş', 'Fatih Sultan Mehmet'], promptsEN: ['Talk with Tesla', 'Chat with Da Vinci', 'Marcus Aurelius'] },
             { id: 'future', icon: '🔮', nameTR: 'Gelecekteki Ben', nameEN: 'Future Self', premium: false, promptsTR: ['20 yıl sonraki halimle konuş', 'Gelecekteki benden tavsiye'], promptsEN: ['Talk to 20 years later', 'Advice from future me'] },
             { id: 'past', icon: '🧸', nameTR: 'Geçmişteki Ben', nameEN: 'Past Self', premium: false, promptsTR: ['Çocukluğuma mesaj gönder', '5 yıl önceki kendimle konuş'], promptsEN: ['Message to childhood', 'Talk to my 5 years ago'] },
             { id: 'if_you_were', icon: '🎭', nameTR: 'Tarihte Sen Olsaydın', nameEN: 'If You Were There', premium: true, promptsTR: ['Antik Mısırda ne olurdum?', 'Viking olsam nasıl yaşardım?'], promptsEN: ['What would I be in Egypt?', 'If I was a Viking?'] },
-            
             { id: 'time_capsule', icon: '📦', nameTR: 'Zaman Kapsülü', nameEN: 'Time Capsule', premium: true, promptsTR: ['Bugünün sırrını göm', 'Geleceğe anı bırak'], promptsEN: ['Bury a secret today', 'Leave a capsule'] },
             { id: 'butterfly', icon: '🦋', nameTR: 'Kelebek Etkisi', nameEN: 'Butterfly Effect', premium: true, promptsTR: ['İskenderiye kütüphanesi yanmasaydı?', 'Yazı hiç bulunmasaydı?'], promptsEN: ['If Alexandria never burned?', 'If writing was never found?'] },
-
             { id: 'egypt', icon: '🔱', nameTR: 'Antik Mısır', nameEN: 'Ancient Egypt', premium: true, promptsTR: [], promptsEN: [] },
             { id: 'ww2', icon: '🎖️', nameTR: 'II. Dünya Savaşı', nameEN: 'World War II', premium: true, promptsTR: [], promptsEN: [] },
             { id: 'custom', icon: '🏰', nameTR: 'Kendi Senaryon', nameEN: 'Custom Scenario', premium: true, promptsTR: [], promptsEN: [] }
@@ -927,7 +979,6 @@
             const emptyState = document.getElementById('chat-empty-state');
             if (emptyState) emptyState.remove();
 
-            // 1. Kullanıcı Mesajını Yazdır
             const userMsg = document.createElement('div');
             userMsg.className = 'msg user';
             userMsg.innerHTML = `<div class="msg-bubble">${text}</div>`;
@@ -938,7 +989,6 @@
             document.getElementById('right-counter').innerText = remainingQuestions;
             display.scrollTop = display.scrollHeight;
 
-            // 2. "Yazıyor..." Efekti
             const loadingMsg = document.createElement('div');
             loadingMsg.className = 'msg system';
             loadingMsg.id = 'ai-loading-indicator';
@@ -947,29 +997,17 @@
             display.scrollTop = display.scrollHeight;
 
             try {
-                // 3. API'ye İstek Gönderme
                 const response = await fetch('/api/ask', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        question: text,
-                        mode: selectedEraId,
-                        lang: currentLang
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: text, mode: selectedEraId, lang: currentLang })
                 });
 
                 const data = await response.json();
-                
-                // Yükleniyor uyarısını temizle
                 document.getElementById('ai-loading-indicator').remove();
 
-                if (data.error) {
-                    throw new Error(data.error);
-                }
+                if (data.error) throw new Error(data.error);
 
-                // 4. Görseli ve Yapay Zeka Cevabını Bas
                 const systemMsg = document.createElement('div');
                 systemMsg.className = 'msg system';
                 
@@ -988,13 +1026,11 @@
 
             } catch (error) {
                 console.error("API Hatası:", error);
-                if(document.getElementById('ai-loading-indicator')) {
-                    document.getElementById('ai-loading-indicator').remove();
-                }
+                if(document.getElementById('ai-loading-indicator')) document.getElementById('ai-loading-indicator').remove();
                 
                 const errorMsg = document.createElement('div');
                 errorMsg.className = 'msg system';
-                errorMsg.innerHTML = `<div class="msg-bubble" style="color: #ff6b6b;">❌ Zaman portalında bir frekans hatası oluştu. Lütfen tekrar deneyin.</div>`;
+                errorMsg.innerHTML = `<div class="msg-bubble" style="color: #ff6b6b;">❌ Zaman portalında bir frekans hatası oluştu. Tekrar deneyin.</div>`;
                 display.appendChild(errorMsg);
             }
 
