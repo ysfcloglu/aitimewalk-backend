@@ -6,13 +6,12 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-HEBEG0FZMF');
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AITimeWalk — Zaman ve Boyut Portালী</title>
+    <title>AITimeWalk — Zaman ve Boyut Portalı</title>
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0a0806">
@@ -75,13 +74,12 @@
 
         .app-container {
             max-width: 800px;
-            margin: 0 oauto;
+            margin: 0 auto;
             padding: 20px 16px 80px 16px;
             position: relative;
             z-index: 1;
         }
 
-        /* Üst Header Alanı */
         header {
             display: flex;
             justify-content: space-between;
@@ -122,7 +120,6 @@
             font-weight: bold;
         }
 
-        /* Ana Başlıklar */
         .main-title-area {
             text-align: center;
             margin-bottom: 25px;
@@ -141,7 +138,6 @@
             font-size: 14px;
         }
 
-        /* Mod Durum Çubuğu */
         .status-bar {
             display: flex;
             justify-content: space-between;
@@ -188,7 +184,6 @@
         }
         .premium-badge-btn:hover { transform: scale(1.03); }
 
-        /* Dönem Yatay Kaydırma Menüsü */
         .era-scroller {
             overflow-x: auto;
             white-space: nowrap;
@@ -198,7 +193,6 @@
         }
 
         .era-scroller::-webkit-scrollbar { display: none; }
-
         .era-row { display: inline-flex; gap: 10px; }
 
         .era-tab {
@@ -222,17 +216,16 @@
             background: rgba(201, 168, 76, 0.05);
         }
 
-        /* İnteraktif Simülasyon / Chat Alanı */
         .simulation-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 24px;
             margin-bottom: 25px;
-            min-height: 250px;
+            min-height: 300px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             position: relative;
         }
 
@@ -248,6 +241,7 @@
         .empty-state {
             text-align: center;
             color: var(--text-dim);
+            margin: auto;
         }
 
         .empty-state i {
@@ -264,7 +258,6 @@
             margin-bottom: 8px;
         }
 
-        /* Hızlı Soru Önerileri */
         .suggestions-row {
             display: flex;
             flex-wrap: wrap;
@@ -289,15 +282,13 @@
             color: var(--text-light);
         }
 
-        /* Chat Mesaj Balonları */
         .msg { display: flex; flex-direction: column; max-width: 85%; margin-bottom: 10px; }
         .msg.system { align-self: flex-start; }
         .msg.user { align-self: flex-end; }
-        .msg-bubble { padding: 12px 16px; border-radius: 10px; font-size: 15px; line-height: 1.5; }
+        .msg-bubble { padding: 12px 16px; border-radius: 10px; font-size: 15px; line-height: 1.5; word-break: break-word; }
         .system .msg-bubble { background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); }
         .user .msg-bubble { background: rgba(201, 168, 76, 0.12); border: 1px solid rgba(201, 168, 76, 0.2); }
 
-        /* Giriş Formu */
         .input-box-area {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -354,7 +345,6 @@
             margin-top: 10px;
         }
 
-        /* PLANLAR VE FİYATLANDIRMA ALANI */
         .section-separator {
             text-align: center;
             font-size: 11px;
@@ -398,7 +388,6 @@
             font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
         }
 
-        /* 👑 PREMIUM KART TASARIMI (Işıl Işıl & Cam Efekti) 👑 */
         .premium-glow-box {
             position: relative;
             border-radius: 16px;
@@ -515,7 +504,6 @@
             box-shadow: 0 7px 25px rgba(235, 209, 128, 0.6);
         }
 
-        /* Tüm Dönemler Izgarası (Grid) */
         .periods-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -542,7 +530,6 @@
         .grid-card-name { font-family: 'Playfair Display', serif; font-size: 14px; }
         .grid-lock { position: absolute; top: 8px; right: 8px; font-size: 10px; color: var(--text-dim); opacity: 0.6; }
 
-        /* Karşılaştırma Tablosu */
         .comparison-wrapper {
             overflow-x: auto; margin-bottom: 50px;
             background: linear-gradient(180deg, var(--bg-card), rgba(20, 17, 14, 0.95));
@@ -568,7 +555,6 @@
             background: rgba(201, 168, 76, 0.02);
         }
         
-        /* Footer */
         footer {
             display: flex; flex-direction: column; align-items: center; gap: 15px;
             border-top: 1px solid var(--border-color); padding-top: 25px;
@@ -607,6 +593,7 @@
             </button>
         </div>
 
+        <!-- Dönem Yatay Menüsü -->
         <div class="era-scroller">
             <div class="era-row" id="era-tabs-container"></div>
         </div>
@@ -625,7 +612,7 @@
         <div class="input-box-area">
             <div class="input-box-title" id="txt-input-title">Tarihe dair ne merak ediyorsun?</div>
             <div class="input-row">
-                <input type="text" id="chat-user-input" placeholder="Bir dönem seç - Enter ile gönder..." onkeypress="handleKeyPress(event)">
+                <input type="text" id="chat-user-input" placeholder="Bir dönem seçin veya soru yazın...">
                 <button class="btn-action" onclick="sendMessage()">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
@@ -670,7 +657,7 @@
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-5">Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-6">Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-7">Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-8">Zengin Medya: Wikipedia & AI Görsel Destekli Anlatım</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-8">Zengin Medya: Wikipedia & AI Görsel Destli Anlatım</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-9">Sesli Portal (Dönem hikayelerini sesli dinleme) — Çok Yakında!</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-10">Tamamen Reklamsız Deneyim & Özel Profil Rozeti</span></li>
                 </ul>
@@ -741,66 +728,248 @@
     </div>
 
     <script>
+        // --- 🔑 TESTING API KEY (Kendi OpenAI Key'inizi Buraya Yazın) ---
+        const OPENAI_API_KEY = "BURAYA_OPENAI_API_KEY_YAZIN"; 
+
         let currentLang = 'TR';
         let selectedEraId = 'ottoman';
         let remainingQuestions = 10;
 
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', (e) => self.skipWaiting());
-                self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
-                self.addEventListener('fetch', (e) => {});
-            `;
-            const blob = new Blob([swCode], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(swUrl, { scope: './' })
-                .then(reg => console.log('PWA Kaydı Başarılı!'))
-                .catch(err => console.error('PWA Hatası:', err));
+        // Dönem Verileri Altyapısı
+        const erasData = [
+            { id: 'ottoman', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', icon: 'fa-gavel', suggestionsTR: ['İstanbul fethini anlat', 'Kanuni kimdir?'], suggestionsEN: ['Tell me about Conquest of Istanbul', 'Who is Suleiman?'] },
+            { id: 'egypt', nameTR: 'Antik Mısır', nameEN: 'Ancient Egypt', icon: 'fa-monument', suggestionsTR: ['Piramitler nasıl yapıldı?', 'Cleopatra kimdir?'], suggestionsEN: ['How pyramids were built?', 'Who is Cleopatra?'] },
+            { id: 'rome', nameTR: 'Antik Roma', nameEN: 'Ancient Rome', icon: 'fa-columns', suggestionsTR: ['Sezarın ölümü', 'Gladyatörler kimdi?'], suggestionsEN: ['Death of Caesar', 'Who were gladiators?'] },
+            { id: 'ww2', nameTR: 'II. Dünya Savaşı', nameEN: 'World War II', icon: 'fa-person-military-rifle', suggestionsTR: ['Normandiya Çıkarması', 'Savaş nasıl bitti?'], suggestionsEN: ['D-Day Landing', 'How did the war end?'] }
+        ];
+
+        // Yıldız Efekti Oluşturma
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = star.style.height = Math.random() * 3 + 'px';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+                star.style.setProperty('--delay', Math.random() * 2 + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.3);
+                container.appendChild(star);
+            }
         }
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-        });
+        // Dönemleri Ekrana Çizme
+        function renderEras() {
+            const tabsContainer = document.getElementById('era-tabs-container');
+            const gridContainer = document.getElementById('periods-grid-box');
+            tabsContainer.innerHTML = '';
+            gridContainer.innerHTML = '';
 
+            erasData.forEach(era => {
+                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
+                
+                // Üst Tablar
+                const tab = document.createElement('div');
+                tab.className = `era-tab ${era.id === selectedEraId ? 'active' : ''}`;
+                tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
+                tab.onclick = () => selectEra(era.id);
+                tabsContainer.appendChild(tab);
+
+                // Alt Grid Kartları
+                const card = document.createElement('div');
+                card.className = `grid-period-card ${era.id === selectedEraId ? 'active' : ''}`;
+                card.innerHTML = `<i class="fa-solid ${era.icon} grid-card-icon"></i><span class="grid-card-name">${name}</span>`;
+                card.onclick = () => selectEra(era.id);
+                gridContainer.appendChild(card);
+            });
+            renderSuggestions();
+        }
+
+        function selectEra(eraId) {
+            selectedEraId = eraId;
+            renderEras();
+        }
+
+        // Öneri Soruları Güncelleme
+        function renderSuggestions() {
+            const box = document.getElementById('suggestions-box');
+            box.innerHTML = '';
+            const activeEra = erasData.find(e => e.id === selectedEraId);
+            if (!activeEra) return;
+
+            const questions = currentLang === 'TR' ? activeEra.suggestionsTR : activeEra.suggestionsEN;
+            questions.forEach(q => {
+                const chip = document.createElement('div');
+                chip.className = 'suggestion-chip';
+                chip.innerText = q;
+                chip.onclick = () => {
+                    document.getElementById('chat-user-input').value = q;
+                    sendMessage();
+                };
+                box.appendChild(chip);
+            });
+        }
+
+        // Mesaj Gönderme / API Bağlantısı
+        async function sendMessage() {
+            const inputEl = document.getElementById('chat-user-input');
+            const query = inputEl.value.trim();
+            if (!query) return;
+
+            if (remainingQuestions <= 0) {
+                alert(currentLang === 'TR' ? "Günlük hakkınız bitti!" : "No requests left today!");
+                return;
+            }
+
+            // Arayüz temizliği ve hazırlık
+            const emptyState = document.getElementById('chat-empty-state');
+            if (emptyState) emptyState.remove();
+
+            appendBubble(query, 'user');
+            inputEl.value = '';
+
+            remainingQuestions--;
+            document.getElementById('right-counter').innerText = remainingQuestions;
+
+            // İstek Tipi Belirleme (Resim mi, Yazı mı?)
+            const isImage = /çiz|oluştur|resim|görsel|draw|image|create/i.test(query);
+            const loadingText = isImage 
+                ? (currentLang === 'TR' ? "Resim çiziliyor, lütfen bekleyin..." : "Drawing image, please wait...")
+                : (currentLang === 'TR' ? "Zaman tünelinden bilgi çekiliyor..." : "Fetching from timeline...");
+
+            const loadingId = appendBubble(loadingText, 'system');
+
+            if (OPENAI_API_KEY === "BURAYA_OPENAI_API_KEY_YAZIN") {
+                document.getElementById(loadingId).innerText = currentLang === 'TR' 
+                    ? "Hata: Lütfen kodun en altındaki API key alanını doldurun!" 
+                    : "Error: Please fill your API key at the bottom of the code!";
+                return;
+            }
+
+            try {
+                if (isImage) {
+                    // 🎨 DALL-E 3 Görsel Üretimi
+                    const response = await fetch("https://api.openai.com/v1/images/generations", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${OPENAI_API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            model: "dall-e-3",
+                            prompt: `Historical context related to ${selectedEraId}. ${query}`,
+                            n: 1,
+                            size: "1024x1024"
+                        })
+                    });
+                    const resData = await response.json();
+                    document.getElementById(loadingId).remove();
+                    appendBubble(resData.data[0].url, 'system', true);
+                } else {
+                    // 💬 GPT-4o Metin Sohbeti
+                    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${OPENAI_API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            model: "gpt-4o",
+                            messages: [
+                                { role: "system", content: `Sen AI Time Walk sitesinin asistanısın. Şu an seçili dönem: ${selectedEraId}. Kullanıcının sorduğu her konuya akıcı ve derinlemesine yanıt ver. Tarihsel soruları sürükleyici bir dille anlat.` },
+                                { role: "user", content: query }
+                            ]
+                        })
+                    });
+                    const resData = await response.json();
+                    document.getElementById(loadingId).remove();
+                    appendBubble(resData.choices[0].message.content, 'system');
+                }
+            } catch (err) {
+                document.getElementById(loadingId).innerText = currentLang === 'TR' ? "Bağlantı hatası oluştu." : "Connection error.";
+            }
+        }
+
+        function appendBubble(content, sender, isImg = false) {
+            const display = document.getElementById('chat-box-display');
+            const msgDiv = document.createElement('div');
+            const uniqueId = 'msg-' + Date.now();
+            msgDiv.className = `msg ${sender}`;
+            msgDiv.id = uniqueId;
+
+            const bubble = document.createElement('div');
+            bubble.className = 'msg-bubble';
+
+            if (isImg) {
+                const img = document.createElement('img');
+                img.src = content;
+                img.style.width = '100%';
+                img.style.borderRadius = '8px';
+                bubble.appendChild(img);
+            } else {
+                bubble.innerText = content;
+            }
+
+            msgDiv.appendChild(bubble);
+            display.appendChild(msgDiv);
+            display.scrollTop = display.scrollHeight;
+            return uniqueId;
+        }
+
+        // Dil Altyapısı ve Çeviriler
         const localization = {
             TR: {
                 mainTitle: 'Tarihte Zaman Yolculuğuna Çık',
                 mainSub: 'Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al',
-                currentMod: 'NORMAL MOD',
-                emptyTitle: 'Geçmişe açılan kapı',
-                emptyDesc: 'Üstten bir dönem veya boyut seç, ardından merak ettiğini yaz.',
-                inputTitle: 'Tarihe ve Boyutlara Dair Ne Merak Ediyorsun?',
-                inputHint: 'Bir mod seç · Enter ile gönder · Shift+Enter yeni satır',
-                p1Name: 'Normal Mod', p1Sub: 'Tarihle tanışmanın başlangıcı', p1Price: 'Ücretsiz',
-                f11: 'Günde 10 zaman yolculuğu hakkı', f12: '5 temel tarihsel senaryo (Aktif)', f13: 'Mitoloji & Geçmişe Dönüş', f14: 'Standart AI yanıt hızı ve kalitesi', f15: 'Premium dönemler & kendi senaryom', f16: 'Reklamsız kesintisiz deneyim',
-                badge3h: 'günlük 3 hak', badgeKilit: 'kilitli', btnActive: '✓ Şu An Aktif',
-                badgePopular: 'EN POPÜLER', p2Name: 'Premium Mod', p2Sub: 'Tam tarihin içinde yaşa',
-                f21: 'Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar', f22: '15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)', f23: 'Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)', f24: 'Kendi Özgün Senaryonu / Evrenini Yaratma Özelliği', f25: 'Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)',
-                f26: 'Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet', f27: 'Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı', f28: 'Zengin Medya: Wikipedia & AI Görsel Destekli Anlatım', f29: 'Sesli Portal (Dönem hikayelerini sesli dinleme) — Çok Yakında!', f210: 'Tamamen Reklamsız Deneyim & Özel Profil Rozeti',
-                btnGoPremium: "Premium'a Geç ★", titlePeriods: 'Dönemler & Boyutlar', titleComp: 'Detaylı Karşılaştırma',
-                thFeature: 'ÖZELLİK', tdF1: 'Günlük yolculuk', tdP1: 'Sınırsız', tdF2: 'Tarihsel senaryo', tdP2: 'Tümü + Özel', tdF3: 'AI yanıt kalitesi', tdN3: 'Standart', tdP3: 'Gelişmiş (Rol Yapma)', tdF4: 'Reklamlar', tdN4: 'Var', tdP4: 'Yok', tdF5: 'Kilitli dönemler', tdP5: 'Açık (Tümü)', tdF6: 'Kendi senaryon',
-                linkContact: 'İletişim', linkPrivacy: 'Gizlilik Politikası', linkTerms: 'Kullanım Şartları',
-                footerNotice: 'İstediğin zaman iptal edebilirsin. · Ödeme güvenli şekilde işlenir<br>Sorular için destek: destek@aitimewalk.com'
+                currentMod: 'NORMAL MOD', emptyTitle: 'Geçmişe açılan kapı',
+                emptyDesc: 'Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.',
+                inputTitle: 'Tarihe dair ne merak ediyorsun?'
             },
             EN: {
                 mainTitle: 'Embark on a Time Travel Journey',
-                mainSub: 'Explore the past with AI — get fluent answers to every question you ask',
-                currentMod: 'NORMAL MODE',
-                emptyTitle: 'Gateway to the past',
-                emptyDesc: 'Select an era or dimension above, then write what you are curious about.',
-                inputTitle: 'What Are You Curious About Regarding History and Dimensions?',
-                inputHint: 'Select a mode · Send with Enter · Shift+Enter new line',
-                p1Name: 'Normal Mode', p1Sub: 'The beginning of meeting history', p1Price: 'Free',
-                f11: '10 time travel rights per day', f12: '5 basic historical scenarios (Active)', f13: 'Mythology & Back to the Past', f14: 'Standard AI response speed and quality', f15: 'Premium eras & my own scenario', f16: 'Ad-free seamless experience',
-                badge3h: '3 daily rights', badgeKilit: 'locked', btnActive: '✓ Active Now',
-                badgePopular: 'MOST POPULAR', p2Name: 'Premium Mode', p2Sub: 'Live right inside history',
-                f21: 'Unlimited Time Travel & Jet Fast Responses', f22: '15+ Special Eras (Ancient Egypt, Maya, WWII...)', f23: 'Advanced AI Roleplay (Characters speak in era language)', f24: 'Feature to Create Your Own Unique Scenario / Universe', f25: 'Butterfly Effect Simulator (What if history changed?)',
-                f26: 'Live Chat with Unlimited Historical Characters (Tesla, Caesar, Ataturk...)', f27: 'Time Capsule & Connection with Your Future/Past Self', f28: 'Rich Media: Wikipedia & AI Image Supported Narration', f29: 'Audio Portal (Listening to era stories aloud) — Coming Soon!', f210: 'Completely Ad-Free Experience & Special Profile Badge',
-                btnGoPremium: 'Go Premium ★', titlePeriods: 'Eras & Dimensions', titleComp: 'Detailed Comparison',
-                thFeature: 'FEATURE', tdF1: 'Daily journey', tdP1: 'Unlimited', tdF2: 'Historical scenario', tdP2: 'All + Custom', tdF3: 'AI response quality', tdN3: 'Standard', tdP3: 'Advanced (Roleplay)', tdF4: 'Ads', tdN4: 'Yes', tdP4: 'No', tdF5: 'Locked eras', tdP5: 'Unlocked (All)', tdF6: 'Your own scenario',
-                linkContact: 'Contact', linkPrivacy: 'Privacy Policy', linkTerms: 'Terms of Use',
-                footerNotice: 'Cancel anytime. · Payment processed securely<br>Support for questions: support@aitimewalk.com'
+                mainSub: 'Explore the past with AI — get fluid answers to any question',
+                currentMod: 'NORMAL MODE', emptyTitle: 'Gateway to the Past',
+                emptyDesc: 'Select an era from above, then type what you wonder about history.',
+                inputTitle: 'What do you wonder about history?'
             }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('btn-tr').classList.toggle('active', lang === 'TR');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'EN');
+            
+            document.getElementById('main-title').innerText = localization[lang].mainTitle;
+            document.getElementById('main-sub').innerText = localization[lang].mainSub;
+            document.getElementById('txt-current-mod').innerText = localization[lang].currentMod;
+            document.getElementById('txt-input-title').innerText = localization[lang].inputTitle;
+            
+            const emptyTitle = document.getElementById('txt-empty-title');
+            const emptyDesc = document.getElementById('txt-empty-desc');
+            if (emptyTitle && emptyDesc) {
+                emptyTitle.innerText = localization[lang].emptyTitle;
+                emptyDesc.innerText = localization[lang].emptyDesc;
+            }
+
+            renderEras();
+        }
+
+        function scrollToPlans() {
+            window.scrollTo({ top: document.querySelector('.section-separator').offsetTop, behavior: 'smooth' });
+        }
+
+        // Enter tuşu dinleyici ayarı
+        document.getElementById('chat-user-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        window.onload = () => {
+            createStars();
+            renderEras();
         };
     </script>
 </body>
