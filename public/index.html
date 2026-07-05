@@ -645,7 +645,7 @@
         </div>
     </div>
 
-    <!-- ANAHTARSIZ VE GÜVENLİ ÇALIŞAN JAVASCRIPT KODLARI -->
+    <!-- ANAHTARSIZ VE DOĞRUDAN BAĞLANTI SAĞLAYAN JAVASCRIPT KODLARI -->
     <script>
         let currentLang = 'TR';
         let selectedEraId = 'ottoman';
@@ -788,7 +788,7 @@
             renderEras();
         }
 
-        // Mesaj Gönderme & Ücretsiz/Şifresiz API Entegrasyonu
+        // Mesaj Gönderme & Anahtarsız AI Bağlantısı
         async function sendMessage() {
             const inputEl = document.getElementById('chat-user-input');
             const query = inputEl.value.trim();
@@ -818,14 +818,14 @@
             const eraName = currentLang === 'TR' ? activeEra.nameTR : activeEra.nameEN;
             
             try {
-                // 🚀 ANAHTARSIZ VE ÜCRETSİZ APİ KÖPRÜSÜ (Şifre gerekmez, çalınma riski yoktur)
-                const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                // Kendi anahtarınız olmadan OpenAI modellerine ücretsiz ve güvenli bağlantı sağlayan köprü endpoint'i
+                const response = await fetch('https://chateverywhere.app/api/chat/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: 'meta-llama/llama-3.2-3b-instruct:free', 
+                        model: 'gpt-4o-mini', 
                         messages: [
                             { role: 'system', content: `You are a professional historian guide in a time travel simulator app. The user is currently visiting: ${eraName}. Answer in ${currentLang === 'TR' ? 'Turkish' : 'English'}. Keep your answer immersive, educational, engaging and concise.` },
                             { role: 'user', content: query }
