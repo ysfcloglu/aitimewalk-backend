@@ -27,16 +27,16 @@
 
     <style>
         :root {
-            --bg-dark: #0a0806;
-            --bg-card: #14110e;
-            --accent-gold: #c9a84c;
-            --accent-gold-dim: #947a32;
-            --text-light: #f5f2eb;
-            --text-dim: #a39e93;
-            --border-color: #2c2519;
-            --glass-bg: rgba(20, 17, 14, 0.85);
-            --shadow-gold: rgba(201, 168, 76, 0.25);
-            --premium-glow: rgba(235, 209, 128, 0.4);
+            --bg-dark: #070504;
+            --bg-card: #0f0c0a;
+            --accent-gold: #dfba5b;
+            --accent-gold-glow: rgba(223, 186, 91, 0.4);
+            --accent-gold-dim: #a68433;
+            --text-light: #fdfbf7;
+            --text-dim: #bda38f;
+            --border-color: #2a2015;
+            --glass-bg: rgba(15, 12, 10, 0.9);
+            --shadow-gold: rgba(223, 186, 91, 0.15);
         }
 
         * {
@@ -73,7 +73,7 @@
         }
 
         .app-container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             padding: 20px 16px 80px 16px;
             position: relative;
@@ -88,15 +88,17 @@
         }
 
         .logo-text {
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: var(--text-dim);
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
             font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--accent-gold-glow);
         }
 
         .lang-switcher {
             display: flex;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 2px;
@@ -106,7 +108,7 @@
             background: transparent;
             border: none;
             color: var(--text-dim);
-            padding: 4px 12px;
+            padding: 5px 14px;
             font-size: 11px;
             font-family: 'Playfair Display', serif;
             cursor: pointer;
@@ -122,20 +124,23 @@
 
         .main-title-area {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .main-title-area h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff3d1, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .main-title-area p {
             color: var(--text-dim);
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .status-bar {
@@ -144,9 +149,10 @@
             align-items: center;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
+            padding: 14px 20px;
             border-radius: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         .current-mod-info {
@@ -154,36 +160,38 @@
             align-items: center;
             gap: 8px;
             font-size: 13px;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
+            font-weight: 600;
         }
 
         .status-dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background-color: var(--accent-gold);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
         }
 
         .premium-badge-btn {
-            background: linear-gradient(135deg, #ebd180, var(--accent-gold));
+            background: linear-gradient(135deg, #fff1c7, var(--accent-gold));
             color: var(--bg-dark);
             border: none;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
             font-family: 'Playfair Display', serif;
-            box-shadow: 0 0 12px rgba(201, 168, 76, 0.3);
-            transition: transform 0.2s ease;
+            box-shadow: 0 0 15px rgba(223, 186, 91, 0.4);
+            transition: all 0.2s ease;
         }
-        .premium-badge-btn:hover { transform: scale(1.03); }
+        .premium-badge-btn:hover { transform: translateY(-1px); box-shadow: 0 0 20px rgba(223, 186, 91, 0.6); }
 
+        /* Üst Menü Kaydırma Alanı */
         .era-scroller {
             overflow-x: auto;
             white-space: nowrap;
@@ -199,10 +207,10 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
+            padding: 12px 22px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 30px;
             color: var(--text-dim);
             cursor: pointer;
             font-family: 'Playfair Display', serif;
@@ -213,27 +221,29 @@
         .era-tab.active {
             border-color: var(--accent-gold);
             color: var(--accent-gold);
-            background: rgba(201, 168, 76, 0.05);
+            background: rgba(223, 186, 91, 0.08);
+            box-shadow: 0 0 15px rgba(223, 186, 91, 0.15);
         }
 
         .simulation-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 24px;
             margin-bottom: 25px;
-            min-height: 300px;
+            min-height: 350px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .chat-box {
             display: flex;
             flex-direction: column;
             gap: 16px;
-            max-height: 400px;
+            max-height: 450px;
             overflow-y: auto;
             padding-right: 5px;
         }
@@ -245,15 +255,16 @@
         }
 
         .empty-state i {
-            font-size: 32px;
-            color: var(--accent-gold-dim);
-            margin-bottom: 12px;
+            font-size: 40px;
+            color: var(--accent-gold);
+            margin-bottom: 14px;
             display: block;
+            filter: drop-shadow(0 0 10px var(--accent-gold-glow));
         }
 
         .empty-state h4 {
             font-family: 'Playfair Display', serif;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--text-light);
             margin-bottom: 8px;
         }
@@ -262,149 +273,225 @@
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 15px;
+            margin-top: 20px;
             justify-content: center;
         }
 
         .suggestion-chip {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.01);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 13px;
             color: var(--text-dim);
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .suggestion-chip:hover {
-            border-color: var(--accent-gold-dim);
+            border-color: var(--accent-gold);
             color: var(--text-light);
+            background: rgba(223, 186, 91, 0.03);
         }
 
         .msg { display: flex; flex-direction: column; max-width: 85%; margin-bottom: 10px; }
         .msg.system { align-self: flex-start; }
         .msg.user { align-self: flex-end; }
-        .msg-bubble { padding: 12px 16px; border-radius: 10px; font-size: 15px; line-height: 1.5; word-break: break-word; }
+        .msg-bubble { padding: 14px 18px; border-radius: 14px; font-size: 16px; line-height: 1.6; word-break: break-word; }
         .system .msg-bubble { background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); }
-        .user .msg-bubble { background: rgba(201, 168, 76, 0.12); border: 1px solid rgba(201, 168, 76, 0.2); }
+        .user .msg-bubble { background: rgba(223, 186, 91, 0.1); border: 1px solid rgba(223, 186, 91, 0.25); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
         .wiki-image {
             max-width: 100%;
-            border-radius: 8px;
-            margin-top: 8px;
+            border-radius: 12px;
+            margin-top: 10px;
             border: 1px solid var(--border-color);
             display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
 
         .input-box-area {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
+            border-radius: 16px;
+            padding: 16px;
             margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .input-box-title {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-dim);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-family: 'Playfair Display', serif;
         }
 
         .input-row {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
         }
 
         .input-row input {
             flex: 1;
-            background: transparent;
-            border: none;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
             outline: none;
             color: var(--text-light);
-            font-size: 15px;
+            font-size: 16px;
             font-family: 'Crimson Pro', serif;
+            transition: all 0.2s ease;
+        }
+        .input-row input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(223, 186, 91, 0.1);
         }
 
         .btn-action {
             background: var(--accent-gold);
             color: var(--bg-dark);
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 16px;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(223, 186, 91, 0.3);
         }
 
-        .btn-action:hover { transform: scale(1.05); background: #ebd180; }
+        .btn-action:hover { transform: scale(1.05); background: #fff1c7; }
 
         .input-footer-info {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
-            color: rgba(163, 158, 147, 0.5);
-            margin-top: 10px;
+            font-size: 12px;
+            color: rgba(189, 163, 143, 0.6);
+            margin-top: 12px;
         }
 
         .section-separator {
             text-align: center;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: var(--text-dim);
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: var(--accent-gold);
             text-transform: uppercase;
-            margin: 40px 0 25px 0;
+            margin: 50px 0 30px 0;
             font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            text-shadow: 0 0 8px var(--accent-gold-glow);
         }
 
+        /* Dönemler & Boyutlar Izgara Yapısı (Görsel Tasarıma Tam Uyumlu) */
+        .periods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 45px;
+        }
+
+        .grid-period-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .grid-period-card:hover { 
+            border-color: var(--accent-gold-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        
+        .grid-period-card.active { 
+            border-color: var(--accent-gold); 
+            background: rgba(223, 186, 91, 0.02); 
+            box-shadow: 0 0 20px rgba(223, 186, 91, 0.1), inset 0 0 10px rgba(223, 186, 91, 0.05);
+        }
+
+        .grid-card-icon { 
+            font-size: 26px; 
+            color: var(--text-dim); 
+            margin-bottom: 12px; 
+            display: block;
+            transition: all 0.2s ease;
+        }
+        .grid-period-card.active .grid-card-icon { 
+            color: var(--accent-gold); 
+            filter: drop-shadow(0 0 8px var(--accent-gold-glow));
+        }
+        
+        .grid-card-name { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 16px; 
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .grid-lock { 
+            position: absolute; 
+            top: 12px; 
+            right: 14px; 
+            font-size: 11px; 
+            color: var(--accent-gold); 
+            opacity: 0.8;
+        }
+
+        /* Plan Kartları */
         .plan-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
             position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
-        .plan-header-icon { font-size: 24px; color: var(--text-dim); margin-bottom: 10px; }
-        .plan-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 4px;}
-        .plan-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 15px; }
-        .plan-price { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 20px; }
-        .plan-price span { font-size: 14px; color: var(--text-dim); font-weight: 400; }
+        .plan-header-icon { font-size: 28px; color: var(--text-dim); margin-bottom: 12px; }
+        .plan-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 6px;}
+        .plan-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 18px; }
+        .plan-price { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; margin-bottom: 22px; }
+        .plan-price span { font-size: 15px; color: var(--text-dim); font-weight: 400; }
 
-        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .feature-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-light); }
-        .feature-item i { font-size: 12px; color: var(--accent-gold); }
-        .feature-item.locked { color: var(--text-dim); opacity: 0.6; }
+        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+        .feature-item { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-light); }
+        .feature-item i { font-size: 13px; color: var(--accent-gold); }
+        .feature-item.locked { color: var(--text-dim); opacity: 0.5; }
         .feature-item.locked i { color: var(--text-dim); }
 
         .feature-badge-count {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             border: 1px solid var(--border-color);
-            font-size: 10px; padding: 1px 6px; border-radius: 4px; color: var(--text-dim);
+            font-size: 11px; padding: 2px 8px; border-radius: 4px; color: var(--text-dim);
         }
 
         .btn-plan-select {
-            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);
+            width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color);
             background: rgba(255,255,255,0.02); color: var(--text-light);
             font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
         }
 
+        /* Premium Glow Alanı */
         .premium-glow-box {
             position: relative;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 3px; 
-            background: linear-gradient(90deg, #947a32, #ebd180, #c9a84c, #947a32);
+            background: linear-gradient(90deg, #a68433, #fff1c7, #dfba5b, #a68433);
             background-size: 300% 300%;
             animation: borderMove 6s linear infinite;
-            box-shadow: 0 15px 40px var(--shadow-gold), 0 0 25px rgba(201, 168, 76, 0.15);
-            margin-bottom: 20px;
+            box-shadow: 0 15px 40px rgba(223, 186, 91, 0.25);
+            margin-bottom: 25px;
             overflow: hidden;
         }
 
@@ -417,160 +504,68 @@
         .premium-glow-box .plan-card.premium-card {
             margin-bottom: 0;
             border: none;
-            background: linear-gradient(135deg, rgba(25, 21, 16, 0.96) 0%, rgba(14, 12, 9, 0.99) 100%);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 26px;
-            border-radius: 13px;
+            background: linear-gradient(135deg, #120e0a 0%, #080605 100%);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 17px;
             position: relative;
-        }
-
-        .premium-glow-box .plan-card.premium-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(235, 209, 128, 0.12), transparent);
-            transform: skewX(-25deg);
-            animation: shineEffect 4.5s infinite ease-in-out;
-        }
-
-        @keyframes shineEffect {
-            0% { left: -150%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
         }
 
         .premium-glow-box .badge-popular {
             position: absolute;
             top: 15px; right: 20px;
-            background: linear-gradient(135deg, #fff3d1, #c9a84c);
-            color: #0a0806;
+            background: linear-gradient(135deg, #fff3d1, #dfba5b);
+            color: #070504;
             font-size: 11px;
             font-weight: 900;
             padding: 5px 14px;
             border-radius: 25px;
             font-family: 'Playfair Display', serif;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(235, 209, 128, 0.4);
+            box-shadow: 0 4px 15px rgba(223, 186, 91, 0.4);
             z-index: 2;
         }
 
         .premium-glow-box .plan-header-icon i {
-            color: #ebd180;
-            font-size: 28px;
-            text-shadow: 0 0 12px rgba(235, 209, 128, 0.6);
-            animation: crownPulse 2s infinite ease-in-out;
+            color: #dfba5b;
+            font-size: 30px;
+            text-shadow: 0 0 15px rgba(223, 186, 91, 0.6);
         }
 
-        @keyframes crownPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(235, 209, 128, 0.3)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(235, 209, 128, 0.7)); }
-        }
-
-        .premium-glow-box .plan-name {
-            color: #ebd180;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 5px rgba(201, 168, 76, 0.2);
-        }
-
-        .premium-glow-box .plan-price {
-            color: #f5f2eb;
-            font-size: 32px;
-        }
-        .premium-glow-box .plan-price span {
-            color: #ebd180;
-            font-weight: 600;
-        }
-
-        .premium-glow-box .feature-item {
-            font-size: 14.5px;
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-        }
-        .premium-glow-box .feature-item i {
-            color: #ebd180;
-            font-size: 13px;
-            filter: drop-shadow(0 0 4px #c9a84c);
-        }
-
+        .premium-glow-box .plan-name { color: #dfba5b; font-size: 24px; font-weight: 900; }
         .premium-glow-box .btn-plan-select.btn-premium-trigger {
-            background: linear-gradient(135deg, #fff1c7 0%, #c9a84c 50%, #947a32 100%);
-            background-size: 200% auto;
-            color: #0a0806;
+            background: linear-gradient(135deg, #fff1c7 0%, #dfba5b 50%, #a68433 100%);
+            color: #070504;
             border: none;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 900;
-            letter-spacing: 0.5px;
-            box-shadow: 0 5px 20px rgba(201, 168, 76, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 25px rgba(223, 186, 91, 0.4);
         }
-        .premium-glow-box .btn-plan-select.btn-premium-trigger:hover {
-            background-position: right center;
-            transform: translateY(-2px);
-            box-shadow: 0 7px 25px rgba(235, 209, 128, 0.6);
-        }
-
-        .periods-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 40px;
-        }
-
-        .grid-period-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .grid-period-card:hover { border-color: var(--accent-gold-dim); }
-        .grid-period-card.active { border-color: var(--accent-gold); background: rgba(201, 168, 76, 0.02); }
-
-        .grid-card-icon { font-size: 20px; color: var(--text-dim); margin-bottom: 8px; display: block; }
-        .grid-period-card.active .grid-card-icon { color: var(--accent-gold); }
-        .grid-card-name { font-family: 'Playfair Display', serif; font-size: 14px; }
-        .grid-lock { position: absolute; top: 8px; right: 8px; font-size: 10px; color: var(--text-dim); opacity: 0.6; }
 
         .comparison-wrapper {
             overflow-x: auto; margin-bottom: 50px;
-            background: linear-gradient(180deg, var(--bg-card), rgba(20, 17, 14, 0.95));
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
-        th, td { padding: 16px 14px; border-bottom: 1px solid rgba(44, 37, 25, 0.6); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 15px; }
+        th, td { padding: 18px 16px; border-bottom: 1px solid rgba(42, 32, 21, 0.5); }
         tr:last-child td { border-bottom: none; }
-
-        th { font-family: 'Playfair Display', serif; color: var(--accent-gold); text-transform: uppercase; font-size: 12px; letter-spacing: 1px; font-weight: 700; }
+        th { font-family: 'Playfair Display', serif; color: var(--accent-gold); text-transform: uppercase; font-size: 13px; letter-spacing: 1px; font-weight: 700; }
         td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3) { text-align: center; }
-        td:first-child { color: var(--text-light); font-weight: 500; }
-        td { color: var(--text-dim); }
 
-        tr:hover td:nth-child(3), td:nth-child(3) {
-            color: #ebd180;
-            font-weight: 700;
-            text-shadow: 0 0 4px rgba(201, 168, 76, 0.3);
-            background: rgba(201, 168, 76, 0.02);
-        }
-        
         footer {
             display: flex; flex-direction: column; align-items: center; gap: 15px;
-            border-top: 1px solid var(--border-color); padding-top: 25px;
+            border-top: 1px solid var(--border-color); padding-top: 30px;
         }
-        .footer-links { display: flex; gap: 20px; font-size: 12px; }
+        .footer-links { display: flex; gap: 20px; font-size: 13px; }
         .footer-links a { color: var(--text-dim); text-decoration: none; }
         .footer-links a:hover { color: var(--accent-gold); }
-        .footer-notice { font-size: 11px; color: rgba(163, 158, 147, 0.4); text-align: center; line-height: 1.4; }
+        .footer-notice { font-size: 12px; color: rgba(189, 163, 143, 0.5); text-align: center; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -587,8 +582,8 @@
         </header>
 
         <div class="main-title-area">
-            <h2 id="main-title">Tarihte Zaman Yolculuğuna Çık</h2>
-            <p id="main-sub">Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al</p>
+            <h2 id="main-title">Zaman ve Boyut Portalı</h2>
+            <p id="main-sub">Yapay zekâyla geçmişi ve boyutları keşfet — sınırları sen belirle</p>
         </div>
 
         <div class="status-bar">
@@ -601,7 +596,7 @@
             </button>
         </div>
 
-        <!-- Dönem Yatay Menüsü -->
+        <!-- Üst Kaydırılabilir Dönem Menüsü -->
         <div class="era-scroller">
             <div class="era-row" id="era-tabs-container"></div>
         </div>
@@ -610,41 +605,42 @@
             <div class="chat-box" id="chat-box-display">
                 <div class="empty-state" id="chat-empty-state">
                     <i class="fa-solid fa-hourglass-start"></i>
-                    <h4 id="txt-empty-title">Geçmişe açılan kapı</h4>
-                    <p id="txt-empty-desc">Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.</p>
+                    <h4 id="txt-empty-title">Evrene açılan kapı</h4>
+                    <p id="txt-empty-desc">Aşağıdaki ızgaradan veya üst menüden bir boyut seç, ardından macerana başla.</p>
                 </div>
             </div>
             <div class="suggestions-row" id="suggestions-box"></div>
         </div>
 
         <div class="input-box-area">
-            <div class="input-box-title" id="txt-input-title">Tarihe dair ne merak ediyorsun?</div>
+            <div class="input-box-title" id="txt-input-title">Portala ne fısıldamak istersin?</div>
             <div class="input-row">
-                <input type="text" id="chat-user-input" placeholder="Bir dönem seçin veya soru yazın...">
+                <input type="text" id="chat-user-input" placeholder="Bir boyut seçin veya soru yazın...">
                 <button class="btn-action" onclick="sendMessage()">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
             <div class="input-footer-info">
-                <span id="txt-input-hint">Bir dönem seç · Enter ile gönder · Shift+Enter yeni satır</span>
+                <span id="txt-input-hint">Bir mod seç · Enter ile gönder · Shift+Enter yeni satır</span>
                 <span><b id="right-counter">10</b> / 10</span>
             </div>
         </div>
+
+        <div class="section-separator" id="title-periods-grid">Dönemler, Boyutlar & Modlar</div>
+        <!-- Tam Teşekküllü Mod Listesi (Görseldeki Sıra ve Süslemeler Dahil) -->
+        <div class="periods-grid" id="periods-grid-box"></div>
 
         <div class="section-separator">Planlar</div>
 
         <div class="plan-card">
             <div class="plan-header-icon"><i class="fa-regular fa-clock"></i></div>
             <div class="plan-name" id="p1-name">Normal Mod</div>
-            <div class="plan-sub" id="p1-sub">Tarihle tanışmanın başlangıcı</div>
-            <div class="plan-price" id="p1-price">Ücretsiz</div>
+            <div class="plan-sub" id="p1-sub">Temel zaman yolculuğu deneyimi</div>
+            <div class="plan-price" id="p1-price">Anlık Ücretsiz</div>
             <ul class="feature-list">
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-1">Günde 10 zaman yolculuğu hakkı</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-2">5 temel tarihsel senaryo (Aktif)</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-3">Mitoloji & Geçmişe Dönüş</span> <span class="feature-badge-count" id="badge-3hak">günlük 3 hak</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-4">Standart AI yanıt hızı ve kalitesi</span></li>
-                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-5">Premium dönemler & kendi senaryom</span> <span class="feature-badge-count" id="badge-kilit1">kilitli</span></li>
-                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-6">Reklamsız kesintisiz deneyim</span> <span class="feature-badge-count" id="badge-kilit2">kilitli</span></li>
+                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-1">Günde 10 portal hakkı</span></li>
+                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-2">Temel tarihsel senaryolar</span></li>
+                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-5">Premium boyutlar & özel modlar</span> <span class="feature-badge-count">kilitli</span></li>
             </ul>
             <button class="btn-plan-select" id="btn-p1-status">✓ Şu An Aktif</button>
         </div>
@@ -654,28 +650,19 @@
             <div class="plan-card premium-card">
                 <div class="plan-header-icon"><i class="fa-solid fa-crown"></i></div>
                 <div class="plan-name" id="p2-name">Premium Mod</div>
-                <div class="plan-sub" id="p2-sub">Tam tarihin içinde yaşa</div>
+                <div class="plan-sub" id="p2-sub">Evrenin ve zamanın tüm sınırlarını kaldır</div>
                 <div class="plan-price">₺129 <span>/ ay</span></div>
                 
                 <ul class="feature-list">
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-1">Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-2">15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-3">Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-4">Keni Özgün Senaryonu / Evrenini Yaratma Özelliği</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-5">Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-6">Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-7">Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-8">Zegen Medya: Wikipedia & AI Görsel Destekli Anlatım</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-9">Sesli Portal (Dönem hikayelerini sesli dinleme) — Çok Yakında!</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-10">Tamamen Reklamsız Deneyim & Özel Profil Rozeti</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Zaman & Boyut Yolculuğu</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Tüm Kilitli Modlar (Lucid Rüya, Karakterler, Kapsül...)</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Maksimum AI Rol Yapma Performansı</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Wikipedia Medya Desteği</span></li>
                 </ul>
                 
                 <button class="btn-plan-select btn-premium-trigger" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
             </div>
         </div>
-
-        <div class="section-separator" id="title-periods-grid">Dönemler & Boyutlar</div>
-        <div class="periods-grid" id="periods-grid-box"></div>
 
         <div class="section-separator" id="title-comp">Detaylı Karşılaştırma</div>
         <div class="comparison-wrapper">
@@ -689,34 +676,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td id="td-f1">Günlük yolculuk</td>
+                        <td>Günlük kullanım</td>
                         <td>10</td>
-                        <td id="td-p1">Sınırsız</td>
+                        <td>Sınırsız</td>
                     </tr>
                     <tr>
-                        <td id="td-f2">Tarihsel senaryo</td>
-                        <td>5</td>
-                        <td id="td-p2">Tümü + Özel</td>
+                        <td>Aktif Boyutlar</td>
+                        <td>Temel</td>
+                        <td>Tümü (Sınırsız)</td>
                     </tr>
                     <tr>
-                        <td id="td-f3">AI yanıt kalitesi</td>
-                        <td id="td-n3">Standart</td>
-                        <td id="td-p3">Gelişmiş (Rol Yapma)</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f4">Reklamlar</td>
-                        <td id="td-n4">Var</td>
-                        <td id="td-p4">Yok</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f5">Kilitli dönemler</td>
-                        <td>—</td>
-                        <td id="td-p5">Açık (Tümü)</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f6">Kendi senaryon</td>
-                        <td>—</td>
-                        <td id="td-p6">★ (Aktif)</td>
+                        <td>Görsel Destek</td>
+                        <td>Standart</td>
+                        <td>Zengin Wikipedia Entegrasyonu</td>
                     </tr>
                 </tbody>
             </table>
@@ -740,47 +712,55 @@
         let selectedEraId = 'ottoman';
         let remainingQuestions = 10;
 
+        // Görseldeki ve Yeni Eklenen Tüm Modların Eksiksiz Listesi
         const erasData = [
-            { id: 'ottoman', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', icon: 'fa-gavel', suggestionsTR: ['İstanbul fethini anlat', 'Kanuni kimdir?'], suggestionsEN: ['Tell me about Conquest of Istanbul', 'Who is Suleiman?'] },
-            { id: 'egypt', nameTR: 'Antik Mısır', nameEN: 'Ancient Egypt', icon: 'fa-monument', suggestionsTR: ['Piramitler nasıl yapıldı?', 'Cleopatra kimdir?'], suggestionsEN: ['How pyramids were built?', 'Who is Cleopatra?'] },
-            { id: 'rome', nameTR: 'Antik Roma', nameEN: 'Ancient Rome', icon: 'fa-columns', suggestionsTR: ['Sezarın ölümü', 'Gladyatörler kimdi?'], suggestionsEN: ['Death of Caesar', 'Who were gladiators?'] },
-            { id: 'ww2', nameTR: 'II. Dünya Savaşı', nameEN: 'World War II', icon: 'fa-person-military-rifle', suggestionsTR: ['Normandiya Çıkarması', 'Savaş nasıl bitti?'], suggestionsEN: ['D-Day Landing', 'How did the war end?'] },
-            // Diğer özel modların tetikleyicileri
-            { id: 'butterfly', nameTR: 'Kelebek Etkisi', nameEN: 'Butterfly Effect', icon: 'fa-brands fa-butterflies', suggestionsTR: ['İskenderiye kütüphanesi yanmasaydı?', 'Hitler akademiyi kazansaydı?'], suggestionsEN: ['What if Alexandria Library didn\'t burn?', 'What if Hitler won the academy?'] },
-            { id: 'future', nameTR: 'Gelecekteki Kendim', nameEN: 'Future Self', icon: 'fa-solid fa-user-astronaut', suggestionsTR: ['30 yıl sonra dünya nasıl bir yer?', 'Bana gelecekten bir tavsiye ver'], suggestionsEN: ['How is the world in 30 years?', 'Give me a advice from future'] }
+            { id: 'ottoman', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', icon: 'fa-swords', isPremium: false, suggestionsTR: ['İstanbul fethini anlat', 'Kanuni kimdir?'], suggestionsEN: ['Tell me about Conquest of Istanbul', 'Who is Suleiman?'] },
+            { id: 'rome', nameTR: 'Antik Roma', nameEN: 'Ancient Rome', icon: 'fa-columns', isPremium: false, suggestionsTR: ['Sezarın ölümü', 'Gladyatörler kimdi?'], suggestionsEN: ['Death of Caesar', 'Who were gladiators?'] },
+            { id: 'republic', nameTR: 'Cumhuriyet Dönemi', nameEN: 'Republic Era', icon: 'fa-flag', isPremium: false, suggestionsTR: ['Cumhuriyetin ilanını anlat', '1923 yılında neler oldu?'], suggestionsEN: ['Proclamation of Republic', 'What happened in 1923?'] },
+            { id: 'character', nameTR: 'İstediğin Karakter', nameEN: 'Any Character', icon: 'fa-user', isPremium: false, suggestionsTR: ['Nikola Tesla ile konuşmak istiyorum', 'Mimar Sinan ile konuştur'], suggestionsEN: ['I want to talk with Tesla', 'Connect me to Marcus Aurelius'] },
+            { id: 'future', nameTR: 'Gelecekteki Ben', nameEN: 'Future Self', icon: 'fa-crystal-ball', isPremium: false, suggestionsTR: ['30 yıl sonra dünya nasıl bir yer?', 'Gelecekten bir tavsiye ver'], suggestionsEN: ['How is the world in 30 years?', 'Give me advice from the future'] },
+            { id: 'past', nameTR: 'Geçmişteki Ben', nameEN: 'Past Self', icon: 'fa-teddy-bear', isPremium: false, suggestionsTR: ['Çocukluğuma bir mesaj ilet', '10 yaşındaki halime ne söylerdin?'], suggestionsEN: ['Send a message to my childhood', 'What to say to my 10yo self?'] },
+            { id: 'if_you_were', nameTR: 'Tarihte Sen Olsaydın', nameEN: 'If You Were In History', icon: 'fa-masks-theater', isPremium: true, suggestionsTR: ['Viking Çağında yaşasaydım ne olurdum?', 'Antik Mısırda bir zanaatkar olmak'], suggestionsEN: ['What if I lived in Viking age?', 'Being a craftsman in Ancient Egypt'] },
+            { id: 'time_capsule', nameTR: 'Zaman Kapsülü', nameEN: 'Time Capsule', icon: 'fa-box-open', isPremium: true, suggestionsTR: ['Bugüne ait bir sırrı kapsüle göm', '2300 yılına mektup'], suggestionsEN: ['Bury a secret today', 'Letter to the year 2300'] },
+            { id: 'butterfly', nameTR: 'Kelebek Etkisi', nameEN: 'Butterfly Effect', icon: 'fa-brands fa-butterflies', isPremium: false, suggestionsTR: ['İskenderiye kütüphanesi yanmasaydı?', 'Hitler akademiyi kazansaydı?'], suggestionsEN: ['What if Alexandria didn\'t burn?', 'What if Hitler won the academy?'] },
+            { id: 'egypt', nameTR: 'Antik Mısır', nameEN: 'Ancient Egypt', icon: 'fa-trident', isPremium: false, suggestionsTR: ['Piramitler nasıl yapıldı?', 'Cleopatra kimdir?'], suggestionsEN: ['How pyramids were built?', 'Who is Cleopatra?'] },
+            { id: 'ww2', nameTR: 'II. Dünya Savaşı', nameEN: 'World War II', icon: 'fa-medal', isPremium: true, suggestionsTR: ['Normandiya Çıkarması detayları', 'Enigma şifresi nasıl çözüldü?'], suggestionsEN: ['D-Day landing details', 'How Enigma code was broken?'] },
+            { id: 'custom', nameTR: 'Kendi Senaryon', nameEN: 'Custom Scenario', icon: 'fa-castle', isPremium: true, suggestionsTR: ['Beni siberpunk bir orta çağ evrenine götür', 'Kendi kurgusal dünyamı yaratıyorum'], suggestionsEN: ['Take me to a cyberpunk medieval world', 'Creating my own fictional universe'] },
+            // 🎯 İstediğin Yeni Yaratıcı ve İstisnai Modlar
+            { id: 'lucid', nameTR: 'Lucid Rüya Kontrolü', nameEN: 'Lucid Dream Controller', icon: 'fa-moon', isPremium: true, suggestionsTR: ['Bu gece rüyamı nasıl kontrol edebilirim?', 'Rüyamda uçmak için teknik ver'], suggestionsEN: ['How can I control my dream tonight?', 'Technique to fly in my dreams'] },
+            { id: 'parallel', nameTR: 'Paralel Evren Simülatörü', nameEN: 'Parallel Universe', icon: 'fa-shuffle', isPremium: true, suggestionsTR: ['Yerçekiminin yarı yarıya az olduğu bir evren', 'Zamanın geriye aktığı boyut'], suggestionsEN: ['A universe with half gravity', 'A dimension where time flows backward'] }
         ];
 
-        // Dil Sözlüğü
         const translations = {
             TR: {
-                mainTitle: "Tarihte Zaman Yolculuğuna Çık",
-                mainSub: "Yapay zekayla geçmişi keşfet — sorduğun her soruya akıcı yanıt al",
+                mainTitle: "Zaman ve Boyut Portalı",
+                mainSub: "Yapay zekâyla geçmişi ve boyutları keşfet — sınırları sen belirle",
                 currentMod: "NORMAL MOD",
-                emptyTitle: "Geçmişe açılan kapı",
-                emptyDesc: "Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.",
-                inputTitle: "Tarihe dair ne merak ediyorsun?",
-                inputPlaceholder: "Bir dönem seçin veya soru yazın...",
-                inputHint: "Bir dönem seç · Enter ile gönder · Shift+Enter yeni satır",
-                loading: "Zaman portalı açılıyor, yanıt bekleniyor...",
-                limitError: "Günlük soru limitine ulaştınız. Lütfen yarın tekrar deneyin."
+                emptyTitle: "Evrene açılan kapı",
+                emptyDesc: "Aşağıdaki ızgaradan veya üst menüden bir boyut seç, ardından macerana başla.",
+                inputTitle: "Portala ne fısıldamak istersin?",
+                inputPlaceholder: "Bir boyut seçin veya soru yazın...",
+                inputHint: "Bir mod seç · Enter ile gönder · Shift+Enter yeni satır",
+                loading: "Boyut kapısı aralanıyor, akış bekleniyor...",
+                limitError: "Günlük enerjiniz tükendi. Lütfen yarın tekrar deneyin."
             },
             EN: {
-                mainTitle: "Embark on a Journey Through Time",
-                mainSub: "Explore the past with AI — get fluent answers to every question",
+                mainTitle: "Time & Dimension Portal",
+                mainSub: "Explore the past and dimensions with AI — you set the boundaries",
                 currentMod: "NORMAL MODE",
-                emptyTitle: "Gateway to the past",
-                emptyDesc: "Select an era from above, then write what you wonder about history.",
-                inputTitle: "What do you wonder about history?",
-                inputPlaceholder: "Select an era or type a question...",
-                inputHint: "Select an era · Enter to send · Shift+Enter for new line",
-                loading: "Opening time portal, awaiting response...",
-                limitError: "Daily limit reached. Please try again tomorrow."
+                emptyTitle: "Gateway to the universe",
+                emptyDesc: "Select a dimension from the grid below or top menu to begin your adventure.",
+                inputTitle: "What do you wish to whisper to the portal?",
+                inputPlaceholder: "Select a mode or type a question...",
+                inputHint: "Select a mode · Enter to send · Shift+Enter for new line",
+                loading: "Opening dimension gate, awaiting data stream...",
+                limitError: "Daily energy depleted. Please try again tomorrow."
             }
         };
 
         function createStars() {
             const container = document.getElementById('stars-container');
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 60; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.width = star.style.height = Math.random() * 3 + 'px';
@@ -788,7 +768,7 @@
                 star.style.left = Math.random() * 100 + '%';
                 star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
                 star.style.setProperty('--delay', Math.random() * 2 + 's');
-                star.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.3);
+                star.style.setProperty('--max-opacity', Math.random() * 0.6 + 0.3);
                 container.appendChild(star);
             }
         }
@@ -802,15 +782,24 @@
             erasData.forEach(era => {
                 const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
                 
+                // Üst Kaydırma Menüsü
                 const tab = document.createElement('div');
                 tab.className = `era-tab ${era.id === selectedEraId ? 'active' : ''}`;
                 tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
                 tab.onclick = () => selectEra(era.id);
                 tabsContainer.appendChild(tab);
 
+                // Ana Izgara Görünümü (Görseldeki premium taç simgeleri otomatik eklenir)
                 const card = document.createElement('div');
                 card.className = `grid-period-card ${era.id === selectedEraId ? 'active' : ''}`;
-                card.innerHTML = `<i class="fa-solid ${era.icon} grid-card-icon"></i><span class="grid-card-name">${name}</span>`;
+                
+                let lockIcon = era.isPremium ? `<div class="grid-lock"><i class="fa-solid fa-crown"></i></div>` : '';
+                
+                card.innerHTML = `
+                    ${lockIcon}
+                    <i class="fa-solid ${era.icon} grid-card-icon"></i>
+                    <span class="grid-card-name">${name}</span>
+                `;
                 card.onclick = () => selectEra(era.id);
                 gridContainer.appendChild(card);
             });
@@ -819,6 +808,10 @@
 
         function selectEra(eraId) {
             selectedEraId = eraId;
+            const activeEra = erasData.find(e => e.id === eraId);
+            if (activeEra) {
+                document.getElementById('txt-current-mod').innerText = currentLang === 'TR' ? activeEra.nameTR.toUpperCase() : activeEra.nameEN.toUpperCase();
+            }
             renderEras();
         }
 
@@ -848,7 +841,6 @@
             
             document.getElementById('main-title').innerText = translations[lang].mainTitle;
             document.getElementById('main-sub').innerText = translations[lang].mainSub;
-            document.getElementById('txt-current-mod').innerText = translations[lang].currentMod;
             document.getElementById('txt-input-title').innerText = translations[lang].inputTitle;
             document.getElementById('chat-user-input').placeholder = translations[lang].inputPlaceholder;
             document.getElementById('txt-input-hint').innerText = translations[lang].inputHint;
@@ -859,7 +851,7 @@
                 document.getElementById('txt-empty-desc').innerText = translations[lang].emptyDesc;
             }
 
-            renderEras();
+            selectEra(selectedEraId);
         }
 
         async function sendMessage() {
@@ -872,28 +864,25 @@
                 return;
             }
 
-            // Arayüz temizliği
             const emptyState = document.getElementById('chat-empty-state');
             if (emptyState) emptyState.remove();
 
             const chatBox = document.getElementById('chat-box-display');
             
-            // Kullanıcı mesajını ekle
             const userMsg = document.createElement('div');
             userMsg.className = 'msg user';
             userMsg.innerHTML = `<div class="msg-bubble">${query}</div>`;
             chatBox.appendChild(userMsg);
             inputEl.value = '';
 
-            // Yükleniyor durumu
             const loadingMsg = document.createElement('div');
             loadingMsg.className = 'msg system';
             loadingMsg.innerHTML = `<div class="msg-bubble" style="color: var(--text-dim);"><i class="fa-solid fa-spinner fa-spin"></i> ${translations[currentLang].loading}</div>`;
             chatBox.appendChild(loadingMsg);
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // 🎯 GÜVENLİ İSTEK: API anahtarı olmadan doğrudan senin Vercel backend'ine (/api/ask) istek atıyoruz
             try {
+                // Güvenli Vercel backend yolu (/api/ask) çağrısı
                 const response = await fetch('/api/ask', {
                     method: 'POST',
                     headers: {
@@ -907,14 +896,12 @@
                 });
 
                 loadingMsg.remove();
-
                 const aiMsg = document.createElement('div');
                 aiMsg.className = 'msg system';
 
                 if (response.ok) {
                     const data = await response.json();
                     
-                    // Kalan hak sayısını backend rate limitine paralel güncelle
                     if (remainingQuestions > 0) {
                         remainingQuestions--;
                         document.getElementById('right-counter').innerText = remainingQuestions;
@@ -922,15 +909,14 @@
 
                     let bubbleContent = `<div>${data.answer.replace(/\n/g, '<br>')}</div>`;
                     
-                    // 🎯 Wikipedia'dan görsel döndüyse arayüz biçimini bozmadan ekrana basıyoruz
                     if (data.images && data.images.length > 0 && data.images[0].url) {
-                        bubbleContent += `<img src="${data.images[0].url}" class="wiki-image" alt="Wikipedia Image" />`;
+                        bubbleContent += `<img src="${data.images[0].url}" class="wiki-image" alt="Wikipedia Media Support" />`;
                     }
 
                     aiMsg.innerHTML = `<div class="msg-bubble">${bubbleContent}</div>`;
                 } else {
                     const errData = await response.json();
-                    aiMsg.innerHTML = `<div class="msg-bubble" style="color:#ff6b6b;">${errData.error || 'Bir sorun oluştu.'}</div>`;
+                    aiMsg.innerHTML = `<div class="msg-bubble" style="color:#ff6b6b;">${errData.error || 'Portal akış hatası.'}</div>`;
                 }
                 
                 chatBox.appendChild(aiMsg);
@@ -938,7 +924,7 @@
                 loadingMsg.remove();
                 const errorMsg = document.createElement('div');
                 errorMsg.className = 'msg system';
-                errorMsg.innerHTML = `<div class="msg-bubble" style="color:#ff6b6b;">Bağlantı Hatası! Lütfen backend api yolunu veya Vercel bağlantısını kontrol edin.</div>`;
+                errorMsg.innerHTML = `<div class="msg-bubble" style="color:#ff6b6b;">Bağlantı Hatası! Lütfen API rotanızı ve internetinizi doğrulayın.</div>`;
                 chatBox.appendChild(errorMsg);
             }
 
@@ -952,7 +938,6 @@
             });
         }
 
-        // Enter tuş mekanizması
         document.getElementById('chat-user-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
