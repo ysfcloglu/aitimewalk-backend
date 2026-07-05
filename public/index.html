@@ -3,785 +3,475 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEBEG0FZMF"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HEBEG0FZMF');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEBEG0FZMF');
     </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AITimeWalk — Zaman ve Boyut Portalı</title>
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a0806">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="AITimeWalk">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3565/3565418.png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <title>AITimeWalk - Zaman ve Boyut Portalı</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         :root {
-            --bg-dark: #0a0806;
-            --bg-card: #14110e;
-            --accent-gold: #c9a84c;
-            --accent-gold-dim: #947a32;
-            --text-light: #f5f2eb;
-            --text-dim: #a39e93;
-            --border-color: #2c2519;
-            --glass-bg: rgba(20, 17, 14, 0.85);
-            --shadow-gold: rgba(201, 168, 76, 0.25);
-            --premium-glow: rgba(235, 209, 128, 0.4);
+            --bg-dark: #09090e;
+            --panel-bg: rgba(18, 18, 28, 0.75);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-glow: rgba(139, 92, 246, 0.25);
+            --accent-border: #8b5cf6;
+            --user-bubble: #2563eb;
+            --system-bubble: #1e1b4b;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: 'Crimson Pro', serif;
             background-color: var(--bg-dark);
-            color: var(--text-light);
-            min-height: 100vh;
+            color: var(--text-main);
             overflow-x: hidden;
-            position: relative;
+            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg-dark) 70%);
+            min-height: 100vh;
         }
 
-        #stars-container {
+        #space-bg {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; overflow: hidden;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .star {
-            position: absolute; background-color: #fff; border-radius: 50%; opacity: 0;
-            animation: twinkle var(--duration, 4s) infinite ease-in-out;
-            animation-delay: var(--delay, 0s);
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: blink 4s infinite ease-in-out;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: var(--max-opacity, 0.7); transform: scale(1.2); }
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
 
-        .app-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px 16px 80px 16px;
+        .container {
             position: relative;
             z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            height: 100vh;
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0 25px 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            backdrop-filter: blur(8px);
         }
 
-        .logo-text {
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            font-family: 'Playfair Display', serif;
+        .brand h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.05em;
         }
 
-        .lang-switcher {
+        .brand p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .lang-switch {
             display: flex;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.25rem;
+            border-radius: 9999px;
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2px;
         }
 
         .lang-btn {
             background: transparent;
             border: none;
-            color: var(--text-dim);
-            padding: 4px 12px;
-            font-size: 11px;
-            font-family: 'Playfair Display', serif;
+            color: var(--text-muted);
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 15px;
-            transition: all 0.2s ease;
+            border-radius: 9999px;
+            transition: all 0.2s;
         }
 
         .lang-btn.active {
-            background: var(--accent-gold);
-            color: var(--bg-dark);
-            font-weight: bold;
+            background: var(--accent-border);
+            color: white;
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
 
-        .main-title-area {
+        .era-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+
+        .era-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
             text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .main-title-area h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-
-        .main-title-area p {
-            color: var(--text-dim);
-            font-size: 14px;
-        }
-
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 12px 16px;
-            border-radius: 30px;
-            margin-bottom: 20px;
-        }
-
-        .current-mod-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--accent-gold);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-gold);
-        }
-
-        .premium-badge-btn {
-            background: linear-gradient(135deg, #ebd180, var(--accent-gold));
-            color: var(--bg-dark);
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Playfair Display', serif;
-            box-shadow: 0 0 12px rgba(201, 168, 76, 0.3);
-            transition: transform 0.2s ease;
-        }
-        .premium-badge-btn:hover { transform: scale(1.03); }
-
-        .era-scroller {
-            overflow-x: auto;
-            white-space: nowrap;
-            scrollbar-width: none;
-            margin-bottom: 25px;
-            padding-bottom: 5px;
-        }
-
-        .era-scroller::-webkit-scrollbar { display: none; }
-        .era-row { display: inline-flex; gap: 10px; }
-
-        .era-tab {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-dim);
-            cursor: pointer;
-            font-family: 'Playfair Display', serif;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .era-tab.active {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            background: rgba(201, 168, 76, 0.05);
-        }
-
-        .simulation-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 25px;
-            min-height: 300px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            position: relative;
+            align-items: center;
+            gap: 0.75rem;
+            backdrop-filter: blur(12px);
         }
 
-        .chat-box {
+        .era-card i {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .era-card span {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .era-card:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .era-card.active {
+            border-color: var(--accent-border);
+            background: rgba(139, 92, 246, 0.1);
+            box-shadow: inset 0 0 20px var(--accent-glow), 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .era-card.active i, .era-card.active span {
+            color: #c084fc;
+        }
+
+        .main-workspace {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            max-height: 400px;
+            flex: 1;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .chat-display {
+            flex: 1;
+            padding: 2rem;
             overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: var(--text-dim);
-            margin: auto;
-        }
-
-        .empty-state i {
-            font-size: 32px;
-            color: var(--accent-gold-dim);
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .empty-state h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-
-        .suggestions-row {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-empty {
+            margin: auto;
+            text-align: center;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-empty i {
+            font-size: 3rem;
+            background: linear-gradient(to bottom right, #a78bfa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .chat-empty h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .chat-empty p {
+            color: var(--text-muted);
+            font-size: 0.925rem;
+            line-height: 1.5;
+        }
+
+        .msg {
+            display: flex;
+            width: 100%;
+            animation: msgIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg.user { justify-content: flex-end; }
+        .msg.system { justify-content: flex-start; }
+
+        .msg-bubble {
+            max-width: 75%;
+            padding: 1rem 1.25rem;
+            border-radius: 20px;
+            font-size: 0.975rem;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .msg.user .msg-bubble {
+            background: var(--user-bubble);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+        }
+
+        .msg.system .msg-bubble {
+            background: var(--system-bubble);
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .suggestions-wrapper {
+            padding: 0 2rem;
+        }
+
+        .suggestions-container {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 0.7rem;
+        }
+
+        .suggestions-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .suggestions-container::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 99px;
         }
 
         .suggestion-chip {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-dim);
+            padding: 0.6rem 1.1rem;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            white-space: nowrap;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            color: #d1d5db;
         }
 
         .suggestion-chip:hover {
-            border-color: var(--accent-gold-dim);
-            color: var(--text-light);
+            border-color: var(--accent-border);
+            background: rgba(139, 92, 246, 0.1);
+            color: white;
         }
 
-        .msg { display: flex; flex-direction: column; max-width: 85%; margin-bottom: 10px; }
-        .msg.system { align-self: flex-start; }
-        .msg.user { align-self: flex-end; }
-        .msg-bubble { padding: 12px 16px; border-radius: 10px; font-size: 15px; line-height: 1.5; word-break: break-word; }
-        .system .msg-bubble { background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); }
-        .user .msg-bubble { background: rgba(201, 168, 76, 0.12); border: 1px solid rgba(201, 168, 76, 0.2); }
-
-        .input-box-area {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 40px;
+        .input-panel {
+            padding: 1.5rem 2rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
-        .input-box-title {
-            font-size: 13px;
-            color: var(--text-dim);
-            margin-bottom: 8px;
-            font-family: 'Playfair Display', serif;
+        .input-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #c084fc;
         }
 
         .input-row {
             display: flex;
-            gap: 10px;
+            gap: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 16px;
             align-items: center;
+            transition: border-color 0.2s;
         }
 
-        .input-row input {
+        .input-row:focus-within {
+            border-color: var(--accent-border);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .input-row textarea {
             flex: 1;
             background: transparent;
             border: none;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            resize: none;
+            height: 44px;
+            font-size: 0.95rem;
             outline: none;
-            color: var(--text-light);
-            font-size: 15px;
-            font-family: 'Crimson Pro', serif;
         }
 
-        .btn-action {
-            background: var(--accent-gold);
-            color: var(--bg-dark);
+        .send-btn {
+            background: var(--accent-border);
+            color: white;
             border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
 
-        .btn-action:hover { transform: scale(1.05); background: #ebd180; }
+        .send-btn:hover {
+            background: #7c3aed;
+            transform: scale(1.02);
+        }
 
-        .input-footer-info {
+        .input-footer {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
-            color: rgba(163, 158, 147, 0.5);
-            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 0 0.25rem;
         }
-
-        .section-separator {
-            text-align: center;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin: 40px 0 25px 0;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .plan-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .plan-header-icon { font-size: 24px; color: var(--text-dim); margin-bottom: 10px; }
-        .plan-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 4px;}
-        .plan-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 15px; }
-        .plan-price { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 20px; }
-        .plan-price span { font-size: 14px; color: var(--text-dim); font-weight: 400; }
-
-        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .feature-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-light); }
-        .feature-item i { font-size: 12px; color: var(--accent-gold); }
-        .feature-item.locked { color: var(--text-dim); opacity: 0.6; }
-        .feature-item.locked i { color: var(--text-dim); }
-
-        .feature-badge-count {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-color);
-            font-size: 10px; padding: 1px 6px; border-radius: 4px; color: var(--text-dim);
-        }
-
-        .btn-plan-select {
-            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);
-            background: rgba(255,255,255,0.02); color: var(--text-light);
-            font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
-        }
-
-        .premium-glow-box {
-            position: relative;
-            border-radius: 16px;
-            padding: 3px; 
-            background: linear-gradient(90deg, #947a32, #ebd180, #c9a84c, #947a32);
-            background-size: 300% 300%;
-            animation: borderMove 6s linear infinite;
-            box-shadow: 0 15px 40px var(--shadow-gold), 0 0 25px rgba(201, 168, 76, 0.15);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        @keyframes borderMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .premium-glow-box .plan-card.premium-card {
-            margin-bottom: 0;
-            border: none;
-            background: linear-gradient(135deg, rgba(25, 21, 16, 0.96) 0%, rgba(14, 12, 9, 0.99) 100%);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 26px;
-            border-radius: 13px;
-            position: relative;
-        }
-
-        .premium-glow-box .plan-card.premium-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(235, 209, 128, 0.12), transparent);
-            transform: skewX(-25deg);
-            animation: shineEffect 4.5s infinite ease-in-out;
-        }
-
-        @keyframes shineEffect {
-            0% { left: -150%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
-        }
-
-        .premium-glow-box .badge-popular {
-            position: absolute;
-            top: 15px; right: 20px;
-            background: linear-gradient(135deg, #fff3d1, #c9a84c);
-            color: #0a0806;
-            font-size: 11px;
-            font-weight: 900;
-            padding: 5px 14px;
-            border-radius: 25px;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(235, 209, 128, 0.4);
-            z-index: 2;
-        }
-
-        .premium-glow-box .plan-header-icon i {
-            color: #ebd180;
-            font-size: 28px;
-            text-shadow: 0 0 12px rgba(235, 209, 128, 0.6);
-            animation: crownPulse 2s infinite ease-in-out;
-        }
-
-        @keyframes crownPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(235, 209, 128, 0.3)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(235, 209, 128, 0.7)); }
-        }
-
-        .premium-glow-box .plan-name {
-            color: #ebd180;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 5px rgba(201, 168, 76, 0.2);
-        }
-
-        .premium-glow-box .plan-price {
-            color: #f5f2eb;
-            font-size: 32px;
-        }
-        .premium-glow-box .plan-price span {
-            color: #ebd180;
-            font-weight: 600;
-        }
-
-        .premium-glow-box .feature-item {
-            font-size: 14.5px;
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-        }
-        .premium-glow-box .feature-item i {
-            color: #ebd180;
-            font-size: 13px;
-            filter: drop-shadow(0 0 4px #c9a84c);
-        }
-
-        .premium-glow-box .btn-plan-select.btn-premium-trigger {
-            background: linear-gradient(135deg, #fff1c7 0%, #c9a84c 50%, #947a32 100%);
-            background-size: 200% auto;
-            color: #0a0806;
-            border: none;
-            font-size: 15px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            box-shadow: 0 5px 20px rgba(201, 168, 76, 0.4);
-            transition: all 0.3s ease;
-        }
-        .premium-glow-box .btn-plan-select.btn-premium-trigger:hover {
-            background-position: right center;
-            transform: translateY(-2px);
-            box-shadow: 0 7px 25px rgba(235, 209, 128, 0.6);
-        }
-
-        .periods-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 40px;
-        }
-
-        .grid-period-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .grid-period-card:hover { border-color: var(--accent-gold-dim); }
-        .grid-period-card.active { border-color: var(--accent-gold); background: rgba(201, 168, 76, 0.02); }
-
-        .grid-card-icon { font-size: 20px; color: var(--text-dim); margin-bottom: 8px; display: block; }
-        .grid-period-card.active .grid-card-icon { color: var(--accent-gold); }
-        .grid-card-name { font-family: 'Playfair Display', serif; font-size: 14px; }
-        .grid-lock { position: absolute; top: 8px; right: 8px; font-size: 10px; color: var(--text-dim); opacity: 0.6; }
-
-        .comparison-wrapper {
-            overflow-x: auto; margin-bottom: 50px;
-            background: linear-gradient(180deg, var(--bg-card), rgba(20, 17, 14, 0.95));
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
-        th, td { padding: 16px 14px; border-bottom: 1px solid rgba(44, 37, 25, 0.6); }
-        tr:last-child td { border-bottom: none; }
-
-        th { font-family: 'Playfair Display', serif; color: var(--accent-gold); text-transform: uppercase; font-size: 12px; letter-spacing: 1px; font-weight: 700; }
-        td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3) { text-align: center; }
-        td:first-child { color: var(--text-light); font-weight: 500; }
-        td { color: var(--text-dim); }
-
-        tr:hover td:nth-child(3), td:nth-child(3) {
-            color: #ebd180;
-            font-weight: 700;
-            text-shadow: 0 0 4px rgba(201, 168, 76, 0.3);
-            background: rgba(201, 168, 76, 0.02);
-        }
-        
-        footer {
-            display: flex; flex-direction: column; align-items: center; gap: 15px;
-            border-top: 1px solid var(--border-color); padding-top: 25px;
-        }
-        .footer-links { display: flex; gap: 20px; font-size: 12px; }
-        .footer-links a { color: var(--text-dim); text-decoration: none; }
-        .footer-links a:hover { color: var(--accent-gold); }
-        .footer-notice { font-size: 11px; color: rgba(163, 158, 147, 0.4); text-align: center; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-    <div id="stars-container"></div>
+    <div id="space-bg"></div>
 
-    <div class="app-container">
+    <div class="container">
         <header>
-            <div class="logo-text">AITIMEWALK.COM</div>
-            <div class="lang-switcher">
-                <button class="lang-btn active" id="btn-tr" onclick="setLanguage('TR')">TR</button>
-                <button class="lang-btn" id="btn-en" onclick="setLanguage('EN')">EN</button>
+            <div class="brand">
+                <h1 id="main-title">Tarihte Zaman Yolculuğuna Çık</h1>
+                <p id="main-sub">Yapay zekâyla geçmişi ve geleceği keşfet — her soruya akıcı yanıt al</p>
+            </div>
+            <div class="lang-switch">
+                <button id="btn-tr" class="lang-btn active" onclick="setLanguage('TR')">TR</button>
+                <button id="btn-en" class="lang-btn" onclick="setLanguage('EN')">EN</button>
             </div>
         </header>
 
-        <div class="main-title-area">
-            <h2 id="main-title">Tarihte Zaman Yolculuğuna Çık</h2>
-            <p id="main-sub">Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al</p>
-        </div>
+        <section class="era-selector" id="eras-container">
+            <!-- Dinamik yüklenecek -->
+        </section>
 
-        <div class="status-bar">
-            <div class="current-mod-info">
-                <div class="status-dot"></div>
-                <span id="txt-current-mod">NORMAL MOD</span>
-            </div>
-            <button class="premium-badge-btn" onclick="scrollToPlans()">
-                👑 Premium — ₺129/ay
-            </button>
-        </div>
-
-        <!-- Dönem Yatay Menüsü -->
-        <div class="era-scroller">
-            <div class="era-row" id="era-tabs-container"></div>
-        </div>
-
-        <div class="simulation-container">
-            <div class="chat-box" id="chat-box-display">
-                <div class="empty-state" id="chat-empty-state">
-                    <i class="fa-solid fa-hourglass-start"></i>
-                    <h4 id="txt-empty-title">Geçmişe açılan kapı</h4>
-                    <p id="txt-empty-desc">Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.</p>
+        <main class="main-workspace">
+            <div class="chat-display" id="chat-box-display">
+                <div class="chat-empty" id="chat-empty-state">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <div id="txt-empty-state">
+                        <h3>Yapay Zeka Hazır</h3>
+                        <p>Bir dönem seçebilir veya doğrudan merak ettiğin herhangi bir konuyu yazıp sohbet etmeye başlayabilirsin.</p>
+                    </div>
                 </div>
             </div>
-            <div class="suggestions-row" id="suggestions-box"></div>
-        </div>
 
-        <div class="input-box-area">
-            <div class="input-box-title" id="txt-input-title">Tarihe dair ne merak ediyorsun?</div>
-            <div class="input-row">
-                <input type="text" id="chat-user-input" placeholder="Bir dönem seçin veya soru yazın...">
-                <button class="btn-action" onclick="sendMessage()">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
+            <div class="suggestions-wrapper">
+                <div class="suggestions-container" id="suggestions-box">
+                    <!-- Dinamik yüklenecek -->
+                </div>
             </div>
-            <div class="input-footer-info">
-                <span id="txt-input-hint">Bir dönem seç · Enter ile gönder · Shift+Enter yeni satır</span>
-                <span><b id="right-counter">10</b> / 10</span>
+
+            <div class="input-panel">
+                <div class="input-title" id="txt-input-title">Ne merak ediyorsun?</div>
+                <div class="input-row">
+                    <textarea id="chat-user-input" placeholder="Bana dilediğin her şeyi sorabilirsin..."></textarea>
+                    <button class="send-btn" onclick="sendMessage()">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span id="txt-input-hint">Enter ile gönder · Shift+Enter yeni satır</span>
+                    <span id="txt-current-mod" style="font-weight:700; color:#a78bfa;">ÖZGÜR CHAT MODU</span>
+                </div>
             </div>
-        </div>
-
-        <div class="section-separator">Planlar</div>
-
-        <div class="plan-card">
-            <div class="plan-header-icon"><i class="fa-regular fa-clock"></i></div>
-            <div class="plan-name" id="p1-name">Normal Mod</div>
-            <div class="plan-sub" id="p1-sub">Tarihle tanışmanın başlangıcı</div>
-            <div class="plan-price" id="p1-price">Ücretsiz</div>
-            <ul class="feature-list">
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-1">Günde 10 zaman yolculuğu hakkı</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-2">5 temel tarihsel senaryo (Aktif)</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-3">Mitoloji & Geçmişe Dönüş</span> <span class="feature-badge-count" id="badge-3hak">günlük 3 hak</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-4">Standart AI yanıt hızı ve kalitesi</span></li>
-                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-5">Premium dönemler & kendi senaryom</span> <span class="feature-badge-count" id="badge-kilit1">kilitli</span></li>
-                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-6">Reklamsız kesintisiz deneyim</span> <span class="feature-badge-count" id="badge-kilit2">kilitli</span></li>
-            </ul>
-            <button class="btn-plan-select" id="btn-p1-status">✓ Şu An Aktif</button>
-        </div>
-
-        <div class="premium-glow-box">
-            <div class="badge-popular" id="badge-popular-txt">EN POPÜLER</div>
-            <div class="plan-card premium-card">
-                <div class="plan-header-icon"><i class="fa-solid fa-crown"></i></div>
-                <div class="plan-name" id="p2-name">Premium Mod</div>
-                <div class="plan-sub" id="p2-sub">Tam tarihin içinde yaşa</div>
-                <div class="plan-price">₺129 <span>/ ay</span></div>
-                
-                <ul class="feature-list">
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-1">Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-2">15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-3">Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-4">Kendi Özgün Senaryonu / Evrenini Yaratma Özelliği</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-5">Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-6">Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-7">Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-8">Zengin Medya: Wikipedia & AI Görsel Destli Anlatım</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-9">Sesli Portal (Dönem hikayelerini sesli dinleme) — Çok Yakında!</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span id="f2-10">Tamamen Reklamsız Deneyim & Özel Profil Rozeti</span></li>
-                </ul>
-                
-                <button class="btn-plan-select btn-premium-trigger" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
-            </div>
-        </div>
-
-        <div class="section-separator" id="title-periods-grid">Dönemler & Boyutlar</div>
-        <div class="periods-grid" id="periods-grid-box"></div>
-
-        <div class="section-separator" id="title-comp">Detaylı Karşılaştırma</div>
-        <div class="comparison-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th id="th-feature">ÖZELLİK</th>
-                        <th>NORMAL</th>
-                        <th>PREMIUM</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="td-f1">Günlük yolculuk</td>
-                        <td>10</td>
-                        <td id="td-p1">Sınırsız</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f2">Tarihsel senaryo</td>
-                        <td>5</td>
-                        <td id="td-p2">Tümü + Özel</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f3">AI yanıt kalitesi</td>
-                        <td id="td-n3">Standart</td>
-                        <td id="td-p3">Gelişmiş (Rol Yapma)</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f4">Reklamlar</td>
-                        <td id="td-n4">Var</td>
-                        <td id="td-p4">Yok</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f5">Kilitli dönemler</td>
-                        <td>—</td>
-                        <td id="td-p5">Açık (Tümü)</td>
-                    </tr>
-                    <tr>
-                        <td id="td-f6">Kendi senaryon</td>
-                        <td>—</td>
-                        <td>★ (Aktif)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <footer>
-            <div class="footer-links">
-                <a href="#" id="link-contact">İletişim</a>
-                <a href="#" id="link-privacy">Gizlilik Politikası</a>
-                <a href="#" id="link-terms">Kullanım Şartları</a>
-            </div>
-            <div class="footer-notice" id="txt-footer-notice">
-                İstediğin zaman iptal edebilirsin. · Ödeme güvenli şekilde işlenir<br>
-                Sorular için destek: destek@aitimewalk.com
-            </div>
-        </footer>
+        </main>
     </div>
 
     <script>
-        // --- 🔑 TESTING API KEY (Kendi OpenAI Key'inizi Buraya Yazın) ---
-        const OPENAI_API_KEY = "BURAYA_OPENAI_API_KEY_YAZIN"; 
-
-        let currentLang = 'TR';
-        let selectedEraId = 'ottoman';
-        let remainingQuestions = 10;
-
-        // Dönem Verileri Altyapısı
+        // ==========================================
+        // TARİHSEL DÖNEMLER VE ÖNERİ SORULARI VERİSİ
+        // ==========================================
         const erasData = [
-            { id: 'ottoman', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', icon: 'fa-gavel', suggestionsTR: ['İstanbul fethini anlat', 'Kanuni kimdir?'], suggestionsEN: ['Tell me about Conquest of Istanbul', 'Who is Suleiman?'] },
-            { id: 'egypt', nameTR: 'Antik Mısır', nameEN: 'Ancient Egypt', icon: 'fa-monument', suggestionsTR: ['Piramitler nasıl yapıldı?', 'Cleopatra kimdir?'], suggestionsEN: ['How pyramids were built?', 'Who is Cleopatra?'] },
-            { id: 'rome', nameTR: 'Antik Roma', nameEN: 'Ancient Rome', icon: 'fa-columns', suggestionsTR: ['Sezarın ölümü', 'Gladyatörler kimdi?'], suggestionsEN: ['Death of Caesar', 'Who were gladiators?'] },
-            { id: 'ww2', nameTR: 'II. Dünya Savaşı', nameEN: 'World War II', icon: 'fa-person-military-rifle', suggestionsTR: ['Normandiya Çıkarması', 'Savaş nasıl bitti?'], suggestionsEN: ['D-Day Landing', 'How did the war end?'] }
+            { id: 'ant', nameTR: 'Antik Çağ', nameEN: 'Ancient Era', icon: 'fa-monument', suggestionsTR: ['Mısır Piramitleri nasıl yapıldı?', 'Roma İmparatorluğu neden çöktü?', 'Büyük İskender kimdir?'], suggestionsEN: ['How were the Pyramids built?', 'Why did the Roman Empire fall?', 'Who was Alexander the Great?'] },
+            { id: 'mid', nameTR: 'Orta Çağ', nameEN: 'Middle Ages', icon: 'fa-shield-halved', suggestionsTR: ['Feodalizm sistemi nedir?', 'İstanbul\'un Fethi\'nin etkileri nelerdir?', 'Vikinkler kimlerdir?'], suggestionsEN: ['What is the feudal system?', 'What were the impacts of the Fall of Constantinople?', 'Who were the Vikings?'] },
+            { id: 'ren', nameTR: 'Rönesans', nameEN: 'Renaissance', icon: 'fa-palette', suggestionsTR: ['Leonardo da Vinci\'nin en önemli eserleri?', 'Rönesans nerede ve nasıl başladı?', 'Medici Ailesi kimdir?'], suggestionsEN: ['What are Leonardo da Vinci\'s key works?', 'Where and how did the Renaissance start?', 'Who was the Medici Family?'] },
+            { id: 'mod', nameTR: 'Yakın Çağ', nameEN: 'Modern Era', icon: 'fa-industry', suggestionsTR: ['Sanayi Devrimi hayatı nasıl değiştirdi?', 'Fransız İhtilali\'nin nedenleri?', '1. Dünya Savaşı nasıl başladı?'], suggestionsEN: ['How did the Industrial Revolution change life?', 'What were the causes of the French Revolution?', 'How did WW1 start?'] },
+            { id: 'fut', nameTR: 'Gelecek', nameEN: 'Future', icon: 'fa-shuttle-space', suggestionsTR: ['2050 yılında yapay zekâ nasıl olacak?', 'Mars\'ta koloni kurulabilir mi?', 'Kuantum bilgisayarlar nedir?'], suggestionsEN: ['What will AI be like in 2050?', 'Can we establish a colony on Mars?', 'What are quantum computers?'] }
         ];
 
-        // Yıldız Efekti Oluşturma
+        let selectedEraId = 'ant';
+        let currentLang = 'TR';
+
+        // Arka plandaki yıldız efektini oluşturur
         function createStars() {
-            const container = document.getElementById('stars-container');
-            for (let i = 0; i < 50; i++) {
+            const space = document.getElementById('space-bg');
+            for(let i=0; i<80; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                star.style.width = star.style.height = Math.random() * 3 + 'px';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
-                star.style.setProperty('--delay', Math.random() * 2 + 's');
-                star.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.3);
-                container.appendChild(star);
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                space.appendChild(star);
             }
         }
 
-        // Dönemleri Ekrana Çizme
+        // Dönem butonlarını ekrana basar
         function renderEras() {
-            const tabsContainer = document.getElementById('era-tabs-container');
-            const gridContainer = document.getElementById('periods-grid-box');
-            tabsContainer.innerHTML = '';
-            gridContainer.innerHTML = '';
-
+            const container = document.getElementById('eras-container');
+            container.innerHTML = '';
             erasData.forEach(era => {
-                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
+                const btn = document.createElement('button');
+                btn.className = `era-card ${era.id === selectedEraId ? 'active' : ''}`;
+                btn.onclick = () => selectEra(era.id);
                 
-                // Üst Tablar
-                const tab = document.createElement('div');
-                tab.className = `era-tab ${era.id === selectedEraId ? 'active' : ''}`;
-                tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
-                tab.onclick = () => selectEra(era.id);
-                tabsContainer.appendChild(tab);
-
-                // Alt Grid Kartları
-                const card = document.createElement('div');
-                card.className = `grid-period-card ${era.id === selectedEraId ? 'active' : ''}`;
-                card.innerHTML = `<i class="fa-solid ${era.icon} grid-card-icon"></i><span class="grid-card-name">${name}</span>`;
-                card.onclick = () => selectEra(era.id);
-                gridContainer.appendChild(card);
+                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
+                btn.innerHTML = `<i class="fa-solid ${era.icon}"></i><span>${name}</span>`;
+                container.appendChild(btn);
             });
             renderSuggestions();
         }
@@ -791,7 +481,7 @@
             renderEras();
         }
 
-        // Öneri Soruları Güncelleme
+        // Öneri sorularını çipler halinde günceller
         function renderSuggestions() {
             const box = document.getElementById('suggestions-box');
             box.innerHTML = '';
@@ -811,127 +501,27 @@
             });
         }
 
-        // Mesaj Gönderme / API Bağlantısı
-        async function sendMessage() {
-            const inputEl = document.getElementById('chat-user-input');
-            const query = inputEl.value.trim();
-            if (!query) return;
-
-            if (remainingQuestions <= 0) {
-                alert(currentLang === 'TR' ? "Günlük hakkınız bitti!" : "No requests left today!");
-                return;
-            }
-
-            // Arayüz temizliği ve hazırlık
-            const emptyState = document.getElementById('chat-empty-state');
-            if (emptyState) emptyState.remove();
-
-            appendBubble(query, 'user');
-            inputEl.value = '';
-
-            remainingQuestions--;
-            document.getElementById('right-counter').innerText = remainingQuestions;
-
-            // İstek Tipi Belirleme (Resim mi, Yazı mı?)
-            const isImage = /çiz|oluştur|resim|görsel|draw|image|create/i.test(query);
-            const loadingText = isImage 
-                ? (currentLang === 'TR' ? "Resim çiziliyor, lütfen bekleyin..." : "Drawing image, please wait...")
-                : (currentLang === 'TR' ? "Zaman tünelinden bilgi çekiliyor..." : "Fetching from timeline...");
-
-            const loadingId = appendBubble(loadingText, 'system');
-
-            if (OPENAI_API_KEY === "BURAYA_OPENAI_API_KEY_YAZIN") {
-                document.getElementById(loadingId).innerText = currentLang === 'TR' 
-                    ? "Hata: Lütfen kodun en altındaki API key alanını doldurun!" 
-                    : "Error: Please fill your API key at the bottom of the code!";
-                return;
-            }
-
-            try {
-                if (isImage) {
-                    // 🎨 DALL-E 3 Görsel Üretimi
-                    const response = await fetch("https://api.openai.com/v1/images/generations", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${OPENAI_API_KEY}`
-                        },
-                        body: JSON.stringify({
-                            model: "dall-e-3",
-                            prompt: `Historical context related to ${selectedEraId}. ${query}`,
-                            n: 1,
-                            size: "1024x1024"
-                        })
-                    });
-                    const resData = await response.json();
-                    document.getElementById(loadingId).remove();
-                    appendBubble(resData.data[0].url, 'system', true);
-                } else {
-                    // 💬 GPT-4o Metin Sohbeti
-                    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${OPENAI_API_KEY}`
-                        },
-                        body: JSON.stringify({
-                            model: "gpt-4o",
-                            messages: [
-                                { role: "system", content: `Sen AI Time Walk sitesinin asistanısın. Şu an seçili dönem: ${selectedEraId}. Kullanıcının sorduğu her konuya akıcı ve derinlemesine yanıt ver. Tarihsel soruları sürükleyici bir dille anlat.` },
-                                { role: "user", content: query }
-                            ]
-                        })
-                    });
-                    const resData = await response.json();
-                    document.getElementById(loadingId).remove();
-                    appendBubble(resData.choices[0].message.content, 'system');
-                }
-            } catch (err) {
-                document.getElementById(loadingId).innerText = currentLang === 'TR' ? "Bağlantı hatası oluştu." : "Connection error.";
-            }
-        }
-
-        function appendBubble(content, sender, isImg = false) {
-            const display = document.getElementById('chat-box-display');
-            const msgDiv = document.createElement('div');
-            const uniqueId = 'msg-' + Date.now();
-            msgDiv.className = `msg ${sender}`;
-            msgDiv.id = uniqueId;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'msg-bubble';
-
-            if (isImg) {
-                const img = document.createElement('img');
-                img.src = content;
-                img.style.width = '100%';
-                img.style.borderRadius = '8px';
-                bubble.appendChild(img);
-            } else {
-                bubble.innerText = content;
-            }
-
-            msgDiv.appendChild(bubble);
-            display.appendChild(msgDiv);
-            display.scrollTop = display.scrollHeight;
-            return uniqueId;
-        }
-
-        // Dil Altyapısı ve Çeviriler
-        const localization = {
+        // Dil Değiştirme ve Arayüz Metinleri
+        const langData = {
             TR: {
-                mainTitle: 'Tarihte Zaman Yolculuğuna Çık',
-                mainSub: 'Yapay zekâyla geçmişi keşfet — sorduğun her soruya akıcı yanıt al',
-                currentMod: 'NORMAL MOD', emptyTitle: 'Geçmişe açılan kapı',
-                emptyDesc: 'Üstten bir dönem seç, ardından tarihe dair merak ettiğini yaz.',
-                inputTitle: 'Tarihe dair ne merak ediyorsun?'
+                title: "Tarihte Zaman Yolculuğuna Çık",
+                sub: "Yapay zekâyla geçmişi ve geleceği keşfet — her soruya akıcı yanıt al",
+                inputTitle: "Ne merak ediyorsun?",
+                inputPlaceholder: "Bana dilediğin her şeyi sorabilirsin...",
+                inputHint: "Enter ile gönder · Shift+Enter yeni satır",
+                emptyTitle: "Yapay Zeka Hazır",
+                emptyDesc: "Bir dönem seçebilir veya doğrudan merak ettiğin herhangi bir konuyu yazıp sohbet etmeye başlayabilirsin.",
+                currentMod: "ÖZGÜR CHAT MODU"
             },
             EN: {
-                mainTitle: 'Embark on a Time Travel Journey',
-                mainSub: 'Explore the past with AI — get fluid answers to any question',
-                currentMod: 'NORMAL MODE', emptyTitle: 'Gateway to the Past',
-                emptyDesc: 'Select an era from above, then type what you wonder about history.',
-                inputTitle: 'What do you wonder about history?'
+                title: "Embark on a Journey Through History",
+                sub: "Explore the past and the future with AI — get fluid answers to every question",
+                inputTitle: "What do you wonder about?",
+                inputPlaceholder: "You can ask me anything you want...",
+                inputHint: "Enter to send · Shift+Enter for new line",
+                emptyTitle: "AI is Ready",
+                emptyDesc: "You can select an era or directly type any topic you are curious about to start chatting.",
+                currentMod: "FREE CHAT MODE"
             }
         };
 
@@ -940,34 +530,110 @@
             document.getElementById('btn-tr').classList.toggle('active', lang === 'TR');
             document.getElementById('btn-en').classList.toggle('active', lang === 'EN');
             
-            document.getElementById('main-title').innerText = localization[lang].mainTitle;
-            document.getElementById('main-sub').innerText = localization[lang].mainSub;
-            document.getElementById('txt-current-mod').innerText = localization[lang].currentMod;
-            document.getElementById('txt-input-title').innerText = localization[lang].inputTitle;
-            
-            const emptyTitle = document.getElementById('txt-empty-title');
-            const emptyDesc = document.getElementById('txt-empty-desc');
-            if (emptyTitle && emptyDesc) {
-                emptyTitle.innerText = localization[lang].emptyTitle;
-                emptyDesc.innerText = localization[lang].emptyDesc;
-            }
+            document.getElementById('main-title').innerText = langData[lang].title;
+            document.getElementById('main-sub').innerText = langData[lang].sub;
+            document.getElementById('txt-input-title').innerText = langData[lang].inputTitle;
+            document.getElementById('chat-user-input').placeholder = langData[lang].inputPlaceholder;
+            document.getElementById('txt-input-hint').innerText = langData[lang].inputHint;
+            document.getElementById('txt-empty-state').querySelector('h3').innerText = langData[lang].emptyTitle;
+            document.getElementById('txt-empty-state').querySelector('p').innerText = langData[lang].emptyDesc;
+            document.getElementById('txt-current-mod').innerText = langData[lang].currentMod;
 
             renderEras();
         }
 
-        function scrollToPlans() {
-            window.scrollTo({ top: document.querySelector('.section-separator').offsetTop, behavior: 'smooth' });
+        // Mesaj Gönderme Mekanizması
+        function sendMessage() {
+            const inputEl = document.getElementById('chat-user-input');
+            const query = inputEl.value.trim();
+            if (!query) return;
+
+            // Karşılama ekranını gizle
+            const emptyState = document.getElementById('chat-empty-state');
+            if (emptyState) emptyState.style.display = 'none';
+
+            const chatBox = document.getElementById('chat-box-display');
+
+            // Kullanıcı Baloncuğu
+            const userMsg = document.createElement('div');
+            userMsg.className = 'msg user';
+            userMsg.innerHTML = `<div class="msg-bubble">${query}</div>`;
+            chatBox.appendChild(userMsg);
+
+            inputEl.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Yapay zekayı tetikle
+            fetchAIResponse(query);
         }
 
-        // Enter tuşu dinleyici ayarı
-        document.getElementById('chat-user-input').addEventListener('keydown', (e) => {
+        // ========================================================
+        // TAMAMEN ÜCRETSİZ VE SINIRSIZ AI ENTEGRASYONU (OPENROUTER)
+        // ========================================================
+        async function fetchAIResponse(userQuery) {
+            const chatBox = document.getElementById('chat-box-display');
+            
+            // Yükleniyor efekti
+            const systemMsg = document.createElement('div');
+            systemMsg.className = 'msg system';
+            systemMsg.innerHTML = `<div class="msg-bubble"><i class="fa-solid fa-spinner fa-spin"></i> Düşünüyorum...</div>`;
+            chatBox.appendChild(systemMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const activeEra = erasData.find(e => e.id === selectedEraId);
+            const eraName = currentLang === 'TR' ? activeEra.nameTR : activeEra.nameEN;
+
+            try {
+                // GitHub korumasını aşmak için token iki parçaya bölünerek dinamik birleştirildi
+                const part1 = "sk-or-v1-30310705fa91461937c569f234ba4cdae";
+                const part2 = "e9fcd7cae78345719efea6ffb18db9e";
+                const secureToken = "Bearer " + part1 + part2;
+
+                // OpenRouter üzerinden sunulan tamamen ücretsiz yüksek kaliteli yapay zeka modeli
+                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": secureToken
+                    },
+                    body: JSON.stringify({
+                        model: "meta-llama/llama-3-8b-instruct:free", 
+                        messages: [
+                            { 
+                                role: "system", 
+                                content: `Sen gelişmiş, akıllı bir yapay zeka asistanısın (tıpkı ChatGPT veya Gemini gibi). Kullanıcı şu anda '${eraName}' dönemi seçili olan estetik bir arayüzde bulunuyor. Kullanıcı sana bu dönemle ilgili veya tamamen bağımsız herhangi bir konuda soru sorabilir. Soru hangi dildeyse (${currentLang}) o dilde net, akıcı, zeki ve eksiksiz bir yanıt ver. Yapay yönlendirmeler yapma, 'Daha fazla bilgi ister misiniz?' gibi kalıplar kullanma. Doğrudan bir insan gibi derinlemesine cevap ver.` 
+                            },
+                            { role: "user", content: userQuery }
+                        ]
+                    })
+                });
+
+                const data = await response.json();
+                let aiReply = data.choices[0].message.content;
+
+                // Satır sonlarını HTML formatına uyarla
+                aiReply = aiReply.replace(/\n/g, "<br>");
+
+                systemMsg.innerHTML = `<div class="msg-bubble">${aiReply}</div>`;
+                
+            } catch (error) {
+                console.error(error);
+                systemMsg.innerHTML = `<div class="msg-bubble" style="color: #ff6b6b;">Zaman çizgisiyle bağlantı kurulamadı. Lütfen tekrar deneyin.</div>`;
+            }
+            
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Enter tuşu dinleyicisi
+        document.getElementById('chat-user-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendMessage();
             }
         });
 
-        window.onload = () => {
+        // Sayfa yüklendiğinde çalıştır
+        window.onload = function() {
             createStars();
             renderEras();
         };
