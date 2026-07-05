@@ -387,7 +387,7 @@
             text-shadow: 0 0 8px var(--accent-gold-glow);
         }
 
-        /* Dönemler & Boyutlar Izgara Yapısı (Görsel Tasarıma Tam Uyumlu) */
+        /* Dönemler & Boyutlar Izgara Yapısı */
         .periods-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -465,7 +465,7 @@
         .plan-price span { font-size: 15px; color: var(--text-dim); font-weight: 400; }
 
         .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-        .feature-item { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-light); }
+        .feature-item { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-light); line-height: 1.4; }
         .feature-item i { font-size: 13px; color: var(--accent-gold); }
         .feature-item.locked { color: var(--text-dim); opacity: 0.5; }
         .feature-item.locked i { color: var(--text-dim); }
@@ -627,11 +627,11 @@
         </div>
 
         <div class="section-separator" id="title-periods-grid">Dönemler, Boyutlar & Modlar</div>
-        <!-- Tam Teşekküllü Mod Listesi (Görseldeki Sıra ve Süslemeler Dahil) -->
         <div class="periods-grid" id="periods-grid-box"></div>
 
         <div class="section-separator">Planlar</div>
 
+        <!-- Normal Ücretsiz Plan Kartı -->
         <div class="plan-card">
             <div class="plan-header-icon"><i class="fa-regular fa-clock"></i></div>
             <div class="plan-name" id="p1-name">Normal Mod</div>
@@ -645,19 +645,26 @@
             <button class="btn-plan-select" id="btn-p1-status">✓ Şu An Aktif</button>
         </div>
 
+        <!-- YENİLENEN PREMIUM KART ALANI -->
         <div class="premium-glow-box">
             <div class="badge-popular" id="badge-popular-txt">EN POPÜLER</div>
             <div class="plan-card premium-card">
                 <div class="plan-header-icon"><i class="fa-solid fa-crown"></i></div>
                 <div class="plan-name" id="p2-name">Premium Mod</div>
-                <div class="plan-sub" id="p2-sub">Evrenin ve zamanın tüm sınırlarını kaldır</div>
+                <div class="plan-sub" id="p2-sub">Tam tarihin içinde yaşa</div>
                 <div class="plan-price">₺129 <span>/ ay</span></div>
                 
                 <ul class="feature-list">
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Zaman & Boyut Yolculuğu</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Tüm Kilitli Modlar (Lucid Rüya, Karakterler, Kapsül...)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Maksimum AI Rol Yapma Performansı</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Wikipedia Medya Desteği</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Kendi Özgün Senaryonu / Evrenini Yaratma Özelliği</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Zengin Medya: Wikipedia & AI Görsel Destekli Anlatım</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sesli Portal (Dönem hikayelerini sesli dinleme) — <i>Çok Yakında!</i></span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Tamamen Reklamsız Deneyim & Özel Profil Rozeti</span></li>
                 </ul>
                 
                 <button class="btn-plan-select btn-premium-trigger" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
@@ -712,7 +719,6 @@
         let selectedEraId = 'ottoman';
         let remainingQuestions = 10;
 
-        // Görseldeki ve Yeni Eklenen Tüm Modların Eksiksiz Listesi
         const erasData = [
             { id: 'ottoman', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', icon: 'fa-swords', isPremium: false, suggestionsTR: ['İstanbul fethini anlat', 'Kanuni kimdir?'], suggestionsEN: ['Tell me about Conquest of Istanbul', 'Who is Suleiman?'] },
             { id: 'rome', nameTR: 'Antik Roma', nameEN: 'Ancient Rome', icon: 'fa-columns', isPremium: false, suggestionsTR: ['Sezarın ölümü', 'Gladyatörler kimdi?'], suggestionsEN: ['Death of Caesar', 'Who were gladiators?'] },
@@ -726,7 +732,6 @@
             { id: 'egypt', nameTR: 'Antik Mısır', nameEN: 'Ancient Egypt', icon: 'fa-trident', isPremium: false, suggestionsTR: ['Piramitler nasıl yapıldı?', 'Cleopatra kimdir?'], suggestionsEN: ['How pyramids were built?', 'Who is Cleopatra?'] },
             { id: 'ww2', nameTR: 'II. Dünya Savaşı', nameEN: 'World War II', icon: 'fa-medal', isPremium: true, suggestionsTR: ['Normandiya Çıkarması detayları', 'Enigma şifresi nasıl çözüldü?'], suggestionsEN: ['D-Day landing details', 'How Enigma code was broken?'] },
             { id: 'custom', nameTR: 'Kendi Senaryon', nameEN: 'Custom Scenario', icon: 'fa-castle', isPremium: true, suggestionsTR: ['Beni siberpunk bir orta çağ evrenine götür', 'Kendi kurgusal dünyamı yaratıyorum'], suggestionsEN: ['Take me to a cyberpunk medieval world', 'Creating my own fictional universe'] },
-            // 🎯 İstediğin Yeni Yaratıcı ve İstisnai Modlar
             { id: 'lucid', nameTR: 'Lucid Rüya Kontrolü', nameEN: 'Lucid Dream Controller', icon: 'fa-moon', isPremium: true, suggestionsTR: ['Bu gece rüyamı nasıl kontrol edebilirim?', 'Rüyamda uçmak için teknik ver'], suggestionsEN: ['How can I control my dream tonight?', 'Technique to fly in my dreams'] },
             { id: 'parallel', nameTR: 'Paralel Evren Simülatörü', nameEN: 'Parallel Universe', icon: 'fa-shuffle', isPremium: true, suggestionsTR: ['Yerçekiminin yarı yarıya az olduğu bir evren', 'Zamanın geriye aktığı boyut'], suggestionsEN: ['A universe with half gravity', 'A dimension where time flows backward'] }
         ];
@@ -760,78 +765,23 @@
 
         function createStars() {
             const container = document.getElementById('stars-container');
+            if(!container) return;
             for (let i = 0; i < 60; i++) {
                 const star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = star.style.height = Math.random() * 3 + 'px';
-                star.style.top = Math.random() * 100 + '%';
+                star.classList.add('star');
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
                 star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
                 star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
                 star.style.setProperty('--delay', Math.random() * 2 + 's');
-                star.style.setProperty('--max-opacity', Math.random() * 0.6 + 0.3);
+                star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
                 container.appendChild(star);
             }
         }
 
-        function renderEras() {
-            const tabsContainer = document.getElementById('era-tabs-container');
-            const gridContainer = document.getElementById('periods-grid-box');
-            tabsContainer.innerHTML = '';
-            gridContainer.innerHTML = '';
-
-            erasData.forEach(era => {
-                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
-                
-                // Üst Kaydırma Menüsü
-                const tab = document.createElement('div');
-                tab.className = `era-tab ${era.id === selectedEraId ? 'active' : ''}`;
-                tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
-                tab.onclick = () => selectEra(era.id);
-                tabsContainer.appendChild(tab);
-
-                // Ana Izgara Görünümü (Görseldeki premium taç simgeleri otomatik eklenir)
-                const card = document.createElement('div');
-                card.className = `grid-period-card ${era.id === selectedEraId ? 'active' : ''}`;
-                
-                let lockIcon = era.isPremium ? `<div class="grid-lock"><i class="fa-solid fa-crown"></i></div>` : '';
-                
-                card.innerHTML = `
-                    ${lockIcon}
-                    <i class="fa-solid ${era.icon} grid-card-icon"></i>
-                    <span class="grid-card-name">${name}</span>
-                `;
-                card.onclick = () => selectEra(era.id);
-                gridContainer.appendChild(card);
-            });
-            renderSuggestions();
-        }
-
-        function selectEra(eraId) {
-            selectedEraId = eraId;
-            const activeEra = erasData.find(e => e.id === eraId);
-            if (activeEra) {
-                document.getElementById('txt-current-mod').innerText = currentLang === 'TR' ? activeEra.nameTR.toUpperCase() : activeEra.nameEN.toUpperCase();
-            }
-            renderEras();
-        }
-
-        function renderSuggestions() {
-            const box = document.getElementById('suggestions-box');
-            box.innerHTML = '';
-            const activeEra = erasData.find(e => e.id === selectedEraId);
-            if (!activeEra) return;
-
-            const questions = currentLang === 'TR' ? activeEra.suggestionsTR : activeEra.suggestionsEN;
-            questions.forEach(q => {
-                const chip = document.createElement('div');
-                chip.className = 'suggestion-chip';
-                chip.innerText = q;
-                chip.onclick = () => {
-                    document.getElementById('chat-user-input').value = q;
-                    sendMessage();
-                };
-                box.appendChild(chip);
-            });
+        function scrollToPlans() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
         function setLanguage(lang) {
@@ -841,113 +791,128 @@
             
             document.getElementById('main-title').innerText = translations[lang].mainTitle;
             document.getElementById('main-sub').innerText = translations[lang].mainSub;
+            document.getElementById('txt-current-mod').innerText = translations[lang].currentMod;
+            document.getElementById('txt-empty-title').innerText = translations[lang].emptyTitle;
+            document.getElementById('txt-empty-desc').innerText = translations[lang].emptyDesc;
             document.getElementById('txt-input-title').innerText = translations[lang].inputTitle;
             document.getElementById('chat-user-input').placeholder = translations[lang].inputPlaceholder;
             document.getElementById('txt-input-hint').innerText = translations[lang].inputHint;
 
-            const emptyState = document.getElementById('chat-empty-state');
-            if (emptyState) {
-                document.getElementById('txt-empty-title').innerText = translations[lang].emptyTitle;
-                document.getElementById('txt-empty-desc').innerText = translations[lang].emptyDesc;
-            }
-
-            selectEra(selectedEraId);
+            renderTabs();
+            renderGrid();
         }
 
-        async function sendMessage() {
-            const inputEl = document.getElementById('chat-user-input');
-            const query = inputEl.value.trim();
-            if (!query) return;
+        function renderTabs() {
+            const container = document.getElementById('era-tabs-container');
+            if(!container) return;
+            container.innerHTML = '';
+            erasData.forEach(era => {
+                const tab = document.createElement('div');
+                tab.className = `era-tab ${era.id === selectedEraId ? 'active' : ''}`;
+                tab.onclick = () => selectEra(era.id);
+                
+                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
+                tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
+                container.appendChild(tab);
+            });
+        }
+
+        function renderGrid() {
+            const container = document.getElementById('periods-grid-box');
+            if(!container) return;
+            container.innerHTML = '';
+            erasData.forEach(era => {
+                const card = document.createElement('div');
+                card.className = `grid-period-card ${era.id === selectedEraId ? 'active' : ''}`;
+                card.onclick = () => selectEra(era.id);
+
+                if (era.isPremium) {
+                    card.innerHTML += `<div class="grid-lock">👑</div>`;
+                }
+
+                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
+                card.innerHTML += `
+                    <i class="fa-solid ${era.icon} grid-card-icon"></i>
+                    <div class="grid-card-name">${name}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectEra(eraId) {
+            selectedEraId = eraId;
+            renderTabs();
+            renderGrid();
+            
+            const chatEmpty = document.getElementById('chat-empty-state');
+            if(chatEmpty) chatEmpty.style.display = 'block';
+            
+            const display = document.getElementById('chat-box-display');
+            if(display) {
+                const messages = display.querySelectorAll('.msg');
+                messages.forEach(m => m.remove());
+            }
+
+            renderSuggestions();
+        }
+
+        function renderSuggestions() {
+            const container = document.getElementById('suggestions-box');
+            if(!container) return;
+            container.innerHTML = '';
+            const era = erasData.find(e => e.id === selectedEraId);
+            if (!era) return;
+
+            const suggestions = currentLang === 'TR' ? era.suggestionsTR : era.suggestionsEN;
+            suggestions.forEach(sug => {
+                const chip = document.createElement('div');
+                chip.className = 'suggestion-chip';
+                chip.innerText = sug;
+                chip.onclick = () => {
+                    document.getElementById('chat-user-input').value = sug;
+                    sendMessage();
+                };
+                container.appendChild(chip);
+            });
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-user-input');
+            if (!input || !input.value.trim()) return;
 
             if (remainingQuestions <= 0) {
                 alert(translations[currentLang].limitError);
                 return;
             }
 
-            const emptyState = document.getElementById('chat-empty-state');
-            if (emptyState) emptyState.remove();
+            const chatEmpty = document.getElementById('chat-empty-state');
+            if (chatEmpty) chatEmpty.style.display = 'none';
 
-            const chatBox = document.getElementById('chat-box-display');
+            const display = document.getElementById('chat-box-display');
             
+            // User Message
             const userMsg = document.createElement('div');
             userMsg.className = 'msg user';
-            userMsg.innerHTML = `<div class="msg-bubble">${query}</div>`;
-            chatBox.appendChild(userMsg);
-            inputEl.value = '';
+            userMsg.innerHTML = `<div class="msg-bubble">${input.value}</div>`;
+            display.appendChild(userMsg);
 
-            const loadingMsg = document.createElement('div');
-            loadingMsg.className = 'msg system';
-            loadingMsg.innerHTML = `<div class="msg-bubble" style="color: var(--text-dim);"><i class="fa-solid fa-spinner fa-spin"></i> ${translations[currentLang].loading}</div>`;
-            chatBox.appendChild(loadingMsg);
-            chatBox.scrollTop = chatBox.scrollHeight;
+            input.value = '';
+            remainingQuestions--;
+            document.getElementById('right-counter').innerText = remainingQuestions;
 
-            try {
-                // Güvenli Vercel backend yolu (/api/ask) çağrısı
-                const response = await fetch('/api/ask', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        question: query,
-                        mode: selectedEraId,
-                        lang: currentLang
-                    })
-                });
-
-                loadingMsg.remove();
-                const aiMsg = document.createElement('div');
-                aiMsg.className = 'msg system';
-
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    if (remainingQuestions > 0) {
-                        remainingQuestions--;
-                        document.getElementById('right-counter').innerText = remainingQuestions;
-                    }
-
-                    let bubbleContent = `<div>${data.answer.replace(/\n/g, '<br>')}</div>`;
-                    
-                    if (data.images && data.images.length > 0 && data.images[0].url) {
-                        bubbleContent += `<img src="${data.images[0].url}" class="wiki-image" alt="Wikipedia Media Support" />`;
-                    }
-
-                    aiMsg.innerHTML = `<div class="msg-bubble">${bubbleContent}</div>`;
-                } else {
-                    const errData = await response.json();
-                    aiMsg.innerHTML = `<div class="msg-bubble" style="color:#ff6b6b;">${errData.error || 'Portal akış hatası.'}</div>`;
-                }
-                
-                chatBox.appendChild(aiMsg);
-            } catch (error) {
-                loadingMsg.remove();
-                const errorMsg = document.createElement('div');
-                errorMsg.className = 'msg system';
-                errorMsg.innerHTML = `<div class="msg-bubble" style="color:#ff6b6b;">Bağlantı Hatası! Lütfen API rotanızı ve internetinizi doğrulayın.</div>`;
-                chatBox.appendChild(errorMsg);
-            }
-
-            chatBox.scrollTop = chatBox.scrollHeight;
+            // System Fake Response
+            setTimeout(() => {
+                const sysMsg = document.createElement('div');
+                sysMsg.className = 'msg system';
+                sysMsg.innerHTML = `<div class="msg-bubble">${translations[currentLang].loading}</div>`;
+                display.appendChild(sysMsg);
+                display.scrollTop = display.scrollHeight;
+            }, 600);
         }
-
-        function scrollToPlans() {
-            window.scrollTo({
-                top: document.getElementById('p1-name').offsetTop - 100,
-                behavior: 'smooth'
-            });
-        }
-
-        document.getElementById('chat-user-input').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
 
         window.onload = () => {
             createStars();
-            renderEras();
+            setLanguage('TR');
         };
     </script>
 </body>
