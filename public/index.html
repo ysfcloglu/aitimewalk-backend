@@ -1,1003 +1,577 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEBEG0FZMF"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HEBEG0FZMF');
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AITimeWalk — Zaman ve Boyut Portalı</title>
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#080B11">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AITimeWalk">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3565/3565418.png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>AITimeWalk - Gelişmiş Zaman Platformu</title>
     <style>
-        :root {
-            --bg-main: #080B11;
-            --bg-card: rgba(17, 22, 34, 0.65);
-            --bg-card-hover: rgba(25, 32, 48, 0.8);
-            --accent-gold: #E2B857;
-            --accent-gold-glow: rgba(226, 184, 87, 0.25);
-            --accent-gold-dark: #B58F32;
-            --text-main: #F3F4F6;
-            --text-muted: #9CA3AF;
-            --border-color: rgba(226, 184, 87, 0.12);
-            --border-hover: rgba(226, 184, 87, 0.3);
-            --glass-blur: blur(16px);
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(226, 184, 87, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(31, 41, 61, 0.5) 0%, transparent 50%);
-        }
-
-        #stars-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; overflow: hidden;
-        }
-
-        .star {
-            position: absolute; background-color: #fff; border-radius: 50%; opacity: 0;
-            animation: twinkle var(--duration, 4s) infinite ease-in-out;
-            animation-delay: var(--delay, 0s);
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: var(--max-opacity, 0.6); transform: scale(1.2); }
-        }
-
-        .app-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 24px 20px 80px 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0 30px 0;
-        }
-
-        .logo-text {
-            font-size: 16px;
-            letter-spacing: 4px;
-            color: var(--accent-gold);
-            font-family: 'Playfair Display', serif;
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFF, var(--accent-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 8px rgba(226, 184, 87, 0.3));
-        }
-
-        .lang-switcher {
-            display: flex;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            padding: 3px;
-            backdrop-filter: var(--glass-blur);
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 6px 16px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 20px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .lang-btn.active {
-            background: linear-gradient(135deg, #FFF, var(--accent-gold));
-            color: #080B11;
-            box-shadow: 0 2px 10px rgba(226, 184, 87, 0.3);
-        }
-
-        .main-title-area {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .main-title-area h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 38px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #FFFFFF 30%, #F5D485 70%, var(--accent-gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .main-title-area p {
-            color: var(--text-muted);
-            font-size: 16px;
-            font-weight: 400;
-        }
-
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 14px 24px;
-            border-radius: 100px;
-            margin-bottom: 30px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-        }
-
-        .current-mod-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--accent-gold);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-gold);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--accent-gold);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(226, 184, 87, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(226, 184, 87, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(226, 184, 87, 0); }
-        }
-
-        .premium-badge-btn {
-            background: linear-gradient(135deg, #FFF, var(--accent-gold));
-            color: #080B11;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 20px rgba(226, 184, 87, 0.25);
-            transition: all 0.3s ease;
-        }
-        .premium-badge-btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 24px rgba(226, 184, 87, 0.4); 
-        }
-
-        .era-scroller {
-            overflow-x: auto;
-            white-space: nowrap;
-            scrollbar-width: none;
-            margin-bottom: 25px;
-            padding: 4px 0;
-        }
-
-        .era-scroller::-webkit-scrollbar { display: none; }
-        .era-row { display: inline-flex; gap: 12px; }
-
-        .era-tab {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 100px;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .era-tab:hover {
-            border-color: var(--border-hover);
-            color: var(--text-main);
-            background: var(--bg-card-hover);
-        }
-
-        .era-tab.active {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            background: rgba(226, 184, 87, 0.08);
-            box-shadow: inset 0 0 12px rgba(226, 184, 87, 0.05);
-        }
-
-        .simulation-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 28px;
-            margin-bottom: 25px;
-            min-height: 400px;
+            background-color: #0a0a0e;
+            color: #e4e4e7;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            position: relative;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .chat-box {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-height: 480px;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
-
-        .chat-box::-webkit-scrollbar { width: 4px; }
-        .chat-box::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-
-        .empty-state {
-            text-align: center;
-            color: var(--text-muted);
-            margin: auto;
-            max-width: 400px;
-        }
-
-        .empty-state i {
-            font-size: 44px;
-            color: var(--accent-gold);
-            margin-bottom: 18px;
-            display: block;
-            filter: drop-shadow(0 4px 12px var(--accent-gold-glow));
-        }
-
-        .empty-state h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            color: var(--text-main);
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .suggestions-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 24px;
-            justify-content: center;
-        }
-
-        .suggestion-chip {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 10px 20px;
-            border-radius: 100px;
-            font-size: 13px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .suggestion-chip:hover {
-            border-color: var(--accent-gold);
-            color: var(--text-main);
-            background: rgba(226, 184, 87, 0.05);
-            transform: translateY(-1px);
-        }
-
-        .msg { display: flex; flex-direction: column; max-width: 80%; margin-bottom: 4px; }
-        .msg.system { align-self: flex-start; }
-        .msg.user { align-self: flex-end; }
-        .msg-bubble { padding: 16px 22px; border-radius: 20px; font-size: 15px; line-height: 1.6; word-break: break-word; }
-        
-        .system .msg-bubble { 
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(255, 255, 255, 0.06); 
-            border-top-left-radius: 4px;
-            color: #E5E7EB;
-        }
-        
-        .user .msg-bubble { 
-            background: linear-gradient(135deg, rgba(226, 184, 87, 0.15), rgba(181, 143, 50, 0.05)); 
-            border: 1px solid rgba(226, 184, 87, 0.2); 
-            border-top-right-radius: 4px;
-            color: #FFF;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .wiki-image {
-            max-width: 100%;
-            border-radius: 16px;
-            margin-top: 14px;
-            border: 1px solid rgba(255,255,255,0.08);
-            display: block;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .input-box-area {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 40px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .input-box-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .input-row {
-            display: flex;
-            gap: 14px;
-            align-items: center;
-        }
-
-        .input-row input {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 16px;
-            outline: none;
-            color: var(--text-main);
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.25s ease;
-        }
-        
-        .input-row input:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 15px rgba(226, 184, 87, 0.1);
-            background: rgba(0, 0, 0, 0.35);
-        }
-
-        .btn-action {
-            background: linear-gradient(135deg, #FFF, var(--accent-gold));
-            color: #080B11;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(226, 184, 87, 0.3);
-        }
-
-        .btn-action:hover { 
-            transform: scale(1.02) translateY(-1px); 
-            box-shadow: 0 6px 20px rgba(226, 184, 87, 0.45); 
-        }
-
-        .input-footer-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 14px;
-            opacity: 0.8;
-        }
-
-        .section-separator {
-            text-align: center;
-            font-size: 14px;
-            letter-spacing: 5px;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            margin: 60px 0 35px 0;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
-
-        .periods-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 50px;
-        }
-
-        @media (max-width: 600px) {
-            .periods-grid { grid-template-columns: 1fr; }
-            .main-title-area h2 { font-size: 30px; }
-        }
-
-        .grid-period-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 26px 20px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        .grid-period-card:hover { 
-            border-color: var(--border-hover);
-            transform: translateY(-3px);
-            background: var(--bg-card-hover);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-        }
-        
-        .grid-period-card.active { 
-            border-color: var(--accent-gold); 
-            background: rgba(226, 184, 87, 0.04); 
-            box-shadow: 0 0 25px rgba(226, 184, 87, 0.1);
-        }
-
-        .grid-card-icon { 
-            font-size: 28px; 
-            color: var(--text-muted); 
-            margin-bottom: 14px; 
-            display: block;
-            transition: all 0.25s ease;
-        }
-        .grid-period-card:hover .grid-card-icon,
-        .grid-period-card.active .grid-card-icon { 
-            color: var(--accent-gold); 
-            filter: drop-shadow(0 0 8px var(--accent-gold-glow));
-        }
-        
-        .grid-card-name { 
-            font-size: 15px; 
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        .grid-lock { 
-            position: absolute; 
-            top: 14px; 
-            right: 16px; 
-            font-size: 12px; 
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-        }
-
-        /* Standart Plan Kartı */
-        .plan-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 32px;
-            margin-bottom: 30px;
-            position: relative;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
-
-        .plan-header-icon { font-size: 32px; color: var(--text-muted); margin-bottom: 16px; }
-        .plan-name { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 8px;}
-        .plan-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
-        .plan-price { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; margin-bottom: 24px; color: #FFF; }
-        .plan-price span { font-size: 16px; color: var(--text-muted); font-weight: 400; font-family: 'Inter', sans-serif; }
-
-        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
-        .feature-item { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: #E5E7EB; line-height: 1.5; }
-        .feature-item i { font-size: 14px; color: var(--accent-gold); margin-top: 4px; }
-        .feature-item.locked { color: var(--text-muted); opacity: 0.45; }
-        .feature-item.locked i { color: var(--text-muted); }
-
-        .feature-badge-count {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            font-size: 11px; padding: 2px 8px; border-radius: 6px; color: var(--text-muted); margin-left: 4px;
-        }
-
-        .btn-plan-select {
-            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03); color: var(--text-main);
-            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.25s ease;
-        }
-        .btn-plan-select:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); }
-
-        /* Yenilenen Premium Kapsayıcı Kutu */
-        .premium-glow-box {
-            position: relative;
-            border-radius: 26px;
-            padding: 2px; 
-            background: linear-gradient(90deg, var(--accent-gold-dark), #FFEBB3, var(--accent-gold), var(--accent-gold-dark));
-            background-size: 300% 300%;
-            animation: borderMove 6s linear infinite;
-            box-shadow: 0 20px 50px rgba(226, 184, 87, 0.2);
-            margin-bottom: 30px;
+            height: 100vh;
             overflow: hidden;
         }
 
-        @keyframes borderMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Üst Bar */
+        header {
+            background: linear-gradient(145deg, #111116, #161622);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222235;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.5);
         }
 
-        .premium-glow-box .plan-card.premium-card {
-            margin-bottom: 0;
-            border: none;
-            background: linear-gradient(135deg, #0E131F 0%, #06090F 100%);
-            padding: 36px;
-            border-radius: 24px;
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: #E2B857;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(226, 184, 87, 0.3);
         }
 
-        .premium-glow-box .badge-popular {
-            position: absolute;
-            top: 20px; right: 24px;
-            background: linear-gradient(135deg, #FFF, var(--accent-gold));
-            color: #080B11;
-            font-size: 11px;
-            font-weight: 700;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-badge {
             padding: 6px 16px;
-            border-radius: 100px;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(226, 184, 87, 0.3);
-            z-index: 2;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid #27273a;
         }
 
-        .premium-glow-box .plan-header-icon i {
-            color: var(--accent-gold);
-            font-size: 36px;
-            filter: drop-shadow(0 0 12px var(--accent-gold-glow));
+        .status-badge.normal {
+            background-color: #14141f;
+            color: #a1a1aa;
         }
 
-        .premium-glow-box .plan-name { 
-            color: var(--accent-gold); 
-            font-size: 26px; 
-            font-weight: 700; 
-            background: linear-gradient(135deg, #FFF, var(--accent-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .status-badge.premium {
+            background: linear-gradient(135deg, #E2B857, #b88e2f);
+            color: #0d0d11;
+            box-shadow: 0 0 15px rgba(226, 184, 87, 0.5);
+            display: none;
         }
-        
-        .premium-glow-box .btn-plan-select.btn-premium-trigger {
-            background: linear-gradient(135deg, #FFF, var(--accent-gold) 60%, var(--accent-gold-dark) 100%);
-            color: #080B11;
+
+        .premium-btn {
+            background-color: #E2B857;
+            color: #0d0d11;
             border: none;
-            font-size: 16px;
-            font-weight: 700;
-            box-shadow: 0 6px 25px rgba(226, 184, 87, 0.35);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .premium-glow-box .btn-plan-select.btn-premium-trigger:hover {
-            transform: scale(1.01) translateY(-1px);
-            box-shadow: 0 8px 30px rgba(226, 184, 87, 0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Tablo Alanı */
-        .comparison-wrapper {
-            overflow-x: auto; 
-            margin-bottom: 60px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 24px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        .premium-btn:hover {
+            background-color: #c99f43;
+            transform: scale(1.05);
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 15px; }
-        th, td { padding: 20px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        tr:last-child td { border-bottom: none; }
-        th { font-size: 13px; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
-        td { color: #E5E7EB; }
-        td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3) { text-align: center; }
-
-        blockquote {
-            background: rgba(255,255,255,0.02);
-            border-left: 3px solid var(--accent-gold);
-            padding: 14px 20px;
-            margin: 20px 0;
-            border-radius: 4px;
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.5;
+        /* Ana Ekran Düzeni */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
         }
 
-        footer {
-            display: flex; flex-direction: column; align-items: center; gap: 20px;
-            border-top: 1px solid rgba(255,255,255,0.06); padding-top: 35px;
+        /* Sol Panel - Modlar ve Özellikler */
+        .sidebar {
+            width: 320px;
+            background-color: #0f0f15;
+            border-right: 1px solid #222235;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
         }
-        .footer-links { display: flex; gap: 24px; font-size: 14px; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--accent-gold); }
-        .footer-notice { font-size: 13px; color: var(--text-muted); opacity: 0.6; text-align: center; line-height: 1.6; }
+
+        .sidebar-title {
+            font-size: 11px;
+            color: #636375;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .sidebar-title:first-child { margin-top: 0; }
+
+        .era-btn {
+            background-color: #14141f;
+            border: 1px solid #222235;
+            color: #a1a1aa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            font-size: 13.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .era-btn:hover {
+            border-color: #E2B857;
+            color: #fff;
+            background-color: #191928;
+        }
+
+        .era-btn.active {
+            background: linear-gradient(145deg, #191928, #222235);
+            border-color: #E2B857;
+            color: #E2B857;
+            font-weight: bold;
+        }
+
+        .lock-badge {
+            font-size: 10px;
+            background: rgba(226, 184, 87, 0.12);
+            color: #E2B857;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* Sağ Panel - Simülasyon Akışı */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #0a0a0e;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 15px 20px;
+            border-radius: 14px;
+            line-height: 1.6;
+            font-size: 15px;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background-color: #222235;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .message.bot {
+            background-color: #14141f;
+            color: #e4e4e7;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border-left: 4px solid #E2B857;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Girdi Alanı */
+        .chat-input-area {
+            padding: 25px;
+            background-color: #0f0f15;
+            border-top: 1px solid #222235;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background-color: #14141f;
+            border: 1px solid #222235;
+            color: #fff;
+            padding: 16px 22px;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #E2B857;
+        }
+
+        button.send-btn {
+            background-color: #E2B857;
+            color: #0a0a0e;
+            border: none;
+            padding: 0 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+
+        button.send-btn:hover {
+            background-color: #c99f43;
+        }
+
+        .status-text {
+            text-align: center;
+            font-size: 12px;
+            color: #636375;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 💳 ÖDEME EKRANI (MODAL) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 5, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1; visibility: visible;
+        }
+
+        .modal-box {
+            background: linear-gradient(145deg, #111116, #181826);
+            border: 1px solid #2c2c44;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none; border: none; color: #636375;
+            font-size: 24px; cursor: pointer;
+        }
+
+        .modal-title {
+            color: #E2B857;
+            font-size: 22px; font-weight: bold; margin-bottom: 10px; text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-subtitle {
+            color: #a1a1aa; font-size: 13.5px; text-align: center; margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block; font-size: 11px; color: #636375; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%; background: #0a0a0e; border: 1px solid #222235;
+            padding: 14px; border-radius: 8px; color: #fff; font-size: 14px; outline: none;
+        }
+
+        .form-group input:focus { border-color: #E2B857; }
+
+        .form-row {
+            display: flex; gap: 12px;
+        }
+
+        .pay-btn {
+            width: 100%; background-color: #E2B857; color: #0a0a0e;
+            border: none; padding: 16px; border-radius: 10px; font-weight: bold;
+            font-size: 15px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(226,184,87,0.2);
+        }
+
+        .pay-btn:hover { background-color: #c99f43; }
     </style>
 </head>
 <body>
 
-    <div id="stars-container"></div>
-
-    <div class="app-container">
-        <header>
-            <div class="logo-text">AITIMEWALK.COM</div>
-            <div class="lang-switcher">
-                <button class="lang-btn active" id="btn-tr" onclick="setLanguage('TR')">TR</button>
-                <button class="lang-btn" id="btn-en" onclick="setLanguage('EN')">EN</button>
-            </div>
-        </header>
-
-        <div class="main-title-area">
-            <h2 id="main-title">Zaman ve Boyut Portalı</h2>
-            <p id="main-sub">Yapay zekâyla geçmişi ve boyutları keşfet — sınırları sen belirle</p>
+    <header>
+        <div class="logo">⏳ AITimeWalk Pro</div>
+        <div class="header-right">
+            <div class="status-badge normal" id="normalBadge">Ücretsiz Sürüm</div>
+            <div class="status-badge premium" id="premiumBadge">Zaman Yolcusu Sürümü 🔥</div>
+            <button class="premium-btn" id="upgradeBtn" onclick="openModal()">Tüm Boyutları Aç</button>
         </div>
+    </header>
 
-        <div class="status-bar">
-            <div class="current-mod-info">
-                <div class="status-dot"></div>
-                <span id="txt-current-mod">NORMAL MOD</span>
-            </div>
-            <button class="premium-badge-btn" onclick="scrollToPlans()">
-                👑 Premium — ₺129/ay
+    <div class="main-container">
+        <!-- Sol Panel: Tüm Modlar (Özelliklerin %70'i Premium Kilitli) -->
+        <div class="sidebar">
+            
+            <div class="sidebar-title">Ücretsiz Zaman Boyutları</div>
+            <button class="era-btn active" onclick="selectEra('antik_misir', this, false)">🏛️ Antik Mısır Simülasyonu</button>
+            <button class="era-btn" onclick="selectEra('ai_karakterler', this, false)">🤖 Gelişmiş AI Karakterler</button>
+
+            <div class="sidebar-title">Kilitli Boyutlar (%70 Premium)</div>
+            
+            <button class="era-btn" onclick="selectEra('gelecekteki_ben', this, true)">
+                <span>🚀 Gelecekteki Ben</span> <span class="lock-badge" id="l1">🔒 Premium</span>
+            </button>
+            
+            <button class="era-btn" onclick="selectEra('gecmisteki_ben', this, true)">
+                <span>⏳ Geçmişteki Ben</span> <span class="lock-badge" id="l2">🔒 Premium</span>
+            </button>
+
+            <button class="era-btn" onclick="selectEra('istedigin_karakterler', this, true)">
+                <span>🎭 Özel Karakterlerle Konuş</span> <span class="lock-badge" id="l3">🔒 Premium</span>
+            </button>
+
+            <button class="era-btn" onclick="selectEra('kelebek_etkisi', this, true)">
+                <span>🦋 Kelebek Etkisi Senaryosu</span> <span class="lock-badge" id="l4">🔒 Premium</span>
+            </button>
+
+            <button class="era-btn" onclick="selectEra('zaman_kapsulu', this, true)">
+                <span>📦 Zaman Kapsülü Bırak</span> <span class="lock-badge" id="l5">🔒 Premium</span>
+            </button>
+
+            <button class="era-btn" onclick="selectEra('tarihte_ben_olsaydim', this, true)">
+                <span>👑 Tarihte Ben Olsaydım</span> <span class="lock-badge" id="l6">🔒 Premium</span>
+            </button>
+
+            <button class="era-btn" onclick="selectEra('kendi_senaryon', this, true)">
+                <span>✍️ Kendi Senaryonu Yaz</span> <span class="lock-badge" id="l7">🔒 Premium</span>
+            </button>
+
+            <div class="sidebar-title">Yeni Eklenen Premium Boyutlar</div>
+            <button class="era-btn" onclick="selectEra('buyuk_patlama', this, true)">
+                <span>💥 Büyük Patlama (Kozmos)</span> <span class="lock-badge" id="l8">🔒 Premium</span>
+            </button>
+            <button class="era-btn" onclick="selectEra('paralel_evren', this, true)">
+                <span>🌀 Paralel Evren Sıçraması</span> <span class="lock-badge" id="l9">🔒 Premium</span>
+            </button>
+            <button class="era-btn" onclick="selectEra('kader_carki', this, true)">
+                <span>🎲 Kader Çarkı (Rastgele)</span> <span class="lock-badge" id="l10">🔒 Premium</span>
             </button>
         </div>
 
-        <!-- Üst Kaydırılabilir Dönem Menüsü -->
-        <div class="era-scroller">
-            <div class="era-row" id="era-tabs-container"></div>
-        </div>
-
-        <div class="simulation-container">
-            <div class="chat-box" id="chat-box-display">
-                <div class="empty-state" id="chat-empty-state">
-                    <i class="fa-solid fa-hourglass-start"></i>
-                    <h4 id="txt-empty-title">Evrene açılan kapı</h4>
-                    <p id="txt-empty-desc">Aşağıdaki ızgaradan veya üst menüden bir boyut seç, ardından macerana başla.</p>
+        <!-- Sağ Panel: Sohbet -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Zaman kırılması merkezine hoş geldiniz. İlk 10 zaman yolculuğu sorgunuz tamamen ücretsizdir! İstediğiniz modu soldan seçin.
                 </div>
             </div>
-            <div class="suggestions-row" id="suggestions-box"></div>
-        </div>
 
-        <div class="input-box-area">
-            <div class="input-box-title" id="txt-input-title">Portala ne fısıldamak istersin?</div>
-            <div class="input-row">
-                <input type="text" id="chat-user-input" placeholder="Bir boyut seçin veya soru yazın...">
-                <button class="btn-action" onclick="sendMessage()">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-            <div class="input-footer-info">
-                <span id="txt-input-hint">Bir mod seç · Enter ile gönder · Shift+Enter yeni satır</span>
-                <span><b id="right-counter">10</b> / 10</span>
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="Zaman çizgisini değiştirecek bir şey yazın..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" onclick="sendMessage()">Gönder</button>
+                </div>
+                <div class="status-text" id="limitStatus">Kalan Ücretsiz Hak: 10</div>
             </div>
         </div>
+    </div>
 
-        <div class="section-separator" id="title-periods-grid">Dönemler, Boyutlar & Modlar</div>
-        <div class="periods-grid" id="periods-grid-box"></div>
-
-        <div class="section-separator">Planlar</div>
-
-        <!-- Normal Ücretsiz Plan Kartı -->
-        <div class="plan-card">
-            <div class="plan-header-icon"><i class="fa-regular fa-clock"></i></div>
-            <div class="plan-name" id="p1-name">Normal Mod</div>
-            <div class="plan-sub" id="p1-sub">Temel zaman yolculuğu deneyimi</div>
-            <div class="plan-price" id="p1-price">Anlık Ücretsiz</div>
-            <ul class="feature-list">
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-1">Günde 10 portal hakkı</span></li>
-                <li class="feature-item"><i class="fa-solid fa-check"></i> <span id="f1-2">Temel tarihsel senaryolar</span></li>
-                <li class="feature-item locked"><i class="fa-solid fa-lock"></i> <span id="f1-5">Premium boyutlar & özel modlar</span> <span class="feature-badge-count">kilitli</span></li>
-            </ul>
-            <button class="btn-plan-select" id="btn-p1-status">✓ Şu An Aktif</button>
-        </div>
-
-        <!-- Yenilenen Premium Kartı -->
-        <div class="premium-glow-box">
-            <div class="badge-popular" id="badge-popular-txt">EN POPÜLER</div>
-            <div class="plan-card premium-card">
-                <div class="plan-header-icon"><i class="fa-solid fa-crown"></i></div>
-                <div class="plan-name" id="p2-name">Premium Mod</div>
-                <div class="plan-sub" id="p2-sub">Tam tarihin içinde yaşa</div>
-                <div class="plan-price">₺129 <span>/ ay</span></div>
-                
-                <ul class="feature-list">
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Keni Özgün Senaryonu / Evrenini Yaratma Özelliği</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Zengin Medya: Wikipedia & AI Görsel Destekli Anlatım</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sesli Portal (Dönem hikayelerini sesli dinleme) — <i>Çok Yakında!</i></span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Tamamen Reklamsız Deneyim & Özel Profil Rozeti</span></li>
-                </ul>
-                
-                <button class="btn-plan-select btn-premium-trigger" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
+    <!-- 💳 KREDİ KARTI ÖDEME EKRANI (MODAL) -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-title">Zamanın Sınırlarını Kaldır</div>
+            <div class="modal-subtitle">Kelebek Etkisi, Gelecekteki Ben ve 10'dan fazla gelişmiş zaman simülasyonunun kilidini hemen açın.</div>
+            
+            <div class="form-group">
+                <label>Kart Sahinin Adı Soyadı</label>
+                <input type="text" id="cardHolder" placeholder="Can Yılmaz">
             </div>
-        </div>
-
-        <div class="section-separator" id="title-comp">Detaylı Karşılaştırma</div>
-        <div class="comparison-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th id="th-feature">ÖZELLİK</th>
-                        <th>NORMAL</th>
-                        <th>PREMIUM</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Günlük kullanım</td>
-                        <td>10</td>
-                        <td>Sınırsız</td>
-                    </tr>
-                    <tr>
-                        <td>Aktif Boyutlar</td>
-                        <td>Temel</td>
-                        <td>Tümü (Sınırsız)</td>
-                    </tr>
-                    <tr>
-                        <td>Görsel Destek</td>
-                        <td>Standart</td>
-                        <td>Zengin Wikipedia Entegrasyonu</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <footer>
-            <div class="footer-links">
-                <a href="#" id="link-contact">İletişim</a>
-                <a href="#" id="link-privacy">Gizlilik Politikası</a>
-                <a href="#" id="link-terms">Kullanım Şartları</a>
+            <div class="form-group">
+                <label>Kredi Kartı Numarası</label>
+                <input type="text" id="cardNumber" placeholder="4355 •••• •••• 9876" maxlength="19">
             </div>
-            <div class="footer-notice" id="txt-footer-notice">
-                İstediğin zaman iptal edebilirsin. · Ödeme güvenli şekilde işlenir<br>
-                Sorular için destek: destek@aitimewalk.com
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <label>S.K. Tarihi</label>
+                    <input type="text" placeholder="AA/YY" maxlength="5">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Güvenlik Kodu (CVC)</label>
+                    <input type="text" placeholder="***" maxlength="3">
+                </div>
             </div>
-        </footer>
+            <button class="pay-btn" onclick="submitPayment()">Ödemeyi Onayla ve Kilidi Aç</button>
+        </div>
     </div>
 
     <script>
-        let currentLang = 'TR';
-        let selectedEraId = 'ottoman';
-        let remainingQuestions = 10;
+        const userId = "user_" + Math.random().toString(36).substr(2, 9);
+        let selectedEra = "antik_misir";
+        let isPremiumUser = false;
 
-        const erasData = [
-            { id: 'ottoman', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', icon: 'fa-swords', isPremium: false, suggestionsTR: ['İstanbul fethini anlat', 'Kanuni kimdir?'], suggestionsEN: ['Tell me about Conquest of Istanbul', 'Who is Suleiman?'] },
-            { id: 'rome', nameTR: 'Antik Roma', nameEN: 'Ancient Rome', icon: 'fa-columns', isPremium: false, suggestionsTR: ['Sezarın ölümü', 'Gladyatörler kimdi?'], suggestionsEN: ['Death of Caesar', 'Who were gladiators?'] },
-            { id: 'republic', nameTR: 'Cumhuriyet Dönemi', nameEN: 'Republic Era', icon: 'fa-flag', isPremium: false, suggestionsTR: ['Cumhuriyetin ilanını anlat', '1923 yılında neler oldu?'], suggestionsEN: ['Proclamation of Republic', 'What happened in 1923?'] },
-            { id: 'character', nameTR: 'İstediğin Karakter', nameEN: 'Any Character', icon: 'fa-user', isPremium: false, suggestionsTR: ['Nikola Tesla ile konuşmak istiyorum', 'Mimar Sinan ile konuştur'], suggestionsEN: ['I want to talk with Tesla', 'Connect me to Marcus Aurelius'] },
-            { id: 'future', nameTR: 'Gelecek Simülasyonu', nameEN: 'Future Simulation', icon: 'fa-rocket', isPremium: true, suggestionsTR: ['2150 yılında dünya', 'Yapay zeka çağını göster'], suggestionsEN: ['World in 2150', 'Show the AI era'] }
-        ];
-
-        // Yıldız arka planı oluşturma fonksiyonu
-        function createStars() {
-            const container = document.getElementById('stars-container');
-            for (let i = 0; i < 60; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = Math.random() * 3 + 'px';
-                star.style.height = star.style.width;
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.setProperty('--delay', (Math.random() * 4) + 's');
-                star.style.setProperty('--max-opacity', Math.random() * 0.4 + 0.3);
-                container.appendChild(star);
-            }
+        async function checkStatus() {
+            try {
+                const res = await fetch('http://localhost:5000/api/status', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify({ userId })
+                });
+                const data = await res.json();
+                updateUI(data);
+            } catch (e) { console.log("Backend sunucu bağlantısı aranıyor..."); }
         }
 
-        // Dil Değiştirme Fonksiyonu
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.getElementById('btn-tr').classList.toggle('active', lang === 'TR');
-            document.getElementById('btn-en').classList.toggle('active', lang === 'EN');
-            
-            if (lang === 'TR') {
-                document.getElementById('main-title').innerText = 'Zaman ve Boyut Portalı';
-                document.getElementById('main-sub').innerText = 'Yapay zekâyla geçmişi ve boyutları keşfet — sınırları sen belirle';
-                document.getElementById('txt-input-title').innerText = 'Portala ne fısıldamak istersin?';
-                document.getElementById('chat-user-input').placeholder = 'Bir boyut seçin veya soru yazın...';
-                document.getElementById('txt-input-hint').innerText = 'Bir mod seç · Enter ile gönder · Shift+Enter yeni satır';
-                document.getElementById('title-periods-grid').innerText = 'Dönemler, Boyutlar & Modlar';
-                document.getElementById('title-comp').innerText = 'Detaylı Karşılaştırma';
-                document.getElementById('th-feature').innerText = 'ÖZELLİK';
-                document.getElementById('txt-empty-title').innerText = 'Evrene açılan kapı';
-                document.getElementById('txt-empty-desc').innerText = 'Aşağıdaki ızgaradan veya üst menüden bir boyut seç, ardından macerana başla.';
-            } else {
-                document.getElementById('main-title').innerText = 'Time and Dimension Portal';
-                document.getElementById('main-sub').innerText = 'Explore the past and dimensions with AI — you set the limits';
-                document.getElementById('txt-input-title').innerText = 'What do you want to whisper to the portal?';
-                document.getElementById('chat-user-input').placeholder = 'Select a dimension or type a question...';
-                document.getElementById('txt-input-hint').innerText = 'Select a mode · Enter to send · Shift+Enter for new line';
-                document.getElementById('title-periods-grid').innerText = 'Eras, Dimensions & Modes';
-                document.getElementById('title-comp').innerText = 'Detailed Comparison';
-                document.getElementById('th-feature').innerText = 'FEATURE';
-                document.getElementById('txt-empty-title').innerText = 'Gateway to the universe';
-                document.getElementById('txt-empty-desc').innerText = 'Select a dimension from the grid below or the top menu, then start your adventure.';
-            }
-            renderUI();
-        }
-
-        // Dönemleri Arayüze Çizme Fonksiyonu
-        function renderUI() {
-            const tabsBox = document.getElementById('era-tabs-container');
-            const gridBox = document.getElementById('periods-grid-box');
-            
-            tabsBox.innerHTML = '';
-            gridBox.innerHTML = '';
-
-            erasData.forEach(era => {
-                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
-                const isActive = era.id === selectedEraId;
-                
-                // Menü sekmeleri
-                const tab = document.createElement('div');
-                tab.className = `era-tab ${isActive ? 'active' : ''}`;
-                tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
-                tab.onclick = () => selectEra(era.id);
-                tabsBox.appendChild(tab);
-
-                // Izgara kartları
-                const card = document.createElement('div');
-                card.className = `grid-period-card ${isActive ? 'active' : ''}`;
-                card.innerHTML = `
-                    ${era.isPremium ? '<i class="fa-solid fa-lock grid-lock" style="color: var(--accent-gold)"></i>' : ''}
-                    <i class="fa-solid ${era.icon} grid-card-icon"></i>
-                    <div class="grid-card-name">${name}</div>
-                `;
-                card.onclick = () => selectEra(era.id);
-                gridBox.appendChild(card);
-            });
-
-            renderSuggestions();
-        }
-
-        // Dönem Seçim İşlemi
-        function selectEra(id) {
-            const era = erasData.find(e => e.id === id);
-            if (era && era.isPremium) {
-                alert(currentLang === 'TR' ? 'Bu boyut Premium üyeler içindir!' : 'This dimension is for Premium members!');
-                scrollToPlans();
+        function selectEra(eraId, element, isLockedEra) {
+            // Eğer kilitli bir moda tıklandıysa ve premium değilse ödeme penceresini aç
+            if (isLockedEra && !isPremiumUser) {
+                appendMessage("bot", `⚠️ Seçtiğiniz özellik ("${element.querySelector('span').innerText}") gelişmiş zaman paradoksları içerir ve sadece Premium Zaman Yolcularına açıktır!`);
+                openModal();
                 return;
             }
-            selectedEraId = id;
-            document.getElementById('txt-current-mod').innerText = (currentLang === 'TR' ? 'AKTİF: ' : 'ACTIVE: ') + (currentLang === 'TR' ? era.nameTR : era.nameEN).toUpperCase();
-            renderUI();
+
+            selectedEra = eraId;
+            document.querySelectorAll('.era-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            appendMessage("bot", `Simülasyon Modu Değiştirildi: ${element.querySelector('span').innerText}. Sorunuzu veya senaryonuzu yazabilirsiniz.`);
         }
 
-        // Öneri Çiplerini Gösterme
-        function renderSuggestions() {
-            const sugBox = document.getElementById('suggestions-box');
-            sugBox.innerHTML = '';
-            const era = erasData.find(e => e.id === selectedEraId);
-            if (era) {
-                const list = currentLang === 'TR' ? era.suggestionsTR : era.suggestionsEN;
-                list.forEach(txt => {
-                    const chip = document.createElement('div');
-                    chip.className = 'suggestion-chip';
-                    chip.innerText = txt;
-                    chip.onclick = () => {
-                        document.getElementById('chat-user-input').value = txt;
-                        sendMessage();
-                    };
-                    sugBox.appendChild(chip);
+        function handleKeyPress(event) { if (event.key === 'Enter') sendMessage(); }
+
+        function appendMessage(sender, text) {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.innerText = text;
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function openModal() { document.getElementById('paymentModal').classList.add('open'); }
+        function closeModal() { document.getElementById('paymentModal').classList.remove('open'); }
+
+        async function submitPayment() {
+            const cardHolder = document.getElementById('cardHolder').value;
+            const cardNumber = document.getElementById('cardNumber').value;
+
+            if(!cardHolder || !cardNumber) {
+                alert("Lütfen kart ve isim bilgilerini doldurun!");
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/checkout', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify({ userId, cardHolder, cardNumber })
                 });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert("Zaman kırılması onaylandı! Tüm premium özelliklerin kilidi açıldı.");
+                    closeModal();
+                    isPremiumUser = true;
+                    checkStatus();
+                }
+            } catch (e) {
+                alert("Ödeme sunucusuna bağlanılamadı.");
             }
         }
 
-        // Mesaj Gönderme Simülasyonu
-        function sendMessage() {
-            const input = document.getElementById('chat-user-input');
-            const query = input.value.trim();
+        async function sendMessage() {
+            const inputElement = document.getElementById('userInput');
+            const query = inputElement.value.trim();
             if (!query) return;
 
-            if (remainingQuestions <= 0) {
-                alert(currentLang === 'TR' ? 'Günlük portal hakkınız bitti!' : 'You have run out of daily portal limits!');
-                return;
+            appendMessage("user", query);
+            inputElement.value = "";
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = "message bot";
+            typingDiv.innerText = "Zaman akışı hesaplanıyor...";
+            document.getElementById('chatMessages').appendChild(typingDiv);
+
+            try {
+                const response = await fetch('http://localhost:5000/api/chat', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify({ userId, query, eraId: selectedEra, lang: "TR" })
+                });
+
+                const data = await response.json();
+                typingDiv.remove();
+
+                if (response.ok) {
+                    appendMessage("bot", data.reply);
+                    updateUI(data);
+                } else {
+                    appendMessage("bot", data.error);
+                    if(response.status === 403 || response.status === 429) {
+                        openModal();
+                    }
+                }
+            } catch (error) {
+                typingDiv.remove();
+                appendMessage("bot", "Zaman kapsülü sunucusu kapalı. Terminal ekranında 'node server.js' komutunun açık olduğundan emin olun.");
             }
+        }
 
-            // Boş durum ekranını gizle
-            const emptyState = document.getElementById('chat-empty-state');
-            if (emptyState) emptyState.remove();
-
-            const display = document.getElementById('chat-box-display');
-
-            // Kullanıcı Mesajı
-            const userMsg = document.createElement('div');
-            userMsg.className = 'msg user';
-            userMsg.innerHTML = `<div class="msg-bubble">${query}</div>`;
-            display.appendChild(userMsg);
-
-            input.value = '';
-            remainingQuestions--;
-            document.getElementById('right-counter').innerText = remainingQuestions;
-
-            // Sistem Yanıt Simülasyonu
-            setTimeout(() => {
-                const systemMsg = document.createElement('div');
-                systemMsg.className = 'msg system';
-                const reply = currentLang === 'TR' ? 
-                    `Portal aracılığıyla bağlantı kuruldu... İstediğiniz "${query}" konusu inceleniyor. Tarih akışı başarıyla simüle edildi.` : 
-                    `Connection established through the portal... Your request "${query}" is being analyzed. The timeline has been successfully simulated.`;
+        function updateUI(data) {
+            if (data.isPremium) {
+                isPremiumUser = true;
+                document.getElementById('upgradeBtn').style.display = 'none';
+                document.getElementById('normalBadge').style.display = 'none';
+                document.getElementById('premiumBadge').style.display = 'block';
+                document.getElementById('limitStatus').innerText = "Sınırsız Zaman Yolculuğu Hakkı Aktif!";
                 
-                systemMsg.innerHTML = `<div class="msg-bubble">${reply}</div>`;
-                display.appendChild(systemMsg);
-                display.scrollTop = display.scrollHeight;
-            }, 800);
-        }
-
-        function scrollToPlans() {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-
-        // Klavye dinleyici (Enter tuşu ile gönderim)
-        document.getElementById('chat-user-input').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
+                // Tüm kilit rozetlerini yeşile ve açık hale çevir
+                for(let i=1; i<=10; i++) {
+                    const badge = document.getElementById(`l${i}`);
+                    if(badge) {
+                        badge.innerText = "🔓 Açık";
+                        badge.style.background = "rgba(46, 204, 113, 0.2)";
+                        badge.style.color = "#2ecc71";
+                    }
+                }
+            } else {
+                document.getElementById('limitStatus').innerText = `Kalan Ücretsiz Hak: ${data.remainingQuestions}`;
             }
-        });
+        }
 
-        // Sayfa yüklenince çalıştır
-        window.onload = () => {
-            createStars();
-            renderUI();
-        };
+        window.onload = checkStatus;
     </script>
 </body>
 </html>
