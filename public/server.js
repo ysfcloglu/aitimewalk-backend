@@ -1,102 +1,101 @@
-// server.js
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import OpenAI from 'openai';
+import { OpenAI } from 'openai';
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+// Render ve Vercel'den gelecek isteklere tam izin vermek için cors ayarı
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Port ayarı (Render kendisi otomatik port atar, bulamazsa 5000 kullanır)
+const PORT = process.env.PORT || 5000;
 
-const userSessions = {};
-
-function initSession(userId) {
-    if (!userSessions[userId]) {
-        userSessions[userId] = { remainingQuestions: 10, isPremium: false };
-    }
-    return userSessions[userId];
-}
-
-app.post('/api/status', (req, res) => {
-    const { userId } = req.body;
-    if (!userId) return res.status(400).json({ error: 'userId gerekli.' });
-    res.json(initSession(userId));
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
 });
 
-app.post('/api/chat', async (req, res) => {
-    const { userId, query, eraId, lang } = req.body;
+// Kullanıcı veritabanı simülasyonu (Bellekte tutulur)
+const users = {};
+
+// Kullanıcı durumunu kontrol eden uç nokta
+app.post('/api/status', (req, res) => {
+    const { userId } = req.body;
+    if (!users[userId]) {
+        users[userId] = { remainingQuestions: 10, isPremium: false };
+    }
+    res.json(users[userId]);
+});
+
+// Ödeme onaylama (Checkout) uç noktası
+app.post('/api/checkout', (req, res) => {
+    const { userId } = req.body;
+    if (!users[userId]) {
+        users[userId] = { remainingQuestions: 0, isPremium: false };
+    }
+    users[userId].isPremium = true;
+    users[userId].remainingQuestions = 999999;
     
-    if (!userId || !query || !eraId) {
-        return res.status(400).json({ error: 'Eksik parametre.' });
+    res.json({ success: true, message: "Ödeme onaylandı! Premium mod aktif.", status: users[userId] });
+});
+
+// OpenAI Sohbet uç noktası
+app.post('/api/chat', async (req, res) => {
+    const { userId, query, eraId } = req.body;
+
+    if (!users[userId]) {
+        users[userId] = { remainingQuestions: 10, isPremium: false };
     }
 
-    const session = initSession(userId);
+    const user = users[userId];
 
-    if (eraId === 'future' && !session.isPremium) {
-        return res.status(403).json({ 
-            error: lang === 'TR' ? 'Bu boyut sadece Premium üyeler içindir!' : 'This dimension is for Premium members only!' 
-        });
+    // Premium kontrolü
+    if (!user.isPremium && user.remainingQuestions <= 0) {
+        return res.status(429).json({ error: "Ücretsiz haklarınız bitti! Lütfen Premium'a geçiş yapın." });
     }
-    if (!session.isPremium && session.remainingQuestions <= 0) {
-        return res.status(429).json({ 
-            error: lang === 'TR' ? 'Günlük ücretsiz portal hakkınız doldu!' : 'Your daily free portal limit has expired!' 
-        });
-    }
+
+    // Dönem bazlı sistem talimatları (Promptlar)
+    let systemPrompt = "Sen bir zaman yolculuğu rehberisin.";
+    if (eraId === 'antik_misir') systemPrompt = "Sen Antik Mısır döneminde yaşayan bir bilgesin. Kullanıcıya o dönemin gizemlerini, piramitleri ve firavunları anlat.";
+    if (eraId === 'ai_karakterler') systemPrompt = "Sen gelecekten gelen gelişmiş bir yapay zekasın. Kullanıcıyla teknoloji ve bilim kurgu üzerine konuş.";
+    if (eraId === 'gelecekteki_ben') systemPrompt = "Sen kullanıcının 30 yıl sonraki halisin. Ona olgun, deneyimli ve bilgece tavsiyeler ver.";
+    if (eraId === 'gecmisteki_ben') systemPrompt = "Sen kullanıcının çocukluk halisin. Ona saf, meraklı ve nostaljik bir dille cevap ver.";
+    if (eraId === 'istedigin_karakterler') systemPrompt = "Kullanıcı tarihten veya kurgudan bir karakter seçti. Sen o karakterin kişiliğine bürünerek cevap ver.";
+    if (eraId === 'kelebek_etkisi') systemPrompt = "Kullanıcı geçmişte bir şeyi değiştirdi. Sen bu değişikliğin gelecekte yaratacağı büyük zincirleme sonuçları (Kelebek Etkisini) simüle et.";
+    if (eraId === 'zaman_kapsulu') systemPrompt = "Kullanıcı geleceğe bir not bırakıyor. Sen bu notu saklayan bir zaman kapsülü yapay zekasısın.";
+    if (eraId === 'tarihte_ben_olsaydim') systemPrompt = "Kullanıcı tarihi bir olayda lider olsaydı ne olurdu? Sen onun kararlarına göre alternatif tarihi şekillendir.";
+    if (eraId === 'kendi_senaryon') systemPrompt = "Kullanıcının yazdığı özel zaman senaryosunu canlandır ve onunla rol yapma (roleplay) oyna.";
+    if (eraId === 'buyuk_patlama') systemPrompt = "Sen evrenin başlangıcındaki kozmik enerjisin. Kullanıcıya atomların, yıldızların ve zamanın başlangıcını anlat.";
+    if (eraId === 'paralel_evren') systemPrompt = "Kullanıcı başka bir boyuta sıçradı. Ona tarihin tamamen farklı aktığı fantastik bir paralel evreni tasvir et.";
+    if (eraId === 'karki_carki') systemPrompt = "Kullanıcıyı rastgele tehlikeli bir çağın ortasına fırlattın. Nerede olduğunu tahmin etmesini sağla.";
 
     try {
-        const systemInstruction = `
-            Sen AITimeWalk platformunda bir zaman portalısın. 
-            Seçilen Dönem/Boyut: ${eraId}.
-            Yanıt vereceğin dil: ${lang === 'TR' ? 'Türkçe' : 'İngilizce'}.
-            Görevin: Kullanıcıya seçilen dönemin ruhuna, tarihi gerçeklerine veya atmosferine uygun, sürükleyici ve gizemli bir şekilde yanıt vermek. Yapay zeka gibi değil, o zaman diliminin içinden konuşan bir anlatıcı gibi konuş. Yanıtları çok uzun tutma.
-        `;
-
         const completion = await openai.chat.completions.create({
-            model: 'gpt-4o-mini',
+            model: "gpt-3.5-turbo",
             messages: [
-                { role: 'system', content: systemInstruction },
-                { role: 'user', content: query }
-            ],
-            max_tokens: 500,
-            temperature: 0.7
+                { role: "system", content: systemPrompt },
+                { role: "user", content: query }
+            ]
         });
 
-        if (!session.isPremium) {
-            session.remainingQuestions--;
+        if (!user.isPremium) {
+            user.remainingQuestions -= 10; // Her soruda hak azalt
         }
 
         res.json({
             reply: completion.choices[0].message.content,
-            remainingQuestions: session.remainingQuestions,
-            isPremium: session.isPremium
+            remainingQuestions: user.remainingQuestions,
+            isPremium: user.isPremium
         });
 
     } catch (error) {
-        console.error('OpenAI Hatası:', error);
-        res.status(500).json({ error: 'Portal dalgalanması yaşandı (OpenAI hatası), lütfen tekrar deneyin.' });
+        console.error(error);
+        res.status(500).json({ error: "OpenAI sunucusuyla iletişim kurulurken bir hata oluştu." });
     }
 });
 
-app.post('/api/checkout', (req, res) => {
-    const { userId, cardHolder, cardNumber } = req.body;
-    if (!userId || !cardHolder || !cardNumber) {
-        return res.status(400).json({ success: false, error: 'Eksik kart bilgileri.' });
-    }
-
-    const session = initSession(userId);
-    session.isPremium = true;
-    session.remainingQuestions = 999999;
-
-    res.json({ 
-        success: true, 
-        message: 'Ödeme başarıyla alındı. OpenAI Premium aktif!',
-        isPremium: session.isPremium
-    });
+app.listen(PORT, () => {
+    console.log(`Sunucu ${PORT} portunda aktif.`);
 });
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`OpenAI destekli sunucu ${PORT} portunda aktif.`));
