@@ -688,8 +688,7 @@
                 <div class="status-dot"></div>
                 <span id="txt-current-mod">NORMAL MOD</span>
             </div>
-            <!-- DÜZELTME: onclick kaldırıldı veya satın alma/ödeme modülüne bağlanabilir -->
-            <button class="premium-badge-btn" onclick="buyPremium()">
+            <button class="premium-badge-btn" onclick="scrollToPlans()">
                 👑 Premium — ₺129/ay
             </button>
         </div>
@@ -710,8 +709,7 @@
             <div class="suggestions-row" id="suggestions-box"></div>
         </div>
 
-        <!-- ID'ler eklendi ve input tetiklemeleri düzeltildi -->
-        <div class="input-box-area" id="input-zone">
+        <div class="input-box-area">
             <div class="input-box-title" id="txt-input-title">Portala ne fısıldamak istersin?</div>
             <div class="input-row">
                 <input type="text" id="chat-user-input" placeholder="Bir boyut seçin veya soru yazın...">
@@ -728,7 +726,7 @@
         <div class="section-separator" id="title-periods-grid">Dönemler, Boyutlar & Modlar</div>
         <div class="periods-grid" id="periods-grid-box"></div>
 
-        <div class="section-separator" id="plans-section">Planlar</div>
+        <div class="section-separator">Planlar</div>
 
         <!-- Normal Ücretsiz Plan Kartı -->
         <div class="plan-card">
@@ -744,7 +742,7 @@
             <button class="btn-plan-select" id="btn-p1-status">✓ Şu An Aktif</button>
         </div>
 
-        <!-- Premium Plan Kartı -->
+        <!-- Yenilenen Premium Kartı -->
         <div class="premium-glow-box">
             <div class="badge-popular" id="badge-popular-txt">EN POPÜLER</div>
             <div class="plan-card premium-card">
@@ -757,7 +755,7 @@
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Zaman Yolculuğu & Jet Hızlı Yanıtlar</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span>15+ Özel Dönem (Antik Mısır, Maya, II. Dünya Savaşı...)</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Gelişmiş AI Rol Yapma (Karakterler dönem diliyle konuşur)</span></li>
-                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Kendi Özgün Senaryonu / Evrenini Yaratma Özelliği</span></li>
+                    <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Keni Özgün Senaryonu / Evrenini Yaratma Özelliği</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Kelebek Etkisi Simülatörü (Tarih değişseydi ne olurdu?)</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Sınırsız Tarihi Karakterle (Tesla, Sezar, Atatürk...) Canlı Sohbet</span></li>
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Zaman Kapsülü & Gelecekteki/Geçmişteki Kendinle Bağlantı</span></li>
@@ -766,8 +764,7 @@
                     <li class="feature-item"><i class="fa-solid fa-star"></i> <span>Tamamen Reklamsız Deneyim & Özel Profil Rozeti</span></li>
                 </ul>
                 
-                <!-- DÜZELTME: Plana geç butonunun işlevi eklendi -->
-                <button class="btn-plan-select btn-premium-trigger" onclick="buyPremium()" id="btn-p2-action">Premium'a Geç ★</button>
+                <button class="btn-plan-select btn-premium-trigger" onclick="scrollToPlans()" id="btn-p2-action">Premium'a Geç ★</button>
             </div>
         </div>
 
@@ -814,40 +811,23 @@
         </footer>
     </div>
 
-    <!-- TAMAMI DÜZELTİLMİŞ VE EKSİKLERİ TAMAMLANMIŞ JAVASCRIPT MOTORU -->
     <script>
         let currentLang = 'TR';
         let selectedEraId = 'ottoman';
         let remainingQuestions = 10;
 
-        // Eksik datalar tamamlandı
         const erasData = [
             { id: 'ottoman', nameTR: 'Osmanlı İmparatorluğu', nameEN: 'Ottoman Empire', icon: 'fa-swords', isPremium: false, suggestionsTR: ['İstanbul fethini anlat', 'Kanuni kimdir?'], suggestionsEN: ['Tell me about Conquest of Istanbul', 'Who is Suleiman?'] },
             { id: 'rome', nameTR: 'Antik Roma', nameEN: 'Ancient Rome', icon: 'fa-columns', isPremium: false, suggestionsTR: ['Sezarın ölümü', 'Gladyatörler kimdi?'], suggestionsEN: ['Death of Caesar', 'Who were gladiators?'] },
             { id: 'republic', nameTR: 'Cumhuriyet Dönemi', nameEN: 'Republic Era', icon: 'fa-flag', isPremium: false, suggestionsTR: ['Cumhuriyetin ilanını anlat', '1923 yılında neler oldu?'], suggestionsEN: ['Proclamation of Republic', 'What happened in 1923?'] },
             { id: 'character', nameTR: 'İstediğin Karakter', nameEN: 'Any Character', icon: 'fa-user', isPremium: false, suggestionsTR: ['Nikola Tesla ile konuşmak istiyorum', 'Mimar Sinan ile konuştur'], suggestionsEN: ['I want to talk with Tesla', 'Connect me to Marcus Aurelius'] },
-            { id: 'future', nameTR: 'Gelecek Sürüm (Premium)', nameEN: 'Future Mode (Premium)', icon: 'fa-rocket', isPremium: true, suggestionsTR: ['2100 yılında dünya', 'Uçan arabalar yapıldı mı?'], suggestionsEN: ['World in 2100', 'Are there flying cars?'] }
+            { id: 'future', nameTR: 'Gelecek Simülasyonu', nameEN: 'Future Simulation', icon: 'fa-rocket', isPremium: true, suggestionsTR: ['2150 yılında dünya', 'Yapay zeka çağını göster'], suggestionsEN: ['World in 2150', 'Show the AI era'] }
         ];
 
-        // Sayfa yüklendiğinde başlat
-        window.onload = function() {
-            createStars();
-            renderEras();
-            selectEra(selectedEraId);
-
-            // Enter tuşuyla mesaj gönderme dinleyicisi
-            document.getElementById('chat-user-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-        };
-
-        // Arka plandaki yıldız efekti simülasyonu
+        // Yıldız arka planı oluşturma fonksiyonu
         function createStars() {
             const container = document.getElementById('stars-container');
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 60; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.width = Math.random() * 3 + 'px';
@@ -855,176 +835,169 @@
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
                 star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.setProperty('--delay', Math.random() * 2 + 's');
-                star.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.3);
+                star.style.setProperty('--delay', (Math.random() * 4) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.4 + 0.3);
                 container.appendChild(star);
             }
         }
 
-        // Dönemleri ekrana çizen fonksiyonlar (Menü ve Grid)
-        function renderEras() {
-            const tabContainer = document.getElementById('era-tabs-container');
-            const gridContainer = document.getElementById('periods-grid-box');
-            
-            tabContainer.innerHTML = '';
-            gridContainer.innerHTML = '';
-
-            erasData.forEach(era => {
-                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
-
-                // Üst Tablar
-                const tab = document.createElement('button');
-                tab.className = `era-tab ${era.id === selectedEraId ? 'active' : ''}`;
-                tab.id = `tab-${era.id}`;
-                tab.onclick = () => selectEra(era.id);
-                tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
-                tabContainer.appendChild(tab);
-
-                // Alt Grid Kartları
-                const card = document.createElement('div');
-                card.className = `grid-period-card ${era.id === selectedEraId ? 'active' : ''}`;
-                card.id = `card-${era.id}`;
-                card.onclick = () => selectEra(era.id);
-                
-                let lockHTML = era.isPremium ? `<div class="grid-lock" style="color: var(--accent-gold);"><i class="fa-solid fa-crown"></i></div>` : '';
-                card.innerHTML = `
-                    ${lockHTML}
-                    <i class="grid-card-icon fa-solid ${era.icon}"></i>
-                    <div class="grid-card-name">${name}</div>
-                `;
-                gridContainer.appendChild(card);
-            });
-        }
-
-        // Dönem Seçildiğinde Tetiklenen Yapı
-        function selectEra(eraId) {
-            const era = erasData.find(e => e.id === eraId);
-            if (!era) return;
-
-            if (era.isPremium) {
-                alert(currentLang === 'TR' ? "Bu boyut sadece Premium üyeler içindir!" : "This dimension is for Premium members only!");
-                buyPremium();
-                return;
-            }
-
-            selectedEraId = eraId;
-
-            // Aktif sınıfları güncelle
-            document.querySelectorAll('.era-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.grid-period-card').forEach(c => c.classList.remove('active'));
-            
-            const activeTab = document.getElementById(`tab-${eraId}`);
-            const activeCard = document.getElementById(`card-${eraId}`);
-            if (activeTab) activeTab.classList.add('active');
-            if (activeCard) activeCard.classList.add('active');
-
-            // Mod bilgisini güncelle
-            document.getElementById('txt-current-mod').innerText = currentLang === 'TR' ? era.nameTR.toUpperCase() : era.nameEN.toUpperCase();
-
-            // Öneri Çiplerini Doldur
-            const suggestionsBox = document.getElementById('suggestions-box');
-            suggestionsBox.innerHTML = '';
-            const suggestions = currentLang === 'TR' ? era.suggestionsTR : era.suggestionsEN;
-            
-            suggestions.forEach(sug => {
-                const chip = document.createElement('div');
-                chip.className = 'suggestion-chip';
-                chip.innerText = sug;
-                chip.onclick = () => {
-                    document.getElementById('chat-user-input').value = sug;
-                    sendMessage();
-                };
-                suggestionsBox.appendChild(chip);
-            });
-
-            // Input alanına odaklan ve ekranı oraya kaydır
-            document.getElementById('chat-user-input').placeholder = currentLang === 'TR' ? `${era.nameTR} modunda yazın...` : `Type in ${era.nameEN} mode...`;
-            document.getElementById('input-zone').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // CEVAP VERMEME SORUNUNUN ÇÖZÜMÜ: Mesaj Gönderme Motoru
-        function sendMessage() {
-            const inputEl = document.getElementById('chat-user-input');
-            const text = inputEl.value.trim();
-            if (!text) return;
-
-            if (remainingQuestions <= 0) {
-                alert(currentLang === 'TR' ? "Günlük limitiniz bitti! Lütfen Premium'a geçin." : "Daily limit reached! Please upgrade to Premium.");
-                buyPremium();
-                return;
-            }
-
-            const chatBox = document.getElementById('chat-box-display');
-            const emptyState = document.getElementById('chat-empty-state');
-            if (emptyState) emptyState.remove();
-
-            // Kullanıcı Mesajını Ekle
-            const userMsg = document.createElement('div');
-            userMsg.className = 'msg user';
-            userMsg.innerHTML = `<div class="msg-bubble">${text}</div>`;
-            chatBox.appendChild(userMsg);
-
-            inputEl.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            // Hakkı düşür
-            remainingQuestions--;
-            document.getElementById('right-counter').innerText = remainingQuestions;
-
-            // Yapay Zeka Cevap Simülasyonu (Buraya kendi API URL'ini / fetch yapını bağlayabilirsin)
-            setTimeout(() => {
-                const systemMsg = document.createElement('div');
-                systemMsg.className = 'msg system';
-                
-                let responseText = "";
-                if (currentLang === 'TR') {
-                    responseText = `[${selectedEraId.toUpperCase()} BOYUTU] Sorunuz portal tarafından işlendi. Zamanda yolculuk yapılarak en doğru yanıt getirildi: "${text}" konusu hakkında detaylı simülasyon çok yakında API bağlantınızla aktif olacak!`;
-                } else {
-                    responseText = `[${selectedEraId.toUpperCase()} DIMENSION] Your question has been processed. Portal retrieved the answer: Detailed simulation about "${text}" will be live as soon as your API is connected!`;
-                }
-
-                systemMsg.innerHTML = `<div class="msg-bubble">${responseText}</div>`;
-                chatBox.appendChild(systemMsg);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 1000);
-        }
-
-        // SAYFANIN YUKARI ATMA SORUNUNUN ÇÖZÜMÜ: Premium Fonksiyonu
-        function buyPremium() {
-            // Planlar alanına pürüzsüz kaydırma sağlar (Yukarı fırlatmaz)
-            const plansSection = document.getElementById('plans-section');
-            if (plansSection) {
-                plansSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        function scrollToPlans() {
-            // Alternatif yönlendirme ismi için koruma linki
-            buyPremium();
-        }
-
-        // Dil Değiştirici Fonksiyonu
+        // Dil Değiştirme Fonksiyonu
         function setLanguage(lang) {
             currentLang = lang;
             document.getElementById('btn-tr').classList.toggle('active', lang === 'TR');
             document.getElementById('btn-en').classList.toggle('active', lang === 'EN');
             
             if (lang === 'TR') {
-                document.getElementById('main-title').innerText = "Zaman ve Boyut Portalı";
-                document.getElementById('main-sub').innerText = "Yapay zekâyla geçmişi ve boyutları keşfet — sınırları sen belirle";
-                document.getElementById('txt-input-title').innerText = "Portala ne fısıldamak istersin?";
-                document.getElementById('txt-input-hint').innerText = "Bir mod seç · Enter ile gönder · Shift+Enter yeni satır";
-                document.getElementById('title-periods-grid').innerText = "Dönemler, Boyutlar & Modlar";
+                document.getElementById('main-title').innerText = 'Zaman ve Boyut Portalı';
+                document.getElementById('main-sub').innerText = 'Yapay zekâyla geçmişi ve boyutları keşfet — sınırları sen belirle';
+                document.getElementById('txt-input-title').innerText = 'Portala ne fısıldamak istersin?';
+                document.getElementById('chat-user-input').placeholder = 'Bir boyut seçin veya soru yazın...';
+                document.getElementById('txt-input-hint').innerText = 'Bir mod seç · Enter ile gönder · Shift+Enter yeni satır';
+                document.getElementById('title-periods-grid').innerText = 'Dönemler, Boyutlar & Modlar';
+                document.getElementById('title-comp').innerText = 'Detaylı Karşılaştırma';
+                document.getElementById('th-feature').innerText = 'ÖZELLİK';
+                document.getElementById('txt-empty-title').innerText = 'Evrene açılan kapı';
+                document.getElementById('txt-empty-desc').innerText = 'Aşağıdaki ızgaradan veya üst menüden bir boyut seç, ardından macerana başla.';
             } else {
-                document.getElementById('main-title').innerText = "Time & Dimension Portal";
-                document.getElementById('main-sub').innerText = "Explore history and dimensions with AI — you set the limits";
-                document.getElementById('txt-input-title').innerText = "What do you want to whisper to the portal?";
-                document.getElementById('txt-input-hint').innerText = "Select a mode · Enter to send · Shift+Enter new line";
-                document.getElementById('title-periods-grid').innerText = "Eras, Dimensions & Modes";
+                document.getElementById('main-title').innerText = 'Time and Dimension Portal';
+                document.getElementById('main-sub').innerText = 'Explore the past and dimensions with AI — you set the limits';
+                document.getElementById('txt-input-title').innerText = 'What do you want to whisper to the portal?';
+                document.getElementById('chat-user-input').placeholder = 'Select a dimension or type a question...';
+                document.getElementById('txt-input-hint').innerText = 'Select a mode · Enter to send · Shift+Enter for new line';
+                document.getElementById('title-periods-grid').innerText = 'Eras, Dimensions & Modes';
+                document.getElementById('title-comp').innerText = 'Detailed Comparison';
+                document.getElementById('th-feature').innerText = 'FEATURE';
+                document.getElementById('txt-empty-title').innerText = 'Gateway to the universe';
+                document.getElementById('txt-empty-desc').innerText = 'Select a dimension from the grid below or the top menu, then start your adventure.';
             }
-            renderEras();
-            selectEra(selectedEraId);
+            renderUI();
         }
+
+        // Dönemleri Arayüze Çizme Fonksiyonu
+        function renderUI() {
+            const tabsBox = document.getElementById('era-tabs-container');
+            const gridBox = document.getElementById('periods-grid-box');
+            
+            tabsBox.innerHTML = '';
+            gridBox.innerHTML = '';
+
+            erasData.forEach(era => {
+                const name = currentLang === 'TR' ? era.nameTR : era.nameEN;
+                const isActive = era.id === selectedEraId;
+                
+                // Menü sekmeleri
+                const tab = document.createElement('div');
+                tab.className = `era-tab ${isActive ? 'active' : ''}`;
+                tab.innerHTML = `<i class="fa-solid ${era.icon}"></i> ${name}`;
+                tab.onclick = () => selectEra(era.id);
+                tabsBox.appendChild(tab);
+
+                // Izgara kartları
+                const card = document.createElement('div');
+                card.className = `grid-period-card ${isActive ? 'active' : ''}`;
+                card.innerHTML = `
+                    ${era.isPremium ? '<i class="fa-solid fa-lock grid-lock" style="color: var(--accent-gold)"></i>' : ''}
+                    <i class="fa-solid ${era.icon} grid-card-icon"></i>
+                    <div class="grid-card-name">${name}</div>
+                `;
+                card.onclick = () => selectEra(era.id);
+                gridBox.appendChild(card);
+            });
+
+            renderSuggestions();
+        }
+
+        // Dönem Seçim İşlemi
+        function selectEra(id) {
+            const era = erasData.find(e => e.id === id);
+            if (era && era.isPremium) {
+                alert(currentLang === 'TR' ? 'Bu boyut Premium üyeler içindir!' : 'This dimension is for Premium members!');
+                scrollToPlans();
+                return;
+            }
+            selectedEraId = id;
+            document.getElementById('txt-current-mod').innerText = (currentLang === 'TR' ? 'AKTİF: ' : 'ACTIVE: ') + (currentLang === 'TR' ? era.nameTR : era.nameEN).toUpperCase();
+            renderUI();
+        }
+
+        // Öneri Çiplerini Gösterme
+        function renderSuggestions() {
+            const sugBox = document.getElementById('suggestions-box');
+            sugBox.innerHTML = '';
+            const era = erasData.find(e => e.id === selectedEraId);
+            if (era) {
+                const list = currentLang === 'TR' ? era.suggestionsTR : era.suggestionsEN;
+                list.forEach(txt => {
+                    const chip = document.createElement('div');
+                    chip.className = 'suggestion-chip';
+                    chip.innerText = txt;
+                    chip.onclick = () => {
+                        document.getElementById('chat-user-input').value = txt;
+                        sendMessage();
+                    };
+                    sugBox.appendChild(chip);
+                });
+            }
+        }
+
+        // Mesaj Gönderme Simülasyonu
+        function sendMessage() {
+            const input = document.getElementById('chat-user-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            if (remainingQuestions <= 0) {
+                alert(currentLang === 'TR' ? 'Günlük portal hakkınız bitti!' : 'You have run out of daily portal limits!');
+                return;
+            }
+
+            // Boş durum ekranını gizle
+            const emptyState = document.getElementById('chat-empty-state');
+            if (emptyState) emptyState.remove();
+
+            const display = document.getElementById('chat-box-display');
+
+            // Kullanıcı Mesajı
+            const userMsg = document.createElement('div');
+            userMsg.className = 'msg user';
+            userMsg.innerHTML = `<div class="msg-bubble">${query}</div>`;
+            display.appendChild(userMsg);
+
+            input.value = '';
+            remainingQuestions--;
+            document.getElementById('right-counter').innerText = remainingQuestions;
+
+            // Sistem Yanıt Simülasyonu
+            setTimeout(() => {
+                const systemMsg = document.createElement('div');
+                systemMsg.className = 'msg system';
+                const reply = currentLang === 'TR' ? 
+                    `Portal aracılığıyla bağlantı kuruldu... İstediğiniz "${query}" konusu inceleniyor. Tarih akışı başarıyla simüle edildi.` : 
+                    `Connection established through the portal... Your request "${query}" is being analyzed. The timeline has been successfully simulated.`;
+                
+                systemMsg.innerHTML = `<div class="msg-bubble">${reply}</div>`;
+                display.appendChild(systemMsg);
+                display.scrollTop = display.scrollHeight;
+            }, 800);
+        }
+
+        function scrollToPlans() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // Klavye dinleyici (Enter tuşu ile gönderim)
+        document.getElementById('chat-user-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Sayfa yüklenince çalıştır
+        window.onload = () => {
+            createStars();
+            renderUI();
+        };
     </script>
 </body>
 </html>
